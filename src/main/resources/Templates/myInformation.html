@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/myInformation.css">
+    <script src=""></script>
+    <title>내정보</title>
+</head>
+
+<body>
+<header>
+</header>
+<main>
+    <form method="" th:action="@{/}" id="myInformation">
+        <div class="title">
+            <img src="../static/Img/img_3.png" height="40" width="40"/>
+            <h1>계정 정보</h1>
+        </div>
+        <div class="information">
+            <p>아이디 <input type="text" name="id"></p>
+            <p>닉네임 <input type="text" name="nickname"></p>
+            <p>등급   <input type="text" name="grade"></p>
+            <p>비밀번호 <input type="password" name="password"></p>
+        </div>
+
+        <div class="btn-changesSubmit">
+            <button class="" type="submit">변경사항 저장</button>
+            <button class="" type="submit">계정 탈퇴</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

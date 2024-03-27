@@ -1,0 +1,57 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+body,
+.logo{
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+
+}
+#login-wrapper{
+    width: 400px;
+    padding: 100px;
+    margin-top: 100px;
+    border: 2px solid #FF9B92;
+}
+
+#login-wrapper h1{
+    font-size: 24px;
+    color: #FF9B92;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#login-form > input{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+#login-form > input::placeholder{
+    color: #D2D2D2;
+}
+#login-form > input[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color: #FF9B92;
+    margin-top: 20px;
+}
+#login-error {
+    margin-top: 10px;
+    color: red;
+}
+
+.join-membership{
+    display: flex;
+    justify-content: right;
+    color: #636363;
+    text-decoration: none;
+}
+
+
+
