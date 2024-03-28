@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="../static/css/login.css">
+  <link th:href="@{/css/login.css}" rel="stylesheet">
+
   <!-- <link th:href="@{/css/login.css}" rel="stylesheet">-->
-  <script src="../static/js/login.js"></script>
+  <script th:src="@{/js/login.js}"></script>
   <title>Login</title>
 
 </head>
@@ -15,29 +16,28 @@
 <body>
 <main id="login-wrapper">
   <div class="logo">
-    <a th:href="@{/}"><img src="../static/Img/img.png" alt=""/></a>
+    <a th:href="@{/}"><img th:src="@{/Img/img.png}" alt=""/></a>
   </div>
   <h1>Login</h1>
+  <div class = "mb-2">
+    <form method="POST" action="/login" id="login-form">
 
-  <form method="" th:action="@{/}" id="login-form">
+      <input type="text" name="username" class="login-form-field" placeholder="아이디">
+      <input type="password" name="password" class="login-form-field" placeholder="비밀번호">
 
-    <input type="text" name="username" class="login-form-field" placeholder="아이디">
-    <input type="password" name="password" class="login-form-field" placeholder="비밀번호">
+      <label for="remember-check">
+        <input type="checkbox" id="remember-check">아이디 저장
+      </label>
 
-    <label for="remember-check">
-      <input type="checkbox" id="remember-check">아이디 저장
-    </label>
-
-    <div id="login-error">
-      <p id="login-error-msg">아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
-        입력하신 내용을 다시 확인해주세요.</p>
-    </div>
-
-    <input type="submit" value="로그인" id="login-form-submit">
-  </form>
-
+      <div th:if="${param.error}" class="alert alert-danger" role="alert" id="login-error">
+        <p id="login-error-msg"> 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
+          입력하신 내용을 다시 확인해주세요.</p> <span th:text="${param.exception}">오류 메시지</span>
+      </div>
+      <button type="submit" id="login-form-submit" class="btn btn-primary">로그인</button>
+    </form>
+  </div>
   <div>
-    <a target="_blank" href="" class="join-membership">회원가입</a>
+    <a href="/signup" class="join-membership">회원가입</a>
   </div>
 
 </main>
