@@ -19,21 +19,21 @@
     <a th:href="@{/}"><img th:src="@{/Img/img.png}" alt=""/></a>
   </div>
   <h1>Login</h1>
-    <form method="POST" action="/login" id="login-form">
+  <form method="POST" action="/login" id="login-form">
 
-      <input type="text" name="username" class="login-form-field" placeholder="아이디">
-      <input type="password" name="password" class="login-form-field" placeholder="비밀번호">
+    <input type="text" name="username" class="login-form-field" placeholder="아이디">
+    <input type="password" name="password" class="login-form-field" placeholder="비밀번호">
 
-      <label for="remember-check">
-        <input type="checkbox" id="remember-check">아이디 저장
-      </label>
+    <label for="remember-check">
+      <input type="checkbox" id="remember-check">아이디 저장
+    </label>
 
-      <div th:if="${param.error}" class="alert alert-danger" role="alert" id="login-error">
-        <p id="login-error-msg"> 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
-          입력하신 내용을 다시 확인해주세요.</p> <span th:text="${param.exception}">오류 메시지</span>
-      </div>
-      <button type="submit" id="login-form-submit" class="btn btn-primary">로그인</button>
-    </form>
+    <div th:if="${param.error}" class="alert alert-danger" role="alert" id="login-error">
+      <p id="login-error-msg"> 아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.
+        입력하신 내용을 다시 확인해주세요.</p> <span th:text="${param.exception}">오류 메시지</span>
+    </div>
+    <button type="submit" id="login-form-submit" class="btn btn-primary">로그인</button>
+  </form>
   <div>
     <a href="/membership" class="join-membership">회원가입</a>
   </div>
