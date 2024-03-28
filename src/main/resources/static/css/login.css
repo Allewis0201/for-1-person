@@ -8,7 +8,10 @@ body,
     display: flex;
     justify-content: center;
     font-size: 14px;
-
+}
+.logo a img{
+    width: 200px;
+    height: 150px;
 }
 #login-wrapper{
     width: 400px;
