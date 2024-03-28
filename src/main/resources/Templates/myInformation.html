@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/myInformation.css">
+    <link rel="stylesheet" href="../static/css/modal.css">
+    <script src=""></script>
+    <title>내정보</title>
+</head>
+
+<body>
+<header>
+<!-- title 시작 -->
+    <section class="main-search">
+        <!--로고 눌렀을 시, 메인 화면 이동-->
+        <a th:href="" class="logo">
+            <img id="logo1" src="../static/Img/img.png" alt="">
+            <h1><span>1</span>인분이요~</h1>
+        </a>
+        <!--검색기능..... 가능할까?-->
+        <div class="search">
+            <input type="text" class="" placeholder="어떤 가게가 혼밥이 가능할까?">
+            <a th:href=""><img src="../static/Img/img_4.png" alt=""></a>
+        </div>
+        <button id="informationClick" th:href=""><img src="../static/Img/img_5.png" alt=""></button>
+    </section>
+<!-- title 완료 -->
+<!-- nav 메뉴 시작-->
+    <section class="nav">
+        <ul>
+            <li><a th:href="">일반게시판</a></li>
+            <li><a th:href="">리뷰게시판</a></li>
+            <li><a th:href="">VIP</a></li>
+        </ul>
+    </section>
+<!-- nav 메뉴 완료-->
+</header>
+<main>
+<!--계정 정보 시작-->
+    <form th:action="@{/}" id="myInformation">
+        <div class="title">
+            <img src="../static/Img/img_3.png" alt="">
+            <h1>계정 정보</h1>
+        </div>
+        <div class="information">
+            <p>아이디 <input type="text" name="id"></p>
+            <p>닉네임 <input type="text" name="nickname"></p>
+            <p>등급   <input type="text" name="grade"></p>
+            <p>비밀번호 <input type="password" name="password"></p>
+        </div>
+
+        <div class="btn-changesSubmit">
+            <button class="" type="submit">변경사항 저장</button>
+            <button class="" type="submit">계정 탈퇴</button>
+        </div>
+<!--계정 정보 완료-->
+    </form>
+<!--모달창 시작-->
+    <div id="modal" class="hidden">
+        <article class="backGround">
+            <!--로그아웃 부분 -->
+            <a class="logout-link" target="_parent" th:href="@{/logout}">로그아웃</a>
+            <div class="information1">
+                <!-- 지정된 회원등급의 이미지 불러오기 -->
+                <img class="modal_screen" th:src="@{/img/grade/{grade}.png(user.grade)}" alt="grade">
+                <div class="user-price">
+                    <!--  사용자입력값 불러오기-->
+                    <p class="user-info" th:text="${user.userId}">사용자아이디</p>
+                    <p class="user-info" th:text="${user.nickname}">사용자닉네임</p>
+                </div>
+            </div>
+            <div class="page-link">
+                <!--계정 관리 페이지로 이동-->
+                <a target="_parent" href="myInformation.html">계정관리</a>
+                <!--운영자 라는 회원등급만 표시-->
+                <a target="_parent" href="/admin" th:if="${user.grade} == '운영자'">운영자 페이지</a>
+            </div>
+            <div>
+                <button id="btn_close_modal">닫기</button>
+            </div>
+        </article>
+    </div>
+<!--모달창 완료-->
+</main>
+    <script src="../static/js/modal.js"></script>
+</body>
+</html>

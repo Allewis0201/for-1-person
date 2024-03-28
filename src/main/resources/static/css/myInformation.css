@@ -1,0 +1,120 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-size: 14px;
+    margin-top: 30px;
+}
+.main-search{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 50px 30px 0;
+}
+.logo{
+    display: flex;
+    position: relative;
+}
+.logo img {
+    width: 100px;
+    height: 80px;
+    position: relative;
+    top: 10px;
+}
+.logo h1{
+    display: flex;
+    align-items: center;
+}
+.logo span{
+    color: #FF695B;
+}
+.search{
+    display: flex;
+    align-items: center;
+    border: 1px solid #BDBDBD;
+    border-radius: 30px;
+    margin-right: 120px;
+}
+.search input{
+    width: 300px;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+}
+.search a img{
+    width: 20px;
+    height: 20px;
+    padding-right:10px;
+}
+#informationClick{
+    background-color: transparent;
+    border: none;
+}
+#informationClick img{
+    width:30px;
+    height:30px;
+    padding-left: 25px;
+}
+.nav{
+    border: 5px solid #FFBAB3;
+}
+.nav ul{
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    gap: 350px;
+}
+.nav li{
+    display: flex;
+    list-style: none;
+    font-size: 20px;
+}
+main{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+#myInformation{
+    padding: 60px 150px;
+    border: 2px solid #FF9B92;
+}
+.title{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.title img{
+    height: 40px;
+}
+.title h1{
+    color: #636363;
+    font-size: 30px;
+}
+.information{
+    margin-bottom: 30px;
+}
+.information p{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #636363;
+}
+.information p input{
+    width: 250px;
+}
+.btn-changesSubmit{
+    display: flex;
+    position: relative;
+    gap: 20px;
+}
+.btn-changesSubmit button{
+    background-color: #FF9B92;
+    border:none;
+    border-radius: 30px;
+    color:white;
+    font-size:13px;
+    padding:9px;
+
+}

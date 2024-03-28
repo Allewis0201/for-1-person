@@ -1,0 +1,81 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+body,
+a{
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+
+}
+.member-wrapper{
+    padding: 100px;
+    margin-top: 150px;
+    border: 2px solid #FF9B92;
+}
+
+.member-wrapper h1{
+    font-size: 20px;
+    color: #FF9B92;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.user-id,
+.user-password{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    background-color: #F2F2F2;
+}
+
+.user-id input,
+.user-password input,
+.user-nickname input,
+.user-passwordCheck input{
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.user-id input,
+.user-password input{
+    background-color: #F2F2F2;
+}
+.user-nickname,
+.user-passwordCheck,
+.form-membership .btn-submit button[type="submit"]{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    background-color: #FFEAE8;
+}
+.user-nickname input,
+.user-passwordCheck input{
+    background-color: #FFEAE8;
+}
+.form-membership .btn-submit{
+    display: flex;
+    justify-content: center;
+}
+.form-membership .btn-submit button[type="submit"]{
+    flex-grow: 1;
+    margin: 0;
+    justify-content: center;
+    color: white;
+    background-color: #FFA097;
+}
+img{
+    width: 20px;
+    height: 20px;
+}
+.logo{
+    width:150px;
+    height:120px;
+}
