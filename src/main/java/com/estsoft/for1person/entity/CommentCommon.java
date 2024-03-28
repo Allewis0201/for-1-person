@@ -25,7 +25,7 @@ public class CommentCommon {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_writer_id")
-    private Users users;
+    private User user;
 
     @Column(nullable = false)
     private String body;

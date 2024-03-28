@@ -21,6 +21,6 @@ public class ArticleLike{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    Users users;
+    User user;
 }
 

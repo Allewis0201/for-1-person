@@ -37,7 +37,7 @@ public class Article {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_writer_id")
-    private Users users; // 작성자 정보 (FK)
+    private User user; // 작성자 정보 (FK)
 
 }
 

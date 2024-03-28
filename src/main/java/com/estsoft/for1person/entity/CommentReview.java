@@ -23,7 +23,7 @@ public class CommentReview {
 
     @ManyToOne
     @JoinColumn(name = "comment_writer_id")
-    private Users users;
+    private User user;
 
     @Column(nullable = false)
     private String body;

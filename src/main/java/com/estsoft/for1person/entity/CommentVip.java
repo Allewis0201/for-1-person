@@ -23,7 +23,7 @@ public class CommentVip {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_writer_id", nullable = false)
-    private Users users;
+    private User user;
 
     @Column(nullable = false)
     private String body;
@@ -32,5 +32,5 @@ public class CommentVip {
     private boolean anonymous;
 
     @Column(nullable = false)
-    private Time createdAtㅣ
+    private Time createdAt;
 }

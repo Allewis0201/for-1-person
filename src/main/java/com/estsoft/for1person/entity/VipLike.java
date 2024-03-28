@@ -21,6 +21,6 @@ public class VipLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private User user;
 }
 

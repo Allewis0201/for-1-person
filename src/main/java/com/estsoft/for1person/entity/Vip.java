@@ -38,7 +38,7 @@ public class Vip {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_writer_id")
-    private Users users;
+    private User user;
 }
 
 
