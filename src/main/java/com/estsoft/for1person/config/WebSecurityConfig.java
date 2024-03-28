@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                         auth.requestMatchers("/login", "/signup", "/user").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
-                        .defaultSuccessUrl("/main"))
+                        .defaultSuccessUrl("/main", true))
                 .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());
