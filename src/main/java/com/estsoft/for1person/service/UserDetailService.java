@@ -1,6 +1,6 @@
 package com.estsoft.for1person.service;
 
-import com.estsoft.for1person.domain.User;
+import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

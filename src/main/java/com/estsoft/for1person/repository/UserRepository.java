@@ -1,6 +1,6 @@
 package com.estsoft.for1person.repository;
 
-import com.estsoft.for1person.domain.User;
+import com.estsoft.for1person.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
