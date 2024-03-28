@@ -22,6 +22,5 @@ public class ReviewLike{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users users;
-
 }
 

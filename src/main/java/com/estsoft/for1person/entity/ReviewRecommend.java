@@ -26,6 +26,5 @@ public class ReviewRecommend {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private Users users;
-
 }
 

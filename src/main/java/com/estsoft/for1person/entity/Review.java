@@ -38,5 +38,4 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "review_writer_id")
     private Users users;
-
 }

@@ -17,11 +17,11 @@ public class CommentReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentReviewId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "review_writer_id")
     private Review review;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "comment_writer_id")
     private Users users;
 
@@ -33,6 +33,4 @@ public class CommentReview {
 
     @Column(nullable = false)
     private Time createdAt;
-
-
 }

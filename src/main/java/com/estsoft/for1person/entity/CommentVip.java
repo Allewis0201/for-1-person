@@ -32,5 +32,5 @@ public class CommentVip {
     private boolean anonymous;
 
     @Column(nullable = false)
-    private Time createdAt;
+    private Time createdAtㅣ
 }

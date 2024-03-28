@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Vip {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long VipId;
