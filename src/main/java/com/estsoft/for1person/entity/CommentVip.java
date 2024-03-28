@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.sql.Time;
 
@@ -13,18 +11,18 @@ import java.sql.Time;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CommentCommon {
+public class CommentVip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentCommonId;
+    private Long commentVipId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    private Article article;
+    @JoinColumn(name = "vip_writer_id")
+    private Vip vip;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_writer_id")
+    @JoinColumn(name = "comment_writer_id", nullable = false)
     private User user;
 
     @Column(nullable = false)
@@ -35,5 +33,4 @@ public class CommentCommon {
 
     @Column(nullable = false)
     private Time createdAt;
-
 }

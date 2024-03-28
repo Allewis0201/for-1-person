@@ -9,23 +9,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ArticleRecommend {
+public class ReviewRecommend {
 
     @Id
-    @Column(name = "article_id", nullable = false)
-    private Long articleId;
+    @Column(name = "review_id", nullable = false)
+    private Long reviewId;
 
     @Id
-    @Column(name = "article_writer_id", nullable = false)
-    private String articleWriterId;
+    @Column(name = "review_writer_id", nullable = false)
+    private String reviewWriterId;
 
-    @ManyToOne
-    @JoinColumn(name = "article_writer_id", insertable = false, updatable = false)
-    private Article article;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_writer_id", insertable = false, updatable = false)
+    private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
-
 }
 

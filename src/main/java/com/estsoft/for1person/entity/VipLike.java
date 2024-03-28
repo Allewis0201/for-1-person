@@ -9,18 +9,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ArticleLike{
+public class VipLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long articleLikeId;
+    private Long vipLikeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    Article article;
+    @JoinColumn(name = "vip_id")
+    private Vip vip;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 }
 

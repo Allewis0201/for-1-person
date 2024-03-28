@@ -9,18 +9,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ArticleLike{
+public class ReviewLike{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long articleLikeId;
+    private Long reviewLikeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    Article article;
+    @JoinColumn(name = "review_id")
+    private Review review;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 }
 

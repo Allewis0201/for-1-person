@@ -11,34 +11,31 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Article {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long articleId; // 게시글 아이디 (PK)
+    private Long reviewId;
 
     @Column(nullable = false)
-    private String title; // 제목
+    private String title;
 
     @Column(nullable = false)
-    private String content; // 내용
+    private String content;
 
     @Column(nullable = false)
-    private long views; // 조회수
+    private Long views;
 
     @Column(nullable = false)
-    private Boolean anonymous; // 익명 여부
+    private Boolean anonymous;
 
     @Column(nullable = false)
-    private Timestamp createdAt; // 생성 날짜
+    private Timestamp createdAt;
 
     @Column(nullable = false)
-    private int need; // 필요
+    private Integer need;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "article_writer_id")
-    private User user; // 작성자 정보 (FK)
-
+    @ManyToOne
+    @JoinColumn(name = "review_writer_id")
+    private User user;
 }
-
-
