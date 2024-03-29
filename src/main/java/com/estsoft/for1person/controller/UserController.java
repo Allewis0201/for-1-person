@@ -10,6 +10,11 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -36,5 +41,24 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
+    }
+
+    @GetMapping("/checkUsername")
+    @ResponseBody
+    public Map<String, Boolean> checkUsername(@RequestParam("userId") String userId) {
+        boolean isAvailable = !userService.existsByUserId(userId);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isAvailable", isAvailable);
+        return response;
+    }
+
+    // 닉네임 중복 확인
+    @GetMapping("/checkNickname")
+    @ResponseBody
+    public Map<String, Boolean> checkNickname(@RequestParam("nickname") String nickname) {
+        boolean isAvailable = !userService.existsByNickname(nickname);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isAvailable", isAvailable);
+        return response;
     }
 }

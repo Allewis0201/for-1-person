@@ -24,3 +24,35 @@ document.addEventListener('DOMContentLoaded', function (){
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('usernameOverlay').addEventListener('click', function () {
+        var userId = document.getElementById('userId').value;
+        if(userId) {
+            fetch('/checkUsername?userId=' + userId)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.isAvailable) {
+                        alert('사용 가능한 아이디입니다.');
+                    } else {
+                        alert('이미 사용중인 아이디입니다.');
+                    }
+                });
+        }
+    });
+
+    document.getElementById('nicknameOverlay').addEventListener('click', function () {
+        var nickname = document.getElementById('nickname').value;
+        if(nickname) {
+            fetch('/checkNickname?nickname=' + nickname)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.isAvailable) {
+                        alert('사용 가능한 닉네임입니다.');
+                    } else {
+                        alert('이미 사용중인 닉네임입니다.');
+                    }
+                });
+        }
+    });
+});
