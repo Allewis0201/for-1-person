@@ -103,10 +103,11 @@ main{
 }
 .information p input{
     width: 250px;
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
 }
 .btn-changesSubmit{
     display: flex;
-    position: relative;
     gap: 20px;
 }
 .btn-changesSubmit button{
