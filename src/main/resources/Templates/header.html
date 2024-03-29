@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>header</title>
+    <link rel="stylesheet" href="../static/css/mainScreen.css">
+    <link rel="stylesheet" href="../static/css/modal.css">
+    <script src="../static/js/modal.js"></script>
+</head>
+<body>
+<header>
+    <!-- title 시작 -->
+    <section class="main-search">
+        <a href="mainScreen.html" class="logo">
+            <img id="logo1" src="../static/Img/img.png" width="100" height="80" alt="">
+            <h1><span>1</span>인분이요~</h1>
+        </a>
+        <div class="search">
+            <input type="text" class="" placeholder="어떤 가게가 혼밥이 가능할까?">
+            <a th:href=""><img src="../static/Img/img_4.png" alt=""></a>
+        </div>
+        <button id="informationClick" th:href=""><img src="../static/Img/img_5.png" alt=""></button>
+    </section>
+    <!-- title 완료 -->
+    <!-- nav 시작 -->
+    <section class="nav">
+        <ul>
+            <li><a href="bulletinboard.html">일반게시판</a></li>
+            <li><a href="review-board.html">리뷰게시판</a></li>
+            <li><a th:href="">VIP</a></li>
+        </ul>
+    </section>
+    <!-- nav 완료 -->
+</header>
+<!--모달창 시작-->
+<div id="modal" class="hidden">
+    <article class="backGround">
+        <!--로그아웃 부분 -->
+        <a class="logout-link" target="_parent" th:href="@{/logout}">로그아웃</a>
+        <div class="information1">
+            <!-- 지정된 회원등급의 이미지 불러오기 -->
+            <img class="modal_screen" th:src="@{/img/grade/{grade}.png(user.grade)}" alt="grade">
+            <div class="user-price">
+                <!--  사용자입력값 불러오기-->
+                <p class="user-info" th:text="${user.userId}">사용자아이디</p>
+                <p class="user-info" th:text="${user.nickname}">사용자닉네임</p>
+            </div>
+        </div>
+        <div class="page-link">
+            <!--계정 관리 페이지로 이동-->
+            <a target="_parent" href="myInformation.html">계정관리</a>
+            <!--운영자 라는 회원등급만 표시-->
+            <a target="_parent" href="/admin" th:if="${user.grade} == '운영자'">운영자 페이지</a>
+        </div>
+        <div>
+            <button id="btn_close_modal">닫기</button>
+        </div>
+    </article>
+</div>
+<!--모달창 완료-->
+</body>
+</html>
