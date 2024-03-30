@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>write</title>
+    <!-- header 에서 사용된 파일 -->
+    <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <script th:src="@{/js/modal.js}"></script>
+    <script th:src="@{/js/header.js}"></script>
+    <!-- write 에서 사용할 추가 파일 -->
+    <link rel="stylesheet" th:href="@{/css/write.css}">
+    <script th:src="@{/js/write.js}"></script>
+    <!-- 별점 Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+
+<!-- Header Fragment 포함 -->
+<div th:replace="header :: headerFragment"></div>
+
+<!-- 모달창 Fragment 포함 -->
+<div th:replace="header :: modalFragment"></div>
+
+
+<div class="container">
+    <div>
+        <img th:src="@{/Img/img_15.png}" alt="">
+        <hr>
+    </div>
+    <form action="/api/post/imageUpload" method="post">
+        <section class="select-container">
+            <div class="choice1">
+                <div class="choice2">
+                    <label>
+                        <select>
+                            <option>일반게시판</option>
+                            <option>리뷰게시판</option>
+                        </select>
+                    </label>
+                    <div class="star-check">
+                        <p>별점 :</p>
+                        <div class="star">
+                            <i class="far fa-star" onclick="rateStar(this)" data-rate="1"></i>
+                            <i class="far fa-star" onclick="rateStar(this)" data-rate="2"></i>
+                            <i class="far fa-star" onclick="rateStar(this)" data-rate="3"></i>
+                            <i class="far fa-star" onclick="rateStar(this)" data-rate="4"></i>
+                            <i class="far fa-star" onclick="rateStar(this)" data-rate="5"></i>
+                        </div>
+                    </div>
+                </div>
+                <label class="write-title">
+                    <input  name="write-title" alt="" placeholder="제목을 입력해주세요">
+                </label>
+            </div>
+        </section>
+        <label class="editor">
+            <!--textarea 들어갈 곳-->
+        </label>
+        <label class="click">
+            <input type="submit" value="수정">
+            <input type="submit" value="등록">
+        </label>
+    </form>
+</div>
+</body>
+</html>
