@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class ArticleService {
 
     private ArticleRepository articleRepository;
