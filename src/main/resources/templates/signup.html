@@ -10,6 +10,26 @@
       background: linear-gradient(to right, rgba(254, 238, 229, 1), rgba(229, 193, 197, 1))
     }
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function (){
+      document.getElementById('cp').addEventListener('keyup', function (event){
+        var password = document.getElementById('password').value;
+        var cp = document.getElementById('cp').value;
+        var error = document.getElementById('error');
+
+        if (password === cp){
+          error.textContent = '비밀번호 일치함';
+          error.style.color = 'green';
+        }
+        else{
+          error.textContent = '비밀번호 일치하지 않음.';
+          error.style.color = 'red';
+        }
+      });
+    });
+  </script>
+
+
 
 </head>
 <body class="gradient-custom">
@@ -38,8 +58,16 @@
             </div>
             <div class="mb-3">
               <label class="form-label text-white">Password</label>
-              <input type="password" class="form-control" name="password">
+              <input type="password" class="form-control" id="password" name="password">
+
             </div>
+
+            <div class="mb-3">
+              <label class="form-label text-white">Confirm Password</label>
+              <input type="password" class="form-control" id="cp">
+              <div id="error" class="text-danger"></div>
+            </div>
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>

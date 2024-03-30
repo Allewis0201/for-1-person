@@ -8,12 +8,12 @@ public class UserViewController {
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
-    @GetMapping("/signup")
-    public String signup(){
-        return "/signup";
+    @GetMapping("/membership")
+    public String membership(){
+        return "/membership";
     }
 
     @GetMapping("/main")
