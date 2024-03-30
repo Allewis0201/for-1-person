@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/myInformation.css">
+    <link rel="stylesheet" th:href="@{/css/myInformation.css}">
     <!-- header 에서 사용된 파일 -->
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
@@ -26,10 +26,8 @@
             <h1>계정 정보</h1>
         </div>
         <div class="information">
-            <p>아이디 <input type="text" name="id" th:value="${user.id}"></p>
-            <p>닉네임 <input type="text" name="nickname" th:value="${user.nickname}"></p>
-            <p>등급   <input type="text" name="grade" th:value = "${user.grade}"></p>
-            <p>비밀번호 <input type="password" name="password" th:value="${user.password}"></p>
+            <p>아이디 <input type="text" name="id" th:value="${user.userId}" readonly></p>
+            <p>닉네임 <input type="text" name="nickname" th:value="${user.nickname}" readonly></p>
         </div>
 
         <div class="btn-changesSubmit">
