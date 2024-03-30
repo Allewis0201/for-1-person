@@ -12,12 +12,8 @@ import lombok.Setter;
 public class VipRecommend {
 
     @Id
-    @Column(name = "vip_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long vipId;
-
-    @Id
-    @Column(name = "vip_writer_id", nullable = false)
-    private String vipWriterId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vip_writer_id", insertable = false, updatable = false)
