@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
 @RequestMapping("/api/article")
 public class ArticleController {
@@ -53,28 +52,28 @@ public class ArticleController {
     //==================================================================================================================
     // 아티클 생성(글 쓰기)
     // 아티클 내용을 받을 DTO 필요
-    @PostMapping("/{user_id}")
+    @PostMapping("/common/{user_id}")
     public void createArticle(@PathVariable("user_id") long userId) {
         articleService.createArticle(userId);
     }
-    @PostMapping("/{user_id}")
+    @PostMapping("/review/{user_id}")
     public void createReview(@PathVariable("user_id") long userId) {
         articleService.createReview(userId);
     }
-    @PostMapping("/{user_id}")
+    @PostMapping("/vip/{user_id}")
     public void createVip(@PathVariable("user_id") long userId) {
         articleService.createVip(userId);
     }
     //==================================================================================================================
     // 아티클 수정
     // 수정 내용을 담을 DTO 필요
-    @PostMapping("/{user_id}/{article_id}")
+    @PostMapping("/common/{user_id}/{article_id}")
     public void updateArticle(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId) {
         articleService.updateArticle(userId, articleId);
     }
 
     // 아티클 삭제
-    @DeleteMapping("/{user_id}/{article_id}")
+    @DeleteMapping("/common/{user_id}/{article_id}")
     public void deleteArticle(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
         articleService.deleteArticle(userId, articleId);
     }
