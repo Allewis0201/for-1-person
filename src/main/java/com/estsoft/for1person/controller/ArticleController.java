@@ -71,11 +71,29 @@ public class ArticleController {
     public void updateArticle(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId) {
         articleService.updateArticle(userId, articleId);
     }
+    @PostMapping("/review/{user_id}/{article_id}")
+    public void updateReview(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId) {
+        articleService.updateReview(userId, articleId);
+    }
+
+    @PostMapping("/vip/{user_id}/{article_id}")
+    public void updateVip(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId) {
+        articleService.updateVip(userId, articleId);
+    }
 
     // 아티클 삭제
     @DeleteMapping("/common/{user_id}/{article_id}")
     public void deleteArticle(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
         articleService.deleteArticle(userId, articleId);
+    }
+    @DeleteMapping("/review/{user_id}/{article_id}")
+    public void deleteReview(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
+        articleService.deleteReview(userId, articleId);
+    }
+
+    @DeleteMapping("/vip/{user_id}/{article_id}")
+    public void deleteVip(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
+        articleService.deleteVip(userId, articleId);
     }
 
 }

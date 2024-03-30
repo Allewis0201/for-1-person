@@ -64,6 +64,22 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
+    public void updateReview(long userId, long reviewId) {
+        Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundException::new);
+        //userId 맞는지 확인
+        //맞으면 dto 내용을 review에 넣어서 변경
+        // 후 저장
+        reviewRepository.save(review);
+    }
+
+    public void updateVip(long userId, long vipId) { // Changed from Article to Vip, and parameter name from articleId to vipId
+        Vip vip = vipRepository.findById(vipId).orElseThrow(NotFoundException::new); // Changed from Article to Vip
+        //userId 맞는지 확인
+        //맞으면 dto 내용을 vip에 넣어서 변경
+        // 후 저장
+        vipRepository.save(vip); // Changed from article to vip
+    }
+
     public void deleteArticle(long userId, long articleId) {
         //계정이 있는지 확인
         articleRepository.findById(articleId);
@@ -71,5 +87,23 @@ public class ArticleService {
         Article articles = new Article();
         //있으면 삭제 없으면 에러 반환
         articleRepository.deleteById(articleId);
+    }
+
+    public void deleteReview(long userId, long reviewId) {
+        //계정이 있는지 확인
+        reviewRepository.findById(reviewId);
+        //유저 아이디랑 일치하는지 확인
+        Review review = new Review();
+        //있으면 삭제 없으면 에러 반환
+        reviewRepository.deleteById(reviewId);
+    }
+
+    public void deleteVip(long userId, long vipId) { // Changed from Article to Vip, and parameter name from articleId to vipId
+        //계정이 있는지 확인
+        vipRepository.findById(vipId);
+        //유저 아이디랑 일치하는지 확인
+        Vip vip = new Vip(); // Changed from Article to Vip
+        //있으면 삭제 없으면 에러 반환
+        vipRepository.deleteById(vipId); // Changed from article to vip
     }
 }

@@ -20,4 +20,5 @@ public class EditorController {
 
         return "Data received and stored.";
     }
+
 }
