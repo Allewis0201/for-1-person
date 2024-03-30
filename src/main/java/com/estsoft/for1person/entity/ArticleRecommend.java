@@ -12,12 +12,8 @@ import lombok.Setter;
 public class ArticleRecommend {
 
     @Id
-    @Column(name = "article_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long articleId;
-
-    @Id
-    @Column(name = "article_writer_id", nullable = false)
-    private String articleWriterId;
 
     @ManyToOne
     @JoinColumn(name = "article_writer_id", insertable = false, updatable = false)
