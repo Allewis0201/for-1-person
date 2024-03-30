@@ -31,4 +31,14 @@ public class UserService {
     public void deleteById(String userId){
         userRepository.deleteById(userId);
     }
+
+    // UserService.java 내에 추가
+    public boolean existsByUserId(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    public boolean existsByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
 }

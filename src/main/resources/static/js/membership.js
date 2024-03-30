@@ -1,3 +1,15 @@
+function checkSubmit() {
+    var submitButton = document.querySelector('.btn-submit button');
+    if(isUser && isNickname) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
+
+var isUser = false;
+var isNickname = false;
+
 document.addEventListener('DOMContentLoaded', function (){
     document.getElementById('password_check').addEventListener('keyup', function (event){
         var password = document.getElementById('password').value;
@@ -23,4 +35,52 @@ document.addEventListener('DOMContentLoaded', function (){
             event.preventDefault();
         }
     });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('usernameOverlay').addEventListener('click', function () {
+        var userId = document.getElementById('userId').value;
+        if(userId) {
+            fetch('/checkUsername?userId=' + userId)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.isAvailable) {
+                        alert('사용 가능한 아이디입니다.');
+                        isUser = true;
+                    }
+                    else {
+                        alert('이미 사용중인 아이디입니다.');
+                        isUser = false;
+                    }
+                    checkSubmit();
+                });
+        }
+    });
+
+    document.getElementById('nicknameOverlay').addEventListener('click', function () {
+        var nickname = document.getElementById('nickname').value;
+        if(nickname) {
+            fetch('/checkNickname?nickname=' + nickname)
+                .then(response => response.json())
+                .then(data => {
+                    if(data.isAvailable) {
+                        alert('사용 가능한 닉네임입니다.');
+                        isNickname = true;
+                    }
+                    else {
+                        alert('이미 사용중인 닉네임입니다.');
+                        isNickname = false;
+                    }
+                    checkSubmit();
+                });
+        }
+    });
+
+    document.getElementById('form').addEventListener('submit', function (event) {
+        if(!isUser || !isNickname) {
+            alert('아이디와 닉네임 중 하나 이상이 이미 사용 중입니다. 다시 확인해 주세요.');
+            event.preventDefault();
+        }
+    });
+
 });
