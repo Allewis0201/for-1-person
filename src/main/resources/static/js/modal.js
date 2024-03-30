@@ -12,8 +12,6 @@ function activateModal() {
     });
 }
 
-
 window.onload = function() {
-    includeHeader();
-
+    activateModal();
 }
