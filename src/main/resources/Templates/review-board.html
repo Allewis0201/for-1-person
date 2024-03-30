@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <title>review-board</title>
     <link rel="stylesheet" href="../static/css/review-board.css">
-    <link rel="stylesheet" href="../static/css/modal.css">
-    <script src="../static/js/modal.js"></script>
+    <!-- header 에서 사용된 파일 -->
+    <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
+    <link rel="stylesheet" th:href="@{/css/modal.css}">
+    <script th:src="@{/js/modal.js}"></script>
 </head>
 
 <body>
-<!--js로 header 로고 & nav 부분 연결-->
-<header id="header">
-    <script src="../static/js/header.js"></script>
-</header>
-<!--js로 header 로고 & nav 부분 연결 완료-->
+
+<!-- Header Fragment 포함 -->
+<div th:replace="header :: headerFragment"></div>
+
+<!-- 모달창 Fragment 포함 -->
+<div th:replace="header :: modalFragment"></div>
 
 <div class="container">
     <div class="title">
