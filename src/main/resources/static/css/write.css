@@ -1,0 +1,75 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.container{
+    padding: 60px;
+    margin: 70px 90px;
+
+}
+.container img{
+    width: 30px;
+    height: 30px;
+}
+hr{
+    border: none;
+    border-top: 3px solid #FF9B92;
+    margin-top: 20px;
+}
+form,
+.container{
+    display: flex;
+    flex-direction: column;
+}
+.select-container {
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+    margin-top: 50px;
+    padding: 20px 0;
+}
+select{
+    width: 795px;
+}
+select,
+.write-title input{
+    border: 1px solid #BDBDBD;
+    border-radius: 5px;
+}
+.star{
+    color: #FF9B92;
+}
+.star-check{
+    display: flex;
+    gap: 20px;
+}
+.choice1{
+    margin-left: 100px;
+}
+.choice2{
+    padding-bottom: 15px;
+    gap: 200px;
+}
+.choice2,
+.write-title{
+    display: flex;
+    justify-content: left;
+}
+.write-title input{
+    width: 92%;
+    padding: 5px;
+}
+.editor{
+    margin: 50px 0;
+}
+.click{
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+}
+.click input{
+    background: #FF9B92;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 15px;
+}
