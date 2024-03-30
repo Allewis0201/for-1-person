@@ -24,7 +24,7 @@ public class Article {
     private String content; // 내용
 
     @Column(nullable = false)
-    private long views; // 조회수
+    private Long views; // 조회수
 
     @Column(nullable = false)
     private Boolean anonymous; // 익명 여부

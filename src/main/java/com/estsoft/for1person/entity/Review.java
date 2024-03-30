@@ -35,6 +35,9 @@ public class Review {
     @Column(nullable = false)
     private Integer need;
 
+    @Column(nullable = false)
+    private Integer score;
+
     @ManyToOne
     @JoinColumn(name = "review_writer_id")
     private User user;
