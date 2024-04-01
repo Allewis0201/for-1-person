@@ -1,11 +1,14 @@
 package com.estsoft.for1person.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -29,8 +32,17 @@ public class CommentReview {
     private String body;
 
     @Column(nullable = false)
-    private boolean anonymous;
+    private Boolean anonymous;
 
+    @CreationTimestamp
     @Column(nullable = false)
-    private Time createdAt;
+    private Timestamp createdAt;
+
+    @Builder
+    public CommentReview(Review review, User user, String body, Boolean anonymous) {
+        this.review = review;
+        this.user = user;
+        this.body = body;
+        this.anonymous = anonymous;
+    }
 }
