@@ -1,10 +1,24 @@
 package com.estsoft.for1person.controller;
 
+import com.estsoft.for1person.repository.UserRepository;
+import com.estsoft.for1person.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.Authentication;
+
+import java.util.Optional;
 
 @Controller
 public class UserViewController {
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public UserViewController(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/login")
     public String login() {
@@ -19,5 +33,13 @@ public class UserViewController {
     @GetMapping("/main")
     public String index(){
         return "/main";
+    }
+
+    @GetMapping("/myInformation")
+    public String myInformation(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        return "/myInformation";
     }
 }

@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('form').addEventListener('submit', function (event) {
         if(!isUser || !isNickname) {
-            alert('아이디와 닉네임 중 하나 이상이 이미 사용 중입니다. 다시 확인해 주세요.');
             event.preventDefault();
         }
     });

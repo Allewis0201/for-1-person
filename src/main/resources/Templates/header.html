@@ -38,21 +38,26 @@
 <div id="modal" class="hidden" th:fragment="modalFragment">
     <article class="backGround">
         <!--로그아웃 부분 -->
-        <a class="logout-link" target="_parent">로그아웃</a>
+        <span class="logout-link" onclick="location.href='/logout'">로그아웃</span>
         <div class="information1">
             <!-- 지정된 회원등급의 이미지 불러오기 -->
-            <img class="modal_screen" th:src="@{/img/grade/{grade}.png(user.grade)}" alt="grade">
+            <img th:if="${user.author == 1}" th:src="@{/img/img_20.png}" alt="쌀밥" class="modal_screen"/>
+            <img th:if="${user.author == 2}" th:src="@{/img/img_21.png}" alt="간장계란밥" class="modal_screen"/>
+            <img th:if="${user.author == 3}" th:src="@{/img/img_22.png}" alt="오므라이스" class="modal_screen"/>
+            <img th:if="${user.author == 4}" th:src="@{/img/img_23.png}" alt="수저" class="modal_screen"/>
+
             <div class="user-price">
                 <!--  사용자입력값 불러오기-->
-                <p class="user-info" >사용자아이디</p>
-                <p class="user-info" >사용자닉네임</p>
+                <p class="user-info" th:text="${user.userId}">사용자아이디</p>
+                <p class="user-info" th:text="${user.nickname}">사용자닉네임</p>
             </div>
+
         </div>
         <div class="page-link">
             <!--계정 관리 페이지로 이동-->
-            <a target="_parent">계정관리</a>
+            <span onclick="location.href='/myInformation'">계정관리</span>
             <!--운영자 라는 회원등급만 표시-->
-            <a target="_parent">운영자 페이지</a>
+            <span th:if="${user.author == 4}" onclick="location.href='/adminPage'"> 운영자 페이지</span>
         </div>
         <div>
             <button id="btn_close_modal">닫기</button>

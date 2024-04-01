@@ -36,15 +36,20 @@
     display: flex;
     justify-content: center;
 }
+
+.information1 img{
+    width: 207px;
+    height: 200px;
+}
 .information1{
-    gap: 100px;
+    gap: 70px;
     margin-top: 30px;
 }
 .page-link{
     font-size: 15px;
     margin: 20px 0;
 }
-.page-link a{
+.page-link a, .page-link span{
     color: #FF9B92;
 }
 #btn_close_modal{

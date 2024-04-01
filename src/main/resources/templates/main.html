@@ -13,6 +13,8 @@
 <body>
 <div class="container">
     <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
+    <!-- 사용자 정보 페이지로 이동하는 버튼 추가 -->
+    <button type="button" class="btn btn-primary" onclick="location.href='/myInformation'">내 정보</button>
     <form action="/delete-account" method="post" onsubmit="return confirmDelete();">
         <button type="submit" class="btn btn-danger">회원 탈퇴</button>
     </form>

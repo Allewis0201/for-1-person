@@ -75,9 +75,13 @@ main{
     justify-content: center;
     margin-top: 100px;
 }
+#informationBlock{
+    border: 2px solid #FF9B92;
+    padding: 60px;
+}
+
 #myInformation{
     padding: 60px 150px;
-    border: 2px solid #FF9B92;
 }
 .title{
     display: flex;
@@ -106,16 +110,25 @@ main{
     border: 1px solid #BDBDBD;
     border-radius: 5px;
 }
-.btn-changesSubmit{
+.btn-changes, .btn-submit{
     display: flex;
     gap: 20px;
 }
-.btn-changesSubmit button{
+.btn-changes button, .btn-submit{
     background-color: #FF9B92;
     border:none;
     border-radius: 30px;
     color:white;
     font-size:13px;
     padding:9px;
+}
+.btn-submit{
+    margin-right: 60px;
+    display: flex;
+    gap: 20px;
+}
 
+.deleteAccount{
+    display: flex;
+    justify-content: flex-end;
 }
