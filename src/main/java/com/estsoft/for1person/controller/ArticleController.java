@@ -93,33 +93,33 @@ public class ArticleController {
     //==================================================================================================================
     // 아티클 수정
     // 수정 내용을 담을 DTO 필요
-    @PostMapping("/api/common/{user_id}/{article_id}")
-    public void updateArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId) {
-        articleService.updateArticle(userId, articleId);
-    }
-    @PostMapping("/api/review/{user_id}/{article_id}")
-    public void updateReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId) {
-        articleService.updateReview(userId, articleId);
-    }
-
-    @PostMapping("/api/vip/{user_id}/{article_id}")
-    public void updateVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId) {
-        articleService.updateVip(userId, articleId);
-    }
+//    @PostMapping("/api/common/{user_id}/{article_id}")
+//    public void updateArticle(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateArticle(userId, articleId);
+//    }
+//    @PostMapping("/api/review/{user_id}/{article_id}")
+//    public void updateReview(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateReview(userId, articleId);
+//    }
+//
+//    @PostMapping("/api/vip/{user_id}/{article_id}")
+//    public void updateVip(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateVip(userId, articleId);
+//    }
 
     // 아티클 삭제
-    @DeleteMapping("/api/common/{user_id}/{article_id}")
-    public void deleteArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-        articleService.deleteArticle(userId, articleId);
-    }
-    @DeleteMapping("/api/review/{user_id}/{article_id}")
-    public void deleteReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-        articleService.deleteReview(userId, articleId);
-    }
-
-    @DeleteMapping("/api/vip/{user_id}/{article_id}")
-    public void deleteVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-        articleService.deleteVip(userId, articleId);
-    }
+//    @DeleteMapping("/api/common/{user_id}/{article_id}")
+//    public void deleteArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteArticle(userId, articleId);
+//    }
+//    @DeleteMapping("/api/review/{user_id}/{article_id}")
+//    public void deleteReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteReview(userId, articleId);
+//    }
+//
+//    @DeleteMapping("/api/vip/{user_id}/{article_id}")
+//    public void deleteVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteVip(userId, articleId);
+//    }
 
 }
