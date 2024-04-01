@@ -1,5 +1,8 @@
 package com.estsoft.for1person.controller;
 
+import com.estsoft.for1person.dto.AddArticleRequest;
+import com.estsoft.for1person.dto.AddReviewRequest;
+import com.estsoft.for1person.dto.AddVipRequest;
 import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.Vip;
@@ -53,16 +56,40 @@ public class ArticleController {
     // 아티클 생성(글 쓰기)
     // 아티클 내용을 받을 DTO 필요
     @PostMapping("/api/common/{user_id}")
-    public void createArticle(@PathVariable("user_id") Long userId) {
-        articleService.createArticle(userId);
+    public void createArticle(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+        AddArticleRequest request = AddArticleRequest.builder().
+                title(title).
+                content(content).
+                views(0L).
+                need(1).
+                anonymous(false).
+                build();
+
+        articleService.createArticle(userId, request);
     }
     @PostMapping("/api/review/{user_id}")
-    public void createReview(@PathVariable("user_id") Long userId) {
-        articleService.createReview(userId);
+    public void createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+        AddReviewRequest request = AddReviewRequest.builder().
+                title(title).
+                content(content).
+                views(0L).
+                need(2).
+                anonymous(false).
+                score(3).
+                build();
+        articleService.createReview(userId, request);
     }
     @PostMapping("/api/vip/{user_id}")
-    public void createVip(@PathVariable("user_id") Long userId) {
-        articleService.createVip(userId);
+    public void createVip(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+        AddVipRequest request = AddVipRequest.builder().
+                title(title).
+                content(content).
+                views(0L).
+                need(1).
+                anonymous(false).
+                build();
+
+        articleService.createVip(userId, request);
     }
     //==================================================================================================================
     // 아티클 수정

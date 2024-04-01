@@ -1,11 +1,16 @@
 package com.estsoft.for1person.service;
 
+import com.estsoft.for1person.dto.AddArticleRequest;
+import com.estsoft.for1person.dto.AddReviewRequest;
+import com.estsoft.for1person.dto.AddVipRequest;
 import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.Review;
+import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.ArticleRepository;
 import com.estsoft.for1person.repository.ReviewRepository;
+import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.repository.VipRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +25,7 @@ public class ArticleService {
     private ArticleRepository articleRepository;
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
+    private UserRepository userRepository;
 
 
     public List<Article> getAllArticle() {
@@ -33,26 +39,29 @@ public class ArticleService {
     }
 
 
-    public Article getArticle(long articleId) {
+    public Article getArticle(Long articleId) {
         return articleRepository.findById(articleId).orElseThrow();
     }
-    public Review getReview(long articleId) {
+    public Review getReview(Long articleId) {
         return reviewRepository.findById(articleId).orElseThrow();
     }
-    public Vip getVip(long articleId) {
+    public Vip getVip(Long articleId) {
         return vipRepository.findById(articleId).orElseThrow();
     }
 
-    public void createArticle(long userId) {
-        Article article = new Article();
+    public void createArticle(String userId, AddArticleRequest request) {
+        User user = userRepository.findByUserId(userId).get();
+        Article article = request.toEntity(user);
         articleRepository.save(article);
     }
-    public void createReview(long userId) {
-        Review article = new Review();
+    public void createReview(String userId, AddReviewRequest request) {
+        User user = userRepository.findByUserId(userId).get();
+        Review article = request.toEntity(user);
         reviewRepository.save(article);
     }
-    public void createVip(long userId) {
-        Vip article = new Vip();
+    public void createVip(String userId, AddVipRequest request) {
+        User user = userRepository.findByUserId(userId).get();
+        Vip article = request.toEntity(user);
         vipRepository.save(article);
     }
 
