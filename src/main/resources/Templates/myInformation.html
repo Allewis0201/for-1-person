@@ -21,6 +21,7 @@
 <body>
 <main>
     <!--계정 정보 시작-->
+    <div id = "informationBlock" style="display: inline-block">
     <form th:action="@{/}" id="myInformation">
         <div class="title">
             <img th:src="@{/Img/img_3.png}" alt="">
@@ -36,10 +37,11 @@
             <button class="" type="submit">변경사항 저장</button>
         </div>
     </form>
-    <form action="/delete-account" method="post" onsubmit="return confirmDelete();">
+    <form action="/delete-account" method="post" class="deleteAccount" onsubmit="return confirmDelete();">
         <button class="btn-submit" type="submit">회원 탈퇴</button>
     </form>
         <!--계정 정보 완료-->
+    </div>
 </main>
 </body>
 </html>
