@@ -69,6 +69,14 @@ public class User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+
     // 계정 만료 여부 반환 (true: 만료 안됨)
     @Override
     public boolean isAccountNonExpired() {

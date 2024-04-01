@@ -22,7 +22,7 @@
 <main>
     <!--계정 정보 시작-->
     <div id = "informationBlock" style="display: inline-block">
-    <form th:action="@{/}" id="myInformation">
+    <form th:action="@{/updateInfo}" method="POST" id="myInformation">
         <div class="title">
             <img th:src="@{/Img/img_3.png}" alt="">
             <h1>계정 정보</h1>
@@ -40,8 +40,6 @@
                 <input type="text" name="author" readonly
                        th:if="${user.author == 4}" th:value="'수저'" />
             </p>
-
-
             <p>비밀번호 <input type="password" name="password" th:value="${user.password}"></p>
         </div>
         <div class="btn-changes">

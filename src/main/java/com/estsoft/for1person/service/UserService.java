@@ -4,7 +4,11 @@ import com.estsoft.for1person.dto.AddUserRequest;
 import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -41,4 +45,12 @@ public class UserService {
         return userRepository.existsByNickname(nickname);
     }
 
+    public void updateProfile(String userId, String nickname, String changePassword){
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+
+        User user = userOptional.get();
+        user.setNickname(nickname);
+        user.setPassword(changePassword);
+        userRepository.save(user);
+    }
 }

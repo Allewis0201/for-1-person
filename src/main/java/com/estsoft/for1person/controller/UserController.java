@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +20,11 @@ import java.util.Map;
 @Controller
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder encoder;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService, PasswordEncoder encoder){
         this.userService = userService;
+        this.encoder = encoder;
     }
 
     @PostMapping("/user")
@@ -52,7 +55,6 @@ public class UserController {
         return response;
     }
 
-    // 닉네임 중복 확인
     @GetMapping("/checkNickname")
     @ResponseBody
     public Map<String, Boolean> checkNickname(@RequestParam("nickname") String nickname) {
@@ -61,4 +63,13 @@ public class UserController {
         response.put("isAvailable", isAvailable);
         return response;
     }
+    @PostMapping("/updateInfo")
+    public String updateInfo(@RequestParam("nickname") String nickname, @RequestParam("password") String password, Authentication authentication){
+        String userId = authentication.getName();
+        String changePassword = encoder.encode(password);
+        userService.updateProfile(userId, nickname, changePassword);
+
+        return "redirect:/myInformation";
+    }
+
 }
