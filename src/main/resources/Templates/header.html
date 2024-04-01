@@ -41,7 +41,7 @@
 <div id="modal" class="hidden" th:fragment="modalFragment">
     <article class="backGround">
         <!--로그아웃 부분 -->
-        <a class="logout-link" target="_parent">로그아웃</a>
+        <span class="logout-link" onclick="location.href='/logout'">로그아웃</span>
         <div class="information1">
             <!-- 지정된 회원등급의 이미지 불러오기 -->
             <img class="modal_screen" th:src="@{/img/grade/{grade}.png(user.grade)}" alt="grade">
