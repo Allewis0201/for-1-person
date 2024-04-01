@@ -28,8 +28,8 @@
             <h1>계정 정보</h1>
         </div>
         <div class="information">
-            <p>아이디 <input type="text" name="id" th:value="${user.userId}" readonly></p>
-            <p>닉네임 <input type="text" name="nickname" th:value="${user.nickname}" readonly></p>
+            <p>아이디   <input type="text" name="id" th:value="${user.userId}" readonly></p>
+            <p>닉네임   <input type="text" name="nickname" th:value="${user.nickname}" readonly></p>
             <p>등급
                 <input type="text" name="author" readonly
                        th:if="${user.author == 1}" th:value="'쌀밥'" />
@@ -40,7 +40,7 @@
                 <input type="text" name="author" readonly
                        th:if="${user.author == 4}" th:value="'수저'" />
             </p>
-            <p>비밀번호 <input type="password" name="password" th:value="${user.password}"></p>
+            <p>비밀번호   <input type="password" name="password" placeholder="비밀번호를 변경할 수 있습니다."></p>
         </div>
         <div class="btn-changes">
             <button class="" type="submit">변경사항 저장</button>
