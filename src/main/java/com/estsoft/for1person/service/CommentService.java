@@ -30,45 +30,45 @@ public class CommentService {
         return commentReviewRepository.findAll();
     }
 
-    public CommentCommon getCommentCommon(long commentId) {
+    public CommentCommon getCommentCommon(Long commentId) {
         return commentCommonRepository.findById(commentId).orElseThrow();
     }
-    public CommentVip getCommentVip(long commentId) {
+    public CommentVip getCommentVip(Long commentId) {
         return commentVipRepository.findById(commentId).orElseThrow();
     }
-    public CommentReview getCommentReview(long commentId) {
+    public CommentReview getCommentReview(Long commentId) {
         return commentReviewRepository.findById(commentId).orElseThrow();
     }
 
     //dto 대체
-    public void createCommentCommon(long commentId) {
+    public void createCommentCommon(Long commentId) {
         CommentCommon comments = new CommentCommon();
         commentCommonRepository.save(comments);
     }
-    public void createCommentVip(long commentId) {
+    public void createCommentVip(Long commentId) {
         CommentVip comments = new CommentVip();
         commentVipRepository.save(comments);
     }
-    public void createCommentReview(long commentId) {
+    public void createCommentReview(Long commentId) {
         CommentReview comments = new CommentReview();
         commentReviewRepository.save(comments);
     }
 
-    public void updateCommentCommon(long userId, long commentId) {
+    public void updateCommentCommon(String userId, Long commentId) {
         CommentCommon comment = commentCommonRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
         //맞으면 dto 내용을 comment에 넣어서 변경
         // 후 저장
         commentCommonRepository.save(comment);
     }
-    public void updateCommentReview(long userId, long commentId) {
+    public void updateCommentReview(String userId, Long commentId) {
         CommentVip comment = commentVipRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
         //맞으면 dto 내용을 comment에 넣어서 변경
         // 후 저장
         commentVipRepository.save(comment);
     }
-    public void updateCommentVip(long userId, long commentId) {
+    public void updateCommentVip(String userId, Long commentId) {
         CommentReview comment = commentReviewRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
         //맞으면 dto 내용을 comment에 넣어서 변경
@@ -76,7 +76,7 @@ public class CommentService {
         commentReviewRepository.save(comment);
     }
 
-    public void deleteCommonComment(long userId, long commentId) {
+    public void deleteCommonComment(String userId, Long commentId) {
         //있는지 확인
         commentCommonRepository.findById(commentId);
         //유저 아이디랑 일치하는지 확인
@@ -85,7 +85,7 @@ public class CommentService {
         commentCommonRepository.deleteById(commentId);
     }
 
-    public void deleteReviewComment(long userId, long commentId) {
+    public void deleteReviewComment(String userId, Long commentId) {
         //있는지 확인
         commentVipRepository.findById(commentId);
         //유저 아이디랑 일치하는지 확인
@@ -94,7 +94,7 @@ public class CommentService {
         commentVipRepository.deleteById(commentId);
     }
 
-    public void deleteVipComment(long userId, long commentId) {
+    public void deleteVipComment(String userId, Long commentId) {
         //있는지 확인
         commentReviewRepository.findById(commentId);
         //유저 아이디랑 일치하는지 확인
