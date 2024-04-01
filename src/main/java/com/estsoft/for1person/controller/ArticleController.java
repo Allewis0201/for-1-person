@@ -83,16 +83,16 @@ public class ArticleController {
 
     // 아티클 삭제
     @DeleteMapping("/api/common/{user_id}/{article_id}")
-    public void deleteArticle(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
+    public void deleteArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
         articleService.deleteArticle(userId, articleId);
     }
     @DeleteMapping("/api/review/{user_id}/{article_id}")
-    public void deleteReview(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
+    public void deleteReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
         articleService.deleteReview(userId, articleId);
     }
 
     @DeleteMapping("/api/vip/{user_id}/{article_id}")
-    public void deleteVip(@PathVariable("user_id") long userId, @PathVariable("article_id") long articleId, @PathVariable String article_id) {
+    public void deleteVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
         articleService.deleteVip(userId, articleId);
     }
 
