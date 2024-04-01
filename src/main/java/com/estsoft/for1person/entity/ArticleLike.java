@@ -13,7 +13,7 @@ public class ArticleLike{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long articleLikeId;
+    Long articleLikeId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")

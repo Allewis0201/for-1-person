@@ -1,13 +1,16 @@
 package com.estsoft.for1person.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -31,9 +34,17 @@ public class CommentCommon {
     private String body;
 
     @Column(nullable = false)
-    private boolean anonymous;
+    private Boolean anonymous;
 
+    @CreationTimestamp
     @Column(nullable = false)
-    private Time createdAt;
+    private Timestamp createdAt;
 
+    @Builder
+    public CommentCommon(Article article, User user, String body, Boolean anonymous) {
+        this.article = article;
+        this.user = user;
+        this.body = body;
+        this.anonymous = anonymous;
+    }
 }
