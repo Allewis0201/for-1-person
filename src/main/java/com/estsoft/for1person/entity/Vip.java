@@ -23,7 +23,7 @@ public class Vip {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100000)
     private String content;
 
     @Column(nullable = false)
@@ -52,6 +52,13 @@ public class Vip {
         this.anonymous = anonymous;
         this.need = need;
         this.user = user;
+    }
+
+    public void update(String title, String content, Boolean anonymous)
+    {
+        this.title = title;
+        this.content = content;
+        this.anonymous = anonymous;
     }
 }
 

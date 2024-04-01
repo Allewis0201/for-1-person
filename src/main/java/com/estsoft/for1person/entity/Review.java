@@ -25,7 +25,7 @@ public class Review {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100000)
     private Long views;
 
     @Column(nullable = false)
@@ -54,6 +54,14 @@ public class Review {
         this.anonymous = anonymous;
         this.need = need;
         this.user = user;
+        this.score = score;
+    }
+
+    public void update(String title, String content, Boolean anonymous, Integer score)
+    {
+        this.title = title;
+        this.content = content;
+        this.anonymous = anonymous;
         this.score = score;
     }
 }

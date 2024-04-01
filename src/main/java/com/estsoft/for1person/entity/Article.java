@@ -52,6 +52,13 @@ public class Article {
         this.need = need;
         this.user = user;
     }
+
+    public void update(String title, String content, Boolean anonymous)
+    {
+        this.title = title;
+        this.content = content;
+        this.anonymous = anonymous;
+    }
 }
 
 
