@@ -36,7 +36,7 @@ public class Article {
     private Timestamp createdAt; // 생성 날짜
 
     @Column(nullable = false)
-    private int need; // 필요
+    private Integer need; // 필요
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_writer_id")
