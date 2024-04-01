@@ -58,9 +58,9 @@
         </div>
         <div class="page-link">
             <!--계정 관리 페이지로 이동-->
-            <span onclick="">계정관리</span>
+            <span onclick="location.href='/myInformation'">계정관리</span>
             <!--운영자 라는 회원등급만 표시-->
-            <a target="_parent">운영자 페이지</a>
+            <span th:if="${user.author == 4}" onclick="location.href='/adminPage'"> 운영자 페이지</span>
         </div>
         <div>
             <button id="btn_close_modal">닫기</button>
