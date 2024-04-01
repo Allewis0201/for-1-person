@@ -30,7 +30,18 @@
         <div class="information">
             <p>아이디 <input type="text" name="id" th:value="${user.userId}" readonly></p>
             <p>닉네임 <input type="text" name="nickname" th:value="${user.nickname}" readonly></p>
-            <p>등급   <input type="text" name="author" th:value = "${user.author}"></p>
+            <p>등급
+                <input type="text" name="author" readonly
+                       th:if="${user.author == 1}" th:value="'쌀밥'" />
+                <input type="text" name="author" readonly
+                       th:if="${user.author == 2}" th:value="'간장계란밥'" />
+                <input type="text" name="author" readonly
+                       th:if="${user.author == 3}" th:value="'오므라이스'" />
+                <input type="text" name="author" readonly
+                       th:if="${user.author == 4}" th:value="'수저'" />
+            </p>
+
+
             <p>비밀번호 <input type="password" name="password" th:value="${user.password}"></p>
         </div>
         <div class="btn-changes">
