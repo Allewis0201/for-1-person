@@ -1,9 +1,11 @@
 package com.estsoft.for1person.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -29,6 +31,7 @@ public class Article {
     @Column(nullable = false)
     private Boolean anonymous; // 익명 여부
 
+    @CreationTimestamp
     @Column(nullable = false)
     private Timestamp createdAt; // 생성 날짜
 
@@ -39,6 +42,16 @@ public class Article {
     @JoinColumn(name = "article_writer_id")
     private User user; // 작성자 정보 (FK)
 
+    @Builder
+    public Article(String title,String content, Long views,Boolean anonymous,Integer need,User user)
+    {
+        this.title = title;
+        this.content = content;
+        this.views = views;
+        this.anonymous = anonymous;
+        this.need = need;
+        this.user = user;
+    }
 }
 
 
