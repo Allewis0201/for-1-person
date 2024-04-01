@@ -41,15 +41,15 @@ public class CommentService {
     }
 
     //dto 대체
-    public void createCommentCommon(Long commentId) {
+    public void createCommentCommon(String commentId) {
         CommentCommon comments = new CommentCommon();
         commentCommonRepository.save(comments);
     }
-    public void createCommentVip(Long commentId) {
+    public void createCommentVip(String commentId) {
         CommentVip comments = new CommentVip();
         commentVipRepository.save(comments);
     }
-    public void createCommentReview(Long commentId) {
+    public void createCommentReview(String commentId) {
         CommentReview comments = new CommentReview();
         commentReviewRepository.save(comments);
     }
