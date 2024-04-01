@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
     <script th:src="@{/js/modal.js}"></script>
+    <script th:src="@{/js/myInformaiton.js}"></script>
     <title>내정보</title>
 </head>
 
@@ -22,7 +23,7 @@
     <!--계정 정보 시작-->
     <form th:action="@{/}" id="myInformation">
         <div class="title">
-            <img src="../static/Img/img_3.png" alt="">
+            <img th:src="@{/Img/img_3.png}" alt="">
             <h1>계정 정보</h1>
         </div>
         <div class="information">
@@ -31,13 +32,14 @@
             <p>등급   <input type="text" name="author" th:value = "${user.author}"></p>
             <p>비밀번호 <input type="password" name="password" th:value="${user.password}"></p>
         </div>
-
-        <div class="btn-changesSubmit">
+        <div class="btn-changes">
             <button class="" type="submit">변경사항 저장</button>
-            <button class="" type="submit">계정 탈퇴</button>
         </div>
-        <!--계정 정보 완료-->
     </form>
+    <form action="/delete-account" method="post" onsubmit="return confirmDelete();">
+        <button class="btn-submit" type="submit">회원 탈퇴</button>
+    </form>
+        <!--계정 정보 완료-->
 </main>
 </body>
 </html>

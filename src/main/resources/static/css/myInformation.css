@@ -106,11 +106,11 @@ main{
     border: 1px solid #BDBDBD;
     border-radius: 5px;
 }
-.btn-changesSubmit{
+.btn-changes, .btn-submit{
     display: flex;
     gap: 20px;
 }
-.btn-changesSubmit button{
+.btn-changes button, .btn-submit{
     background-color: #FF9B92;
     border:none;
     border-radius: 30px;
