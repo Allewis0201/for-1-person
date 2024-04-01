@@ -17,12 +17,12 @@ public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long articleId; // 게시글 아이디 (PK)
+    private Long articleId; // 게시글 아이디 (PK)
 
     @Column(nullable = false)
     private String title; // 제목
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100000)
     private String content; // 내용
 
     @Column(nullable = false)

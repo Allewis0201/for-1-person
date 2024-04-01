@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @AllArgsConstructor
-@RequestMapping("/api/article")
 public class ArticleController {
 
     private ArticleService articleService;
