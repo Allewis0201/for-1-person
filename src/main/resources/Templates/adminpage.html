@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,20 +25,22 @@
         <img th:src="@{/Img/img_19.png}" alt="">
         <h2 class="title1">전체회원/운영진</h2>
     </div>
-    <p class="totalUser">전체회원</p>
-    <!--구분선 & 검색란 시작-->
-    <div class="search1">
-        <form class="searching" action="">
-            <label>
-                <select class="choice" name="searchType">
-                    <option value="title">아이디</option>
-                    <option value="author">닉네임</option>
-                </select>
-            </label>
-            <!-- 검색부분-->
-            <label class="searchKey"><input name="searchKey" alt=""></label>
-            <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
-        </form>
+    <div class = "top">
+        <p class="totalUser">전체회원</p>
+        <!--구분선 & 검색란 시작-->
+        <div class="search1">
+            <form class="searching" action="">
+                <label>
+                    <select class="choice" name="searchType">
+                        <option value="title">아이디</option>
+                        <option value="author">닉네임</option>
+                    </select>
+                </label>
+                <!-- 검색부분-->
+                <label class="searchKey"><input name="searchKey" alt=""></label>
+                <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
+            </form>
+        </div>
     </div>
     <form th:action="@{/updateAuthor}" method="POST">
     <section class="dividing-line">

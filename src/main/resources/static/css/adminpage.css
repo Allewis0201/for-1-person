@@ -16,6 +16,12 @@
     width: 30px;
     height: 30px;
 }
+.top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 0;
+}
 .dividing-line{
     background: #FF9B92;
     justify-content: space-between;
@@ -24,7 +30,6 @@
     margin: 40px 0;
 }
 .totalUser{
-    margin: 40px 0 0;
     font-size: 18px;
 }
 .change-btn{
