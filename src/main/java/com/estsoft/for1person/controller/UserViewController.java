@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.Optional;
 
@@ -41,5 +42,13 @@ public class UserViewController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
         return "/myInformation";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        return "/adminpage";
     }
 }

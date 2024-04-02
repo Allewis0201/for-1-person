@@ -27,22 +27,24 @@
     <p class="totalUser">전체회원</p>
     <!--구분선 & 검색란 시작-->
     <section class="dividing-line">
+        <form th:action="@{/updateAuthor}" method="POST">
         <div class="change-btn">
             <label>
-                <input type="checkbox" alt="">
+                <input type="checkbox" name="userIdCollect" value="회원확인">
             </label>
             <P>선택한 회원</P>
             <label>
-                <select>
-                    <option>준회원</option>
-                    <option>정회원</option>
-                    <option>VIP</option>
-                    <option>운영자</option>
+                <select name="changeAuthor">
+                    <option th:value="1">준회원</option>
+                    <option th:value="2">정회원</option>
+                    <option th:value="3">VIP</option>
+                    <option th:value="4">운영자</option>
                 </select>
             </label>
             <P>(으)로</P>
             <button type="submit">변경</button>
         </div>
+        </form>
         <div class="search1">
             <label>
                 <select class="choice" name="searchType">

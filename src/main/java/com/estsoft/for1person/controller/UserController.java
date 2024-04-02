@@ -64,12 +64,18 @@ public class UserController {
         return response;
     }
     @PostMapping("/updateInfo")
-    public String updateInfo(@RequestParam("nickname") String nickname, @RequestParam("password") String password, Authentication authentication){
+    public String updateInfo( @RequestParam("password") String password, Authentication authentication){
         String userId = authentication.getName();
         String changePassword = encoder.encode(password);
-        userService.updateProfile(userId, nickname, changePassword);
-
+        userService.updateProfile(userId,changePassword);
         return "redirect:/myInformation";
+    }
+
+    @PostMapping("/updateAuthor")
+    public String updateAuthor(@RequestParam("changeAuthor") Integer changeAuthor, Authentication authentication){
+        String userId = authentication.getName();
+        userService.updateAuthor(userId, changeAuthor);
+        return "redirect:/admin";
     }
 
 }
