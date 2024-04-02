@@ -10,6 +10,7 @@
     <script th:src="@{/js/modal.js}"></script>
     <!-- admin-page 에서 사용할 추가 파일 -->
     <link rel="stylesheet" th:href="@{/css/adminpage.css}">
+    <script th:src="@{/js/admin.js}"></script>
 </head>
 <body>
 
@@ -43,7 +44,7 @@
     <section class="dividing-line">
         <div class="change-btn">
             <label>
-<!--                <input type="checkbox" name="userIdCollect" th:value="${user.userId}">-->
+                <input type="checkbox" name="userIdCollect" id="allCheck" th:value="${user.userId}">
             </label>
             <P>선택한 회원</P>
             <label>
