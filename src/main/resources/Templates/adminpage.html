@@ -77,7 +77,12 @@
             <td><label><input type="checkbox" th:value="${user.userId}"></label></td>
             <td th:text="${user.userId}">아이디</td>
             <td th:text="${user.nickname}">닉네임</td>
-            <td th:text="${user.author}">등급</td>
+            <td th:switch="${user.author}">
+                <span th:case="1">준회원</span>
+                <span th:case="2">정회원</span>
+                <span th:case="3">VIP</span>
+                <span th:case="4">운영자</span>
+            </td>
 <!--            <td>게시글의 수</td>-->
 <!--            <td>댓글의 수</td>-->
         </tr>
