@@ -1,6 +1,7 @@
 package com.estsoft.for1person.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,5 +23,11 @@ public class ArticleLike{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     User user;
+
+    @Builder
+    public ArticleLike(User user, Article article){
+        this.user = user;
+        this.article = article;
+    }
 }
 
