@@ -45,12 +45,17 @@ public class UserService {
         return userRepository.existsByNickname(nickname);
     }
 
-    public void updateProfile(String userId, String nickname, String changePassword){
+    public void updateProfile(String userId, String changePassword){
         Optional<User> userOptional = userRepository.findByUserId(userId);
-
         User user = userOptional.get();
-        user.setNickname(nickname);
         user.setPassword(changePassword);
+        userRepository.save(user);
+    }
+
+    public void updateAuthor(String userId, Integer changeAuthor){
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        User user = userOptional.get();
+        user.setAuthor(changeAuthor);
         userRepository.save(user);
     }
 }
