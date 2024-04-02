@@ -68,18 +68,18 @@
             <th class="th-title2">아이디</th>
             <th class="th-title3">닉네임</th>
             <th class="th-title4">회원등급</th>
-            <th class="th-title5">게시글수</th>
-            <th class="th-title6">댓글수</th>
+<!--            <th class="th-title5">게시글수</th>-->
+<!--            <th class="th-title6">댓글수</th>-->
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><label><input type="checkbox"></label></td>
-            <td>qwer123</td>
-            <td><a>용준팀장님 짱</a></td>
-            <td>운영진</td>
-            <td>게시글수</td>
-            <td>댓글수</td>
+        <tr th:each="user : ${userList}">
+            <td><label><input type="checkbox" th:value="${user.userId}"></label></td>
+            <td th:text="${user.userId}">아이디</td>
+            <td th:text="${user.nickname}">닉네임</td>
+            <td th:text="${user.author}">등급</td>
+<!--            <td>게시글의 수</td>-->
+<!--            <td>댓글의 수</td>-->
         </tr>
         </tbody>
     </table>

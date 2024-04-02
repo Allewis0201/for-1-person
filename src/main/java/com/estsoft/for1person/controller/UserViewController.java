@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -48,7 +49,9 @@ public class UserViewController {
     public String admin(Model model, Authentication authentication){
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
+        List<User> userList = userRepository.findAll();
         model.addAttribute("user", user.get());
-        return "/adminpage";
+        model.addAttribute("userList", userList);
+        return "adminpage";
     }
 }

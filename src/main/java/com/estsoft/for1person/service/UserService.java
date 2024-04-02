@@ -36,7 +36,6 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    // UserService.java 내에 추가
     public boolean existsByUserId(String userId) {
         return userRepository.existsByUserId(userId);
     }
