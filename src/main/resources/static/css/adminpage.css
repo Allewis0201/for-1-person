@@ -22,6 +22,9 @@
     align-items: center;
     margin: 40px 0 0;
 }
+.countHighlight{
+    color: #FF695B;
+}
 .dividing-line{
     background: #FF9B92;
     justify-content: space-between;

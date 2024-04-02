@@ -57,4 +57,8 @@ public class UserService {
         user.setAuthor(changeAuthor);
         userRepository.save(user);
     }
+
+    public long countAllUsers(){
+        return userRepository.countAllUsers();
+    }
 }

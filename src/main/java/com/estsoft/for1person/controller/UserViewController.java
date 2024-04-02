@@ -51,6 +51,7 @@ public class UserViewController {
         Optional<User> user = userRepository.findByUserId(username);
         List<User> userList = userRepository.findAll();
         model.addAttribute("user", user.get());
+        model.addAttribute("total", userRepository.countAllUsers());
         model.addAttribute("userList", userList);
         return "adminpage";
     }
