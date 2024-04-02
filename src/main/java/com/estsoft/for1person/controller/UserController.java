@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -72,10 +73,10 @@ public class UserController {
     }
 
     @PostMapping("/updateAuthor")
-    public String updateAuthor(@RequestParam("changeAuthor") Integer changeAuthor, Authentication authentication){
-        String userId = authentication.getName();
-        userService.updateAuthor(userId, changeAuthor);
+    public String updateUserAuthor(@RequestParam("userIdCollect") List<String> userIds, @RequestParam("changeAuthor") Integer changeAuthor, Authentication authentication) {
+        for (String userId : userIds) {
+            userService.updateAuthor(userId, changeAuthor);
+        }
         return "redirect:/admin";
     }
-
 }

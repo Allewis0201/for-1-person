@@ -26,11 +26,24 @@
     </div>
     <p class="totalUser">전체회원</p>
     <!--구분선 & 검색란 시작-->
+    <div class="search1">
+        <form class="searching" action="">
+            <label>
+                <select class="choice" name="searchType">
+                    <option value="title">아이디</option>
+                    <option value="author">닉네임</option>
+                </select>
+            </label>
+            <!-- 검색부분-->
+            <label class="searchKey"><input name="searchKey" alt=""></label>
+            <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
+        </form>
+    </div>
+    <form th:action="@{/updateAuthor}" method="POST">
     <section class="dividing-line">
-        <form th:action="@{/updateAuthor}" method="POST">
         <div class="change-btn">
             <label>
-                <input type="checkbox" name="userIdCollect" value="회원확인">
+<!--                <input type="checkbox" name="userIdCollect" th:value="${user.userId}">-->
             </label>
             <P>선택한 회원</P>
             <label>
@@ -43,20 +56,6 @@
             </label>
             <P>(으)로</P>
             <button type="submit">변경</button>
-        </div>
-        </form>
-        <div class="search1">
-            <label>
-                <select class="choice" name="searchType">
-                    <option value="title">아이디</option>
-                    <option value="author">닉네임</option>
-                </select>
-            </label>
-            <!-- 검색부분-->
-            <form class="searching" action="">
-                <label class="searchKey"><input name="searchKey" alt=""></label>
-                <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
-            </form>
         </div>
     </section>
     <!--구분선 & 검색란 완료-->
@@ -74,7 +73,7 @@
         </thead>
         <tbody>
         <tr th:each="user : ${userList}">
-            <td><label><input type="checkbox" th:value="${user.userId}"></label></td>
+            <td><label><input type="checkbox" name = "userIdCollect" th:value="${user.userId}"></label></td>
             <td th:text="${user.userId}">아이디</td>
             <td th:text="${user.nickname}">닉네임</td>
             <td th:switch="${user.author}">
@@ -88,6 +87,7 @@
         </tr>
         </tbody>
     </table>
+    </form>
     <!--게시글 리스트 목록 부분 -->
     <div class="bottom">
         <!--페이징 부분-->
