@@ -32,8 +32,8 @@
             <form class="searching" action="">
                 <label>
                     <select class="choice" name="searchType">
-                        <option value="title">아이디</option>
-                        <option value="author">닉네임</option>
+                        <option value="searchId">아이디</option>
+                        <option value="searchNickname">닉네임</option>
                     </select>
                 </label>
                 <!-- 검색부분-->
@@ -42,6 +42,7 @@
             </form>
         </div>
     </div>
+    <p class ="message" th:style="${message} != null ? 'visibility:visible;' : 'visibility:hidden;'" th:text="${message} ?: '경고 메세지'">경고 메세지</p>
     <form th:action="@{/updateAuthor}" method="POST">
     <section class="dividing-line">
         <div class="change-btn">
@@ -91,31 +92,5 @@
         </tbody>
     </table>
     </form>
-    <!--게시글 리스트 목록 부분 -->
-    <div class="bottom">
-        <!--페이징 부분-->
-        <nav>
-            <ul>
-                <li>
-                    <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                </li>
-                <li>
-                    <a><img th:src="@{/Img/img_11.png}" alt=""></a>
-                </li>
-                <li><a>1</a></li>
-                <li><a>2</a></li>
-                <li><a>3</a></li>
-                <li><a>4</a></li>
-                <li><a>5</a></li>
-                <li>
-                    <a><img th:src="@{/Img/img_12.png}" alt=""></a>
-                </li>
-                <li>
-                    <a><img th:src="@{/Img/img_13.png}" alt=""></a>
-                </li>
-            </ul>
-        </nav>
-        <!--페이징 부분-->
-    </div>
 </div>
 </body>

@@ -51,6 +51,10 @@
     background: white;
     padding: 5px;
     border-radius: 20px;
+    border: 1px solid #ccc;
+}
+.message{
+    color: #FF695B;
 }
 .title,
 .searching,
