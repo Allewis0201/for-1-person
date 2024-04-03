@@ -95,5 +95,20 @@ public class CommentController {
     public void deleteVipComment(@PathVariable("user_id") String userId, @PathVariable("comment_id") Long commentId, @PathVariable String comment_id) {
         commentService.deleteVipComment(userId, commentId);
     }
+    //==================================================================================================================
+    //댓글 좋아요 기능, 이미 좋아요 되어 있으면 좋아요 취소
+    @PostMapping("/common/like/{user_id}/{article_id}")
+    public void recommendArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendArticle(user_id, article_id);
+    }
+    @PostMapping("/review/like/{user_id}/{article_id}")
+    public void recommendReview(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendReview(user_id, article_id);
+    }
+    @PostMapping("/vip/like/{user_id}/{article_id}")
+    public void recommendVip(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendVip(user_id, article_id);
+    }
+
 
 }
