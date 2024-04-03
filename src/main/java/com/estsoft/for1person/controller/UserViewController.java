@@ -30,12 +30,15 @@ public class UserViewController {
 
     @GetMapping("/membership")
     public String membership(){
-        return "/membership";
+        return "membership";
     }
 
-    @GetMapping("/main")
-    public String index(){
-        return "/main";
+    @GetMapping("/mainScreen")
+    public String mainScreen(Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        return "mainScreen";
     }
 
     @GetMapping("/myInformation")
@@ -43,7 +46,7 @@ public class UserViewController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        return "/myInformation";
+        return "myInformation";
     }
 
     @GetMapping("/admin")
