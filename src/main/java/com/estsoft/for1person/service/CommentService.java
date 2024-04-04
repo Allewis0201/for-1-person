@@ -36,6 +36,19 @@ public class CommentService {
         return commentReviewRepository.findAll();
     }
 
+    public List<CommentCommon> getArticleCommonComment(Long articleId) {
+        return commentCommonRepository.findAllByArticleId(articleId);
+    }
+
+    public List<CommentVip> getArticleVipComment(Long articleId) {
+        return vipRepository.findAllByArticleId(articleId);
+    }
+
+    public List<CommentReview> getArticleReviewComment(Long articleId) {
+        return reviewRepository.findAllByArticleId(articleId);
+    }
+
+
     public CommentCommon getCommentCommon(Long commentId) {
         return commentCommonRepository.findById(commentId).orElseThrow();
     }
@@ -218,5 +231,6 @@ public class CommentService {
         }
 
     }
+
 
 }
