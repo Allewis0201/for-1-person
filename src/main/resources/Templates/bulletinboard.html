@@ -20,7 +20,7 @@
 <div class="container">
     <div class="title">
         <img src="../static/Img/img_8.png" alt="">
-        <h2 class="title1" th:text="#{}">일반게시판</h2>
+        <h2 class="title1" >일반게시판</h2>
 
     </div>
     <!--구분선 & 검색란 시작-->
@@ -34,7 +34,7 @@
         </label>
         <!-- 검색부분-->
         <form class="searching" action="">
-        <label class="searchKey"><input th:text="" name="searchKey" alt=""></label>
+        <label class="searchKey"><input  name="searchKey" alt=""></label>
         <button type="submit"><img src="../static/Img/img_9.png" alt=""></button>
         </form>
         </div>
@@ -44,23 +44,24 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="th-title1" th:text="#{}">번호</th>
-                <th class="th-title2" th:text="#{}">제목</th>
-                <th class="th-title3" th:text="#{}">작성자</th>
-                <th class="th-title4" th:text="#{}">날짜</th>
-                <th class="th-title5" th:text="#{}">조회수</th>
-                <th class="th-title6" th:text="#{}">추천</th>
+                <th class="th-title1">번호</th>
+                <th class="th-title2" >제목</th>
+                <th class="th-title3" >작성자</th>
+                <th class="th-title4" >날짜</th>
+                <th class="th-title5" >조회수</th>
+                <th class="th-title6" >추천</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="board : ${list}">
-                <td th:text="${list.boardIdx}">번호</td>
-                <td th:text="${list.title}"><a th:href="">제목</a></td>
-                <td th:text="">작성자</td>
-                <td class="date" th:text="${#temporals.format(list.createdDatetime,
+                <td th:text="${board.getArticleId()}">번호</td>
+                <td th:text="${board.getTitle()}"><a th:href="">제목</a></td>
+                <td th:text="${board.getUser().getNickname()}">작성자</td>
+                <td class="date" th:text="${#temporals.format(board.getCreatedAt(),
                         'yyyy-MM-dd HH:mm::ss')}">yyyy-MM-dd HH:mm::ss</td>
-                <td th:text="">조회수</td>
-                <td th:text="">추천</td>
+                <td th:text="${board.getViews()}">조회수</td>
+                <td th:text="${board.getViews()}">추천</td>
+                <td th:text="${board.getNeed()}">권한</td>
             </tr>
         </tbody>
     </table>
@@ -70,29 +71,29 @@
         <nav>
             <ul>
                 <li>
-                    <a th:href=""><img src="../static/Img/img_10.png" alt=""></a>
+                    <a ><img src="../static/Img/img_10.png" alt=""></a>
                 </li>
                 <li>
-                    <a th:href=""><img src="../static/Img/img_11.png" alt=""></a>
+                    <a><img src="../static/Img/img_11.png" alt=""></a>
                 </li>
-                <li><a th:href="">1</a></li>
-                <li><a th:href="">2</a></li>
-                <li><a th:href="">3</a></li>
-                <li><a th:href="">4</a></li>
-                <li><a th:href="" >5</a></li>
+                <li><a >1</a></li>
+                <li><a >2</a></li>
+                <li><a >3</a></li>
+                <li><a >4</a></li>
+                <li><a >5</a></li>
                 <li>
-                    <a th:href=""><img src="../static/Img/img_12.png" alt=""></a>
+                    <a ><img src="../static/Img/img_12.png" alt=""></a>
                 </li>
                 <li>
-                    <a th:href=""><img src="../static/Img/img_13.png" alt=""></a>
+                    <a><img src="../static/Img/img_13.png" alt=""></a>
                 </li>
             </ul>
         </nav>
     <!--페이징 부분-->
+    </div>
     <!--글 작성 버튼 부분-->
-        <div class="btn-right">
-            <button class="btn" th:href="" th:text="#{}">글작성</button>
-        </div>
+    <div class="btn-right">
+        <a class="btn" th:href="@{/write}">글작성</a>
     </div>
 </div>
 </body>
