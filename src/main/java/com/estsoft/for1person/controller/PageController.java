@@ -48,8 +48,8 @@ public class PageController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/newArticle")
-    public String newArticle(@RequestParam(required = false) Long articleId, Model model, Authentication authentication){
+    @GetMapping("/newArticleBulletin")
+    public String newArticleBulletin(@RequestParam(required = false) Long articleId, Model model, Authentication authentication){
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
@@ -58,20 +58,46 @@ public class PageController {
             model.addAttribute("article", new ArticleViewResponse());
         }
         else{
-            Article article = articleService.findById(articleId);
+            Article article = articleService.findArticleId(articleId);
             model.addAttribute("article", new ArticleViewResponse(article));
         }
-        return "write";
+        return "writeBulletin";
     }
 
-    @GetMapping("/articles/{articleId}")
-    public String showArticle(@PathVariable Long articleId, Model model, Authentication authentication){
+    @GetMapping("/newArticleReview")
+    public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        if(articleId == null){
+            model.addAttribute("article", new ArticleViewResponse());
+        }
+        else{
+            Review article = articleService.findReviewId(articleId);
+            model.addAttribute("article", new ReviewViewResponse(article));
+        }
+        return "writeReview";
+    }
+
+    @GetMapping("/common/{articleId}")
+    public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication){
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        Article article  = articleService.findById(articleId);
+        Article article  = articleService.findArticleId(articleId);
         model.addAttribute("article", new ArticleViewResponse(article));
-        return "detailpage";
+        return "detailCommon";
+    }
+
+    @GetMapping("/review/{reviewId}")
+    public String showArticleReview(@PathVariable Long reviewId, Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        Review article  = articleService.findReviewId(reviewId);
+        model.addAttribute("article", new ReviewViewResponse(article));
+        return "detailReview";
     }
 
 

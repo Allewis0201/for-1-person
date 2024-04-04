@@ -70,14 +70,14 @@ public class Review {
     public ReviewViewResponse toViewResponse() // 생성자를 사용해 객체 생성
     {
         return ReviewViewResponse.builder()
-                .articleId(reviewId)
+                .reviewId(reviewId)
                 .title(title)
                 .content(content)
                 .views(views)
                 .anonymous(anonymous)
-                .createdAt(createdAt)
+                .createdAt(createdAt.toLocalDateTime())
                 .need(need)
-                .createdAt(createdAt)
+                .createdAt(createdAt.toLocalDateTime())
                 .score(score)
                 .build();
     }

@@ -32,24 +32,6 @@
     <form th:action="@{/api/common/{userId}(userId=${userId})}" method="post">
         <section class="select-container">
                 <div class="choice1">
-                    <div class="choice2">
-                        <label>
-                            <select>
-                                <option>일반게시판</option>
-                                <option>리뷰게시판</option>
-                            </select>
-                        </label>
-                        <div class="star-check">
-                            <p>별점 :</p>
-                            <div class="star">
-                                <i class="far fa-star" onclick="rateStar(this)" data-rate="1"></i>
-                                <i class="far fa-star" onclick="rateStar(this)" data-rate="2"></i>
-                                <i class="far fa-star" onclick="rateStar(this)" data-rate="3"></i>
-                                <i class="far fa-star" onclick="rateStar(this)" data-rate="4"></i>
-                                <i class="far fa-star" onclick="rateStar(this)" data-rate="5"></i>
-                            </div>
-                        </div>
-                    </div>
                     <label class="write-title">
                         <input  name="title" alt="" placeholder="제목을 입력해주세요">
                     </label>
