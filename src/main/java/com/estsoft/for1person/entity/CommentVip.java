@@ -45,4 +45,10 @@ public class CommentVip {
         this.body = body;
         this.anonymous = anonymous;
     }
+
+    public void update(String body, Boolean anonymous)
+    {
+        this.body = body;
+        this.anonymous = anonymous;
+    }
 }

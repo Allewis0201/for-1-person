@@ -37,6 +37,9 @@ public class EditorController {
         return "Data received and stored.";
     }
 
+    //==================================================================================================================
+    // 아티클 생성(글 쓰기)
+    // 아티클 내용을 받을 DTO 필요
     @PostMapping("/api/common/test")
     public String createArticleTest(@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
         String userId = authentication.getName();
@@ -85,7 +88,9 @@ public class EditorController {
         return "Data received and stored.";
     }
 
-
+    //==================================================================================================================
+    // 아티클 수정
+    // 수정 내용을 담을 DTO 필요
     @PutMapping("/api/common/{article_id}")
     public void updateArticle(@PathVariable("article_id") Long articleId,@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
         String userId = authentication.getName();

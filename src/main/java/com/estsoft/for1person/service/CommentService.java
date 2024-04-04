@@ -1,5 +1,7 @@
 package com.estsoft.for1person.service;
 
+
+import com.estsoft.for1person.dto.AddCommentRequest;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
@@ -20,6 +22,10 @@ public class CommentService {
     private CommentCommonRepository commentCommonRepository;
     private CommentVipRepository commentVipRepository;
     private CommentReviewRepository commentReviewRepository;
+    private UserRepository userRepository;
+    private ArticleRepository articleRepository;
+    private ReviewRepository reviewRepository;
+    private VipRepository vipRepository;
 
     public List<CommentCommon> getAllCommentCommon() {
         return commentCommonRepository.findAll();
@@ -37,71 +43,110 @@ public class CommentService {
     public CommentVip getCommentVip(Long commentId) {
         return commentVipRepository.findById(commentId).orElseThrow();
     }
+
     public CommentReview getCommentReview(Long commentId) {
         return commentReviewRepository.findById(commentId).orElseThrow();
     }
 
     //dto 대체
-    public void createCommentCommon(String commentId) {
-        CommentCommon comments = new CommentCommon();
-        commentCommonRepository.save(comments);
+    public void createCommentCommon(String userId, Long articleId, AddCommentRequest request) {
+        User user = userRepository.findByUserId(userId).get();
+        Article article = articleRepository.findById(articleId).get();
+
+        CommentCommon commentCommon = request.toCommonEntity(user,article);
+        commentCommonRepository.save(commentCommon);
     }
-    public void createCommentVip(String commentId) {
-        CommentVip comments = new CommentVip();
-        commentVipRepository.save(comments);
+    public void createCommentVip(String userId, Long articleId, AddCommentRequest request) {
+
+
+        User user = userRepository.findByUserId(userId).get();
+        Vip vip = vipRepository.findById(articleId).get();
+
+        CommentVip commentVip = request.toVipEntity(user,vip);
+        commentVipRepository.save(commentVip);
+
     }
-    public void createCommentReview(String commentId) {
-        CommentReview comments = new CommentReview();
-        commentReviewRepository.save(comments);
+    public void createCommentReview(String userId, Long articleId, AddCommentRequest request) {
+
+
+        User user = userRepository.findByUserId(userId).get();
+        Review review = reviewRepository.findById(articleId).get();
+
+        CommentReview commentReview = request.toReviewEntity(user,review);
+        commentReviewRepository.save(commentReview);
+
     }
 
-    public void updateCommentCommon(String userId, Long commentId) {
-        CommentCommon comment = commentCommonRepository.findById(commentId).orElseThrow(NotFoundException::new);
+    @Transactional
+    public void updateCommentCommon(String userId, Long articleId, Long commentId, AddCommentRequest request) {
+        CommentCommon commentCommon = commentCommonRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
-        //맞으면 dto 내용을 comment에 넣어서 변경
+        if(commentCommon.getUser().getUserId().equals(userId))
+        {
+            //맞으면 dto 내용을 comment에 넣어서 변경
+            commentCommon.update(request.getBody(),request.getAnonymous());
+
+        }
+
         // 후 저장
-        commentCommonRepository.save(comment);
     }
-    public void updateCommentReview(String userId, Long commentId) {
-        CommentVip comment = commentVipRepository.findById(commentId).orElseThrow(NotFoundException::new);
+    @Transactional
+    public void updateCommentReview(String userId, Long articleId, Long commentId, AddCommentRequest request) {
+        CommentVip commentVip = commentVipRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
-        //맞으면 dto 내용을 comment에 넣어서 변경
+        if(commentVip.getUser().getUserId().equals(userId))
+        {
+            //맞으면 dto 내용을 comment에 넣어서 변경
+            commentVip.update(request.getBody(),request.getAnonymous());
+
+        }
         // 후 저장
-        commentVipRepository.save(comment);
+
     }
-    public void updateCommentVip(String userId, Long commentId) {
-        CommentReview comment = commentReviewRepository.findById(commentId).orElseThrow(NotFoundException::new);
+    @Transactional
+    public void updateCommentVip(String userId, Long articleId, Long commentId, AddCommentRequest request) {
+        CommentReview commentReview = commentReviewRepository.findById(commentId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
-        //맞으면 dto 내용을 comment에 넣어서 변경
+        if(commentReview.getUser().getUserId().equals(userId))
+        {
+            //맞으면 dto 내용을 comment에 넣어서 변경
+            commentReview.update(request.getBody(),request.getAnonymous());
+
+        }
         // 후 저장
-        commentReviewRepository.save(comment);
     }
 
     public void deleteCommonComment(String userId, Long commentId) {
         //있는지 확인
-        commentCommonRepository.findById(commentId);
+        CommentCommon commentCommon = commentCommonRepository.findById(commentId).get();
         //유저 아이디랑 일치하는지 확인
-        CommentCommon comments = new CommentCommon();
+        if(commentCommon.getUser().getUserId().equals(userId))
+        {
+            commentCommonRepository.deleteById(commentId);
+        }
         //있으면 삭제 없으면 에러 반환
-        commentCommonRepository.deleteById(commentId);
     }
 
     public void deleteReviewComment(String userId, Long commentId) {
         //있는지 확인
-        commentVipRepository.findById(commentId);
+        CommentReview commentReview = commentReviewRepository.findById(commentId).get();
         //유저 아이디랑 일치하는지 확인
-        CommentVip comments = new CommentVip();
+        if(commentReview.getUser().getUserId().equals(userId))
+        {
+            commentReviewRepository.deleteById(commentId);
+        }
         //있으면 삭제 없으면 에러 반환
-        commentVipRepository.deleteById(commentId);
     }
 
     public void deleteVipComment(String userId, Long commentId) {
         //있는지 확인
-        commentReviewRepository.findById(commentId);
+        CommentVip commentVip = commentVipRepository.findById(commentId).get();
         //유저 아이디랑 일치하는지 확인
-        CommentReview comments = new CommentReview();
+        if(commentVip.getUser().getUserId().equals(userId))
+        {
+            commentVipRepository.deleteById(commentId);
+        }
         //있으면 삭제 없으면 에러 반환
-        commentReviewRepository.deleteById(commentId);
     }
 
     @Transactional
