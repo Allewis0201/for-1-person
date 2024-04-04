@@ -55,11 +55,11 @@
         </thead>
         <tbody>
         <tr th:each="review : ${list}">
-            <td th:text="${review.articleId}">번호</td>
-            <td th:href="@{'/review-board/' + ${review.articleId}}" th:text="${review.title}"><a>제목</a></td>
+            <td th:text="${review.reviewId}">번호</td>
+            <td th:href="@{'/review-board/' + ${review.reviewId}}" th:text="${review.title}"><a>제목</a></td>
             <td th:text="${review.score}"></td>
             <td th:text="${review.user.nickname}">작성자</td>
-            <td class="date" th:text="${#temporals.format(java.sql.Timestamp.valueOf(review.createdAt), 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td class="date" th:text="${review.createdAt != null ? review.createdAt : ''}"></td>
             <td th:text="${review.views}"></td>
             <td>추천</td>
         </tr>
