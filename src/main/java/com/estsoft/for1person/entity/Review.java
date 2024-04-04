@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -35,7 +36,7 @@ public class Review {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private Integer need;
@@ -75,9 +76,9 @@ public class Review {
                 .content(content)
                 .views(views)
                 .anonymous(anonymous)
-                .createdAt(createdAt.toLocalDateTime())
+                .createdAt(createdAt)
                 .need(need)
-                .createdAt(createdAt.toLocalDateTime())
+                .user(user)
                 .score(score)
                 .build();
     }
