@@ -1,5 +1,7 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommonViewResponse;
+import com.estsoft.for1person.dto.ReviewViewResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -63,5 +65,20 @@ public class Review {
         this.content = content;
         this.anonymous = anonymous;
         this.score = score;
+    }
+
+    public ReviewViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return ReviewViewResponse.builder()
+                .articleId(reviewId)
+                .title(title)
+                .content(content)
+                .views(views)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .need(need)
+                .createdAt(createdAt)
+                .score(score)
+                .build();
     }
 }
