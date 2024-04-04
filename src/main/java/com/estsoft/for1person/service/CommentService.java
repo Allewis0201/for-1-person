@@ -22,7 +22,6 @@ public class CommentService {
     private CommentCommonRepository commentCommonRepository;
     private CommentVipRepository commentVipRepository;
     private CommentReviewRepository commentReviewRepository;
-    private UserRepository userRepository;
     private ArticleRepository articleRepository;
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
