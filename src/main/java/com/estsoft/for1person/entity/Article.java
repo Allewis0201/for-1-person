@@ -1,5 +1,6 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommonViewResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,6 +59,20 @@ public class Article {
         this.title = title;
         this.content = content;
         this.anonymous = anonymous;
+    }
+
+    public CommonViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return CommonViewResponse.builder()
+                .articleId(articleId)
+                .title(title)
+                .content(content)
+                .views(views)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .need(need)
+                .createdAt(createdAt)
+                .build();
     }
 }
 
