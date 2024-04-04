@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>review-board</title>
-    <link rel="stylesheet" href="../static/css/review-board.css">
+    <link rel="stylesheet" th:href="@{/css/review-board.css}">
     <!-- header 에서 사용된 파일 -->
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
@@ -99,7 +99,7 @@
     </div>
     <!--글 작성 버튼 시작-->
     <div class="btn-right">
-        <a class="btn" th:href="@{/write}">글작성</a>
+        <a class="btn" th:href="@{/newArticleReview}">글작성</a>
     </div>
     <!--글 작성 버튼 완료-->
 </div>

@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
     <script th:src="@{/js/modal.js}"></script>
-    <link rel="stylesheet" href="../static/css/bulletinboard.css">
+    <link rel="stylesheet" th:href="@{/css/bulletinboard.css}">
 </head>
 
 <body>
@@ -93,7 +93,7 @@
     </div>
     <!--글 작성 버튼 부분-->
     <div class="btn-right">
-        <a class="btn" th:href="@{/write}">글작성</a>
+        <a class="btn" th:href="@{/newArticleBulletin}">글작성</a>
     </div>
 </div>
 </body>
