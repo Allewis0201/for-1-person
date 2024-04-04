@@ -205,6 +205,9 @@ public class ArticleService {
             VipLike tmp = vipLikeRepository.findByVipAndUser(vip, user).get();
             vipLikeRepository.delete(tmp);
         }
-
+    }
+    public Article findById(Long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(() ->
+                new RuntimeException("Article not found with id: " + articleId));
     }
 }

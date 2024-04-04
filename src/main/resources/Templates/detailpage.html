@@ -28,11 +28,11 @@
             <tbody>
             <tr class="table1">
                 <th>제목</th>
-                <td colspan="13">데이터</td>
+                <td colspan="13" th:text="${article.title}">타이틀</td>
             </tr>
             <tr class="table2">
                 <th class="th2">닉네임</th>
-                <td colspan="4" class="data2">데이터</td>
+                <td colspan="4" class="data2" th:text="${user.nickname}">닉네임</td>
 
                 <th class="th3">추천</th>
                 <td class="data3" >데이터</td>
@@ -49,7 +49,7 @@
             </tbody>
         </table>
         <div class="editor">
-            <!--textarea 들어갈 곳-->
+            <p th:utext="${article.content}" value="기본값"></p>
         </div>
         <form class="btn">
              <button class="btn1">추천</button>
