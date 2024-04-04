@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class CommonViewResponse {
     private String content; // 내용
     private Long views; // 조회수
     private Boolean anonymous; // 익명 여부
-    private Timestamp createdAt; // 생성 날짜
+    private LocalDateTime createdAt; // 생성 날짜
     private Integer need; // 필요
     private User user; // 작성자 정보 (FK)
 }
