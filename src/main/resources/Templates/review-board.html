@@ -35,8 +35,8 @@
             </label>
             <!-- 검색부분-->
             <form class="searching" action="">
-                <label class="searchKey"><input th:text="" name="searchKey" alt=""></label>
-                <button type="submit"><img src="../static/Img/img_9.png" alt=""></button>
+                <label class="searchKey"><input name="searchKey" alt=""></label>
+                <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
             </form>
         </div>
     </section>
@@ -44,60 +44,64 @@
     <table class="table">
         <thead>
         <tr>
-            <th class="th-title1" th:text="#{}">번호</th>
-            <th class="th-title2" th:text="#{}">제목</th>
-            <th class="th-title3" th:text="#{}">별점</th>
-            <th class="th-title4" th:text="#{}">작성자</th>
-            <th class="th-title5" th:text="#{}">날짜</th>
-            <th class="th-title6" th:text="#{}">조회수</th>
-            <th class="th-title7" th:text="#{}">추천</th>
+            <th class="th-title1">번호</th>
+            <th class="th-title2">제목</th>
+            <th class="th-title3">별점</th>
+            <th class="th-title4">작성자</th>
+            <th class="th-title5">날짜</th>
+            <th class="th-title6">조회수</th>
+            <th class="th-title7">추천</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="board : ${list}">
-            <td th:text="${list.boardIdx}">번호</td>
-            <td th:text="${list.title}"><a th:href="">제목</a></td>
-            <td th:text="">별점</td>
-            <td th:text="">작성자</td>
-            <td class="date" th:text="${#temporals.format(list.createdDatetime,
-                        'yyyy-MM-dd HH:mm::ss')}">yyyy-MM-dd HH:mm::ss</td>
-            <td th:text="">조회수</td>
-            <td th:text="">추천</td>
+        <tr th:each="review : ${page.content}">
+            <td th:text="${review.reviewId}">번호</td>
+            <td th:href="@{'/review-board/' + ${review.reviewId}}" th:text="${review.title}"><a>제목</a></td>
+            <td th:text="${review.score}"></td>
+            <td th:text="${review.user.nickname}">작성자</td>
+            <td class="date" th:text="${#temporals.format(java.sql.Timestamp.valueOf(review.createdAt.toLocalDateTime()), 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${review.views}"></td>
+            <td>추천</td>
         </tr>
         </tbody>
     </table>
     <!--게시판 리스트 부분 종료-->
     <!--페이징 부분 시작-->
-    <div class="bottom">
+    <div class="bottom" th:if="${page.totalPages > 0}">
         <nav>
             <ul>
                 <li>
-                    <a th:href=""><img src="../static/Img/img_10.png" alt=""></a>
+                    <a th:href="@{${'/'}}">
+                        <img th:src="@{/Img/img_10.png}" alt="">
+                    </a>
                 </li>
-                <li>
-                    <a th:href=""><img src="../static/Img/img_11.png" alt=""></a>
+                <li th:if="${page.number > 0}">
+                    <a th:href="@{${'/review-board?page=' + (page.number - 1)}}">
+                        <img th:src="@{/Img/img_11.png}" alt="">
+                    </a>
                 </li>
-                <li><a th:href="">1</a></li>
-                <li><a th:href="">2</a></li>
-                <li><a th:href="">3</a></li>
-                <li><a th:href="">4</a></li>
-                <li><a th:href="" >5</a></li>
-                <li>
-                    <a th:href=""><img src="../static/Img/img_12.png" alt=""></a>
+                <li th:each="pageNumber : ${#numbers.sequence(page.number / 5 * 5 + 1, ((page.number / 5) + 1) * 5)}">
+                    <a th:href="@{${'/review-board?page=' + pageNumber}}" th:text="${pageNumber}" th:if="${pageNumber <= page.totalPages}"></a>
                 </li>
-                <li>
-                    <a th:href=""><img src="../static/Img/img_13.png" alt=""></a>
+                <li th:if="${page.hasNext}">
+                    <a th:href="@{${'/review-board?page=' + (page.number + 1)}}">
+                        <img th:src="@{/Img/img_12.png}" alt="">
+                    </a>
+                </li>
+                <li th:if="${page.totalPages > 0}">
+                    <a th:href="@{${'/review-board?page=' + (page.totalPages - 1)}}">
+                        <img th:src="@{/Img/img_13.png}" alt="">
+                    </a>
                 </li>
             </ul>
         </nav>
         <!--페이징 부분 완료-->
-
-        <!--글 작성 버튼 시작-->
-        <div class="btn-right">
-            <button class="btn" th:href="" th:text="#{}">글작성</button>
-        </div>
-        <!--글 작성 버튼 완료-->
     </div>
+    <!--글 작성 버튼 시작-->
+    <div class="btn-right">
+        <a class="btn" th:href="@{/write}">글작성</a>
+    </div>
+    <!--글 작성 버튼 완료-->
 </div>
 </body>
 </html>
