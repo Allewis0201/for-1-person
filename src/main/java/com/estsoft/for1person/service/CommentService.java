@@ -1,5 +1,6 @@
 package com.estsoft.for1person.service;
 
+
 import com.estsoft.for1person.dto.AddCommentRequest;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
@@ -14,6 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 public class CommentService {
 
+    private UserRepository userRepository;
+    private ArticleRecommendRepository articleRecommendRepository;
+    private ReviewRecommendRepository reviewRecommendRepository;
+    private VipRecommendRepository vipRecommendRepository;
     private CommentCommonRepository commentCommonRepository;
     private CommentVipRepository commentVipRepository;
     private CommentReviewRepository commentReviewRepository;
@@ -142,6 +147,77 @@ public class CommentService {
             commentVipRepository.deleteById(commentId);
         }
         //있으면 삭제 없으면 에러 반환
+    }
+
+    @Transactional
+    public void recommendArticle(String userId, Long commentCommonId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        CommentCommon comment = commentCommonRepository.findById(commentCommonId).orElseThrow(NotFoundException::new);
+
+        if(articleRecommendRepository.findByCommentCommonAndUser(comment, user).isEmpty()){
+
+            ArticleRecommend articleRecommend = ArticleRecommend.builder()
+                    .commentCommon(comment)
+                    .user(user)
+                    .build();
+
+            articleRecommendRepository.save(articleRecommend);
+        }
+
+        // 좋아요 한 정보가 있다면
+        else {
+            ArticleRecommend tmp = articleRecommendRepository.findByCommentCommonAndUser(comment, user).get();
+            articleRecommendRepository.delete(tmp);
+        }
+
+    }
+    @Transactional
+    public void recommendReview(String userId, Long commentReviewId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        CommentReview comment = commentReviewRepository.findById(commentReviewId).orElseThrow(NotFoundException::new);
+
+        if(reviewRecommendRepository.findByCommentReviewAndUser(comment, user).isEmpty()){
+
+            ReviewRecommend reviewRecommend = ReviewRecommend.builder()
+                    .commentReview(comment)
+                    .user(user)
+                    .build();
+
+            reviewRecommendRepository.save(reviewRecommend);
+        }
+
+        // 좋아요 한 정보가 있다면
+        else {
+            ReviewRecommend tmp = reviewRecommendRepository.findByCommentReviewAndUser(comment, user).get();
+            reviewRecommendRepository.delete(tmp);
+        }
+
+    }
+
+    @Transactional
+    public void recommendVip(String userId, Long commentVipId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        CommentVip comment = commentVipRepository.findById(commentVipId).orElseThrow(NotFoundException::new);
+
+        if(vipRecommendRepository.findByCommentVipAndUser(comment, user).isEmpty()){
+
+            VipRecommend vipRecommend = VipRecommend.builder()
+                    .commentVip(comment)
+                    .user(user)
+                    .build();
+
+            vipRecommendRepository.save(vipRecommend);
+        }
+
+        // 좋아요 한 정보가 있다면
+        else {
+            VipRecommend tmp = vipRecommendRepository.findByCommentVipAndUser(comment, user).get();
+            vipRecommendRepository.delete(tmp);
+        }
+
     }
 
 }
