@@ -59,7 +59,7 @@ public class PageController {
         }
         else{
             Article article = articleService.findArticleId(articleId);
-            model.addAttribute("article", new ArticleViewResponse(article));
+            model.addAttribute("article", article.toViewResponse());
         }
         return "writeBulletin";
     }
@@ -75,7 +75,7 @@ public class PageController {
         }
         else{
             Review article = articleService.findReviewId(articleId);
-            model.addAttribute("article", new ReviewViewResponse(article));
+            model.addAttribute("article", article.toViewResponse());
         }
         return "writeReview";
     }
@@ -86,7 +86,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
         Article article  = articleService.findArticleId(articleId);
-        model.addAttribute("article", new ArticleViewResponse(article));
+        model.addAttribute("article", article.toViewResponse());
         return "detailCommon";
     }
 
@@ -96,7 +96,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
         Review article  = articleService.findReviewId(reviewId);
-        model.addAttribute("article", new ReviewViewResponse(article));
+        model.addAttribute("article", article.toViewResponse());
         return "detailReview";
     }
 
