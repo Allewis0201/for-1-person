@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <script th:src="@{/js/modal.js}"></script>
     <!-- admin-page 에서 사용할 추가 파일 -->
     <link rel="stylesheet" th:href="@{/css/adminpage.css}">
+    <script th:src="@{/js/admin.js}"></script>
 </head>
 <body>
 
@@ -24,37 +25,41 @@
         <img th:src="@{/Img/img_19.png}" alt="">
         <h2 class="title1">전체회원/운영진</h2>
     </div>
-    <p class="totalUser">전체회원</p>
-    <!--구분선 & 검색란 시작-->
+    <div class = "top">
+        <p class="totalUser">전체회원: <span class="countHighlight" th:text="${total}">총 회원수</span>명</p>
+        <!--구분선 & 검색란 시작-->
+        <div class="search1">
+            <form class="searching" action="">
+                <label>
+                    <select class="choice" name="searchType">
+                        <option value="searchId">아이디</option>
+                        <option value="searchNickname">닉네임</option>
+                    </select>
+                </label>
+                <!-- 검색부분-->
+                <label class="searchKey"><input name="searchKey" alt=""></label>
+                <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
+            </form>
+        </div>
+    </div>
+    <p class ="message" th:style="${message} != null ? 'visibility:visible;' : 'visibility:hidden;'" th:text="${message} ?: '경고 메세지'">경고 메세지</p>
+    <form th:action="@{/updateAuthor}" method="POST">
     <section class="dividing-line">
         <div class="change-btn">
             <label>
-                <input type="checkbox" alt="">
+                <input type="checkbox" name="userIdCollect" id="allCheck" th:value="${user.userId}">
             </label>
             <P>선택한 회원</P>
             <label>
-                <select>
-                    <option>준회원</option>
-                    <option>정회원</option>
-                    <option>VIP</option>
-                    <option>운영자</option>
+                <select name="changeAuthor">
+                    <option th:value="1">준회원</option>
+                    <option th:value="2">정회원</option>
+                    <option th:value="3">VIP</option>
+                    <option th:value="4">운영자</option>
                 </select>
             </label>
             <P>(으)로</P>
             <button type="submit">변경</button>
-        </div>
-        <div class="search1">
-            <label>
-                <select class="choice" name="searchType">
-                    <option value="title">아이디</option>
-                    <option value="author">닉네임</option>
-                </select>
-            </label>
-            <!-- 검색부분-->
-            <form class="searching" action="">
-                <label class="searchKey"><input name="searchKey" alt=""></label>
-                <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
-            </form>
         </div>
     </section>
     <!--구분선 & 검색란 완료-->
@@ -66,46 +71,26 @@
             <th class="th-title2">아이디</th>
             <th class="th-title3">닉네임</th>
             <th class="th-title4">회원등급</th>
-            <th class="th-title5">게시글수</th>
-            <th class="th-title6">댓글수</th>
+<!--            <th class="th-title5">게시글수</th>-->
+<!--            <th class="th-title6">댓글수</th>-->
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><label><input type="checkbox"></label></td>
-            <td>qwer123</td>
-            <td><a>용준팀장님 짱</a></td>
-            <td>운영진</td>
-            <td>게시글수</td>
-            <td>댓글수</td>
+        <tr th:each="user : ${userList}">
+            <td><label><input type="checkbox" name = "userIdCollect" th:value="${user.userId}"></label></td>
+            <td th:text="${user.userId}">아이디</td>
+            <td th:text="${user.nickname}">닉네임</td>
+            <td th:switch="${user.author}">
+                <span th:case="1">준회원</span>
+                <span th:case="2">정회원</span>
+                <span th:case="3">VIP</span>
+                <span th:case="4">운영자</span>
+            </td>
+<!--            <td>게시글의 수</td>-->
+<!--            <td>댓글의 수</td>-->
         </tr>
         </tbody>
     </table>
-    <!--게시글 리스트 목록 부분 -->
-    <div class="bottom">
-        <!--페이징 부분-->
-        <nav>
-            <ul>
-                <li>
-                    <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                </li>
-                <li>
-                    <a><img th:src="@{/Img/img_11.png}" alt=""></a>
-                </li>
-                <li><a>1</a></li>
-                <li><a>2</a></li>
-                <li><a>3</a></li>
-                <li><a>4</a></li>
-                <li><a>5</a></li>
-                <li>
-                    <a><img th:src="@{/Img/img_12.png}" alt=""></a>
-                </li>
-                <li>
-                    <a><img th:src="@{/Img/img_13.png}" alt=""></a>
-                </li>
-            </ul>
-        </nav>
-        <!--페이징 부분-->
-    </div>
+    </form>
 </div>
 </body>

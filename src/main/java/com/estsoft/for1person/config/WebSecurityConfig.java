@@ -28,10 +28,10 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->              // 인증, 인가 설정
-                        auth.requestMatchers("/login", "/membership", "/user", "/checkUsername", "/checkNickname", "/updateInfo").permitAll()
+                        auth.requestMatchers("/login", "/mainScreen", "/membership", "/user","/admin", "/checkUsername", "/checkNickname", "/updateInfo", "/updateAuthor", "/userList").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
-                        .defaultSuccessUrl("/main"))
+                        .defaultSuccessUrl("/mainScreen"))
                 .logout(auth -> auth.logoutSuccessUrl("/login")
                         .invalidateHttpSession(true))
                 .csrf(auth -> auth.disable());

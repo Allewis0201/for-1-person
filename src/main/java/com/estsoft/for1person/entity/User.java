@@ -73,8 +73,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setNickname(String nickname){
-        this.nickname = nickname;
+    public void setAuthor(Integer author){
+        this.author = author;
     }
 
     // 계정 만료 여부 반환 (true: 만료 안됨)

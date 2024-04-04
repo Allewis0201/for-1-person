@@ -16,6 +16,15 @@
     width: 30px;
     height: 30px;
 }
+.top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0 0;
+}
+.countHighlight{
+    color: #FF695B;
+}
 .dividing-line{
     background: #FF9B92;
     justify-content: space-between;
@@ -24,7 +33,6 @@
     margin: 40px 0;
 }
 .totalUser{
-    margin: 40px 0 0;
     font-size: 18px;
 }
 .change-btn{
@@ -43,6 +51,10 @@
     background: white;
     padding: 5px;
     border-radius: 20px;
+    border: 1px solid #ccc;
+}
+.message{
+    color: #FF695B;
 }
 .title,
 .searching,
