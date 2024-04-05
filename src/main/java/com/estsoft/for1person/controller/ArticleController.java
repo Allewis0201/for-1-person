@@ -7,13 +7,10 @@ import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.service.ArticleService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -59,7 +56,7 @@ public class ArticleController {
     // 아티클 생성(글 쓰기)
     // 아티클 내용을 받을 DTO 필요
     @PostMapping("/api/common/{user_id}")
-    public void createArticle(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public ResponseEntity<?> createArticle(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddArticleRequest request = AddArticleRequest.builder().
                 title(title).
                 content(content).
@@ -69,9 +66,10 @@ public class ArticleController {
                 build();
 
         articleService.createArticle(userId, request);
+        return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/commons"));
     }
     @PostMapping("/api/review/{user_id}")
-    public void createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public ResponseEntity<?> createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddReviewRequest request = AddReviewRequest.builder().
                 title(title).
                 content(content).
@@ -81,6 +79,7 @@ public class ArticleController {
                 score(3).
                 build();
         articleService.createReview(userId, request);
+        return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/reviews"));
     }
     @PostMapping("/api/vip/{user_id}")
     public void createVip(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {

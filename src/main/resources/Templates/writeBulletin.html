@@ -11,6 +11,7 @@
     <!-- write 에서 사용할 추가 파일 -->
     <link rel="stylesheet" th:href="@{/css/write.css}">
     <script th:src="@{/js/write.js}"></script>
+    <script th:src="@{/js/writeCommon.js}"></script>
     <!-- 별점 Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -29,7 +30,7 @@
         <img th:src="@{/Img/img_15.png}" alt="">
         <hr>
     </div>
-    <form th:action="@{/api/common/{userId}(userId=${userId})}" method="post">
+    <form id="commonForm" th:action="@{/api/common/{userId}(userId=${userId})}" method="post">
         <section class="select-container">
                 <div class="choice1">
                     <label class="write-title">
