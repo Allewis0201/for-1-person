@@ -69,14 +69,14 @@ public class ArticleController {
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/commons"));
     }
     @PostMapping("/api/review/{user_id}")
-    public ResponseEntity<?> createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public ResponseEntity<?> createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("score") Integer score) {
         AddReviewRequest request = AddReviewRequest.builder().
                 title(title).
                 content(content).
                 views(0L).
                 need(2).
                 anonymous(false).
-                score(3).
+                score(score).
                 build();
         articleService.createReview(userId, request);
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/reviews"));
