@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class ReviewService {
 
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
 
+
+    public ReviewService(ReviewRepository reviewRepository, VipRepository vipRepository) {
+        this.reviewRepository = reviewRepository;
+        this.vipRepository = vipRepository;
+    }
 
     public List<Review> getAllReview() {
         return reviewRepository.findAll();
