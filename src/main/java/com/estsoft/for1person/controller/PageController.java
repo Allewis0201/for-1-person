@@ -1,14 +1,10 @@
 package com.estsoft.for1person.controller;
 
 
-import com.estsoft.for1person.dto.ArticleViewResponse;
-import com.estsoft.for1person.entity.Article;
-import com.estsoft.for1person.entity.User;
+import com.estsoft.for1person.dto.*;
+import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.repository.UserRepository;
-import com.estsoft.for1person.dto.CommonViewResponse;
-import com.estsoft.for1person.dto.ReviewViewResponse;
 import com.estsoft.for1person.entity.Article;
-import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.*;
@@ -22,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -35,8 +32,6 @@ public class PageController {
     private VipService vipService;
     private CommentService commentService;
     private UserService userService;
-
-    @Autowired
     private UserRepository userRepository;
 
     public PageController(ArticleService articleService, ReviewService reviewService, VipService vipService, CommentService commentService, UserService userService, UserRepository userRepository) {
@@ -49,15 +44,14 @@ public class PageController {
     }
 
     @GetMapping("/newArticleBulletin")
-    public String newArticleBulletin(@RequestParam(required = false) Long articleId, Model model, Authentication authentication){
+    public String newArticleBulletin(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        if(articleId == null){
+        if (articleId == null) {
             model.addAttribute("article", new ArticleViewResponse());
-        }
-        else{
+        } else {
             Article article = articleService.findArticleId(articleId);
             model.addAttribute("article", article.toViewResponse());
         }
@@ -65,45 +59,94 @@ public class PageController {
     }
 
     @GetMapping("/newArticleReview")
-    public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication){
+    public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        if(articleId == null){
-            model.addAttribute("article", new ArticleViewResponse());
-        }
-        else{
-            Review article = articleService.findReviewId(articleId);
-            model.addAttribute("article", article.toViewResponse());
+        if (articleId == null) {
+            model.addAttribute("article", new ReviewViewResponse());
+        } else {
+            Review review = articleService.findReviewId(articleId);
+            model.addAttribute("article", review.toViewResponse());
         }
         return "writeReview";
     }
 
+
+    @GetMapping("/newArticleVip")
+    public String newArticleVip(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        if (articleId == null) {
+            model.addAttribute("article", new VipViewResponse());
+        } else {
+            Vip vip = articleService.findVipId(articleId);
+            model.addAttribute("article", vip.toViewResponse());
+        }
+        return "writeBulletin";
+    }
+
+
+
     @GetMapping("/common/{articleId}")
-    public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication){
+    public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        Article article  = articleService.findArticleId(articleId);
+        Article article = articleService.findArticleId(articleId);
         model.addAttribute("article", article.toViewResponse());
+
+
+        List<CommentCommonViewResponse> comments = commentService.getArticleCommonComment(articleId).stream()
+                .map(CommentCommon::toViewResponse)
+                .toList();
+        model.addAttribute("comments",comments);
+
         return "detailCommon";
     }
 
     @GetMapping("/review/{reviewId}")
-    public String showArticleReview(@PathVariable Long reviewId, Model model, Authentication authentication){
+    public String showArticleReview(@PathVariable Long reviewId, Model model, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        Review article  = articleService.findReviewId(reviewId);
+        Review article = articleService.findReviewId(reviewId);
         model.addAttribute("article", article.toViewResponse());
+
+
+        List<CommentReviewViewResponse> comments = commentService.getArticleReviewComment(reviewId).stream()
+                .map(CommentReview::toViewResponse)
+                .toList();
+        model.addAttribute("comments",comments);
+
+
         return "detailReview";
+    }
+
+    @GetMapping("/vip/{vipId}")
+    public String showArticleVip(@PathVariable Long vipId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        Vip vip = articleService.findVipId(vipId);
+        model.addAttribute("article", vip.toViewResponse());
+
+
+        List<CommentVipViewResponse> comments = commentService.getArticleVipComment(vipId).stream()
+                .map(CommentVip::toViewResponse)
+                .toList();
+        model.addAttribute("comments",comments);
+
+
+        return "detailCommon";
     }
 
 
     @GetMapping("/commons")
-    public String getCommons(Model model, Authentication authentication)
-    {
+    public String getCommons(Model model, Authentication authentication) {
         List<CommonViewResponse> articles = articleService.getAllArticle().stream()
                 .map(Article::toViewResponse)
                 .toList();
@@ -111,24 +154,37 @@ public class PageController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        model.addAttribute("list",articles);
+        model.addAttribute("list", articles);
 
         return "bulletinboard";
     }
 
     @GetMapping("/reviews")
-    public String getReviews(Model model, Authentication authentication)
-    {
-        List<ReviewViewResponse> articles = articleService.getAllReview().stream()
+    public String getReviews(Model model, Authentication authentication) {
+        List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
                 .map(Review::toViewResponse)
                 .toList();
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        model.addAttribute("list",articles);
+        model.addAttribute("list", reviews);
 
         return "review-board";
+    }
+
+    @GetMapping("/vips")
+    public String getVip(Model model, Authentication authentication) {
+        List<VipViewResponse> vips = articleService.getAllVip().stream()
+                .map(Vip::toViewResponse)
+                .toList();
+
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+        model.addAttribute("list", vips);
+
+        return "vip-board";
     }
 
 
