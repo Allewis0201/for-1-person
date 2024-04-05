@@ -1,5 +1,7 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommonViewResponse;
+import com.estsoft.for1person.dto.VipViewResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -34,7 +37,7 @@ public class Vip {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private Integer need;
@@ -59,6 +62,20 @@ public class Vip {
         this.title = title;
         this.content = content;
         this.anonymous = anonymous;
+    }
+
+    public VipViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return VipViewResponse.builder()
+                .VipId(VipId)
+                .title(title)
+                .content(content)
+                .views(views)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .need(need)
+                .user(user)
+                .build();
     }
 }
 
