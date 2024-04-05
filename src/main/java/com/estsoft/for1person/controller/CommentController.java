@@ -14,10 +14,14 @@ import java.util.List;
 
 
 @RestController
-@AllArgsConstructor
 public class CommentController {
 
     private CommentService commentService;
+
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
     //==================================================================================================================
     // common comment 모든 목록 출력
     @GetMapping("/api/comment/common")

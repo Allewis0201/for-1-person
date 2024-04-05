@@ -17,14 +17,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class ArticleController {
 
-    @Autowired
+
     private ArticleService articleService;
     // 게시판 (목록, 상세보기, 글쓰기, 댓글, 글 수정, 글 삭제)
     // 유저 정보 관리를 어떻게 하는지에 따라서 달라짐 (user_id가 필요 없을 수도)
+
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     // 모든 목록 출력
     @GetMapping("/api/common")

@@ -37,15 +37,15 @@ public class CommentService {
     }
 
     public List<CommentCommon> getArticleCommonComment(Long articleId) {
-        return commentCommonRepository.findAllByArticleId(articleId);
+        return commentCommonRepository.findAllByCommentCommonId(articleId);
     }
 
     public List<CommentVip> getArticleVipComment(Long articleId) {
-        return vipRepository.findAllByArticleId(articleId);
+        return commentVipRepository.findAllByCommentVipId(articleId);
     }
 
     public List<CommentReview> getArticleReviewComment(Long articleId) {
-        return reviewRepository.findAllByArticleId(articleId);
+        return commentReviewRepository.findAllByCommentReviewId(articleId);
     }
 
 

@@ -4,6 +4,10 @@ import com.estsoft.for1person.entity.CommentVip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CommentVipRepository extends JpaRepository<CommentVip, Long> {
+
+    List<CommentVip> findAllByCommentVipId(Long articleId);
 }

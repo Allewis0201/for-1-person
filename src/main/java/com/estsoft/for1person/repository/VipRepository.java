@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface VipRepository extends JpaRepository<Vip, Long> {
-    List<CommentVip> findAllByArticleId(Long articleId);
+
 }

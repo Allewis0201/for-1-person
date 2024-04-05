@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface CommentCommonRepository extends JpaRepository<CommentCommon, Long> {
-    List<CommentCommon> findAllByArticleId(Long articleId);
+    List<CommentCommon> findAllByCommentCommonId(Long articleId);
 }
