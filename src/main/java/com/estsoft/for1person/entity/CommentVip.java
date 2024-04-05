@@ -1,5 +1,7 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommentReviewViewResponse;
+import com.estsoft.for1person.dto.CommentVipViewResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -36,7 +39,7 @@ public class CommentVip {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Builder
     public CommentVip(Vip vip, User user, String body, Boolean anonymous) {
@@ -50,5 +53,16 @@ public class CommentVip {
     {
         this.body = body;
         this.anonymous = anonymous;
+    }
+
+    public CommentVipViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return CommentVipViewResponse.builder()
+                .commentVipId(commentVipId)
+                .user(user)
+                .body(body)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .build();
     }
 }

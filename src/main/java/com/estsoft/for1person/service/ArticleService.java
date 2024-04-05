@@ -13,17 +13,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ArticleService {
 
     private ArticleRepository articleRepository;
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
     private UserRepository userRepository;
-
     private ArticleLikeRepository articleLikeRepository;
     private ReviewLikeRepository reviewLikeRepository;
     private VipLikeRepository vipLikeRepository;
+
+    public ArticleService(ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository, UserRepository userRepository, ArticleLikeRepository articleLikeRepository, ReviewLikeRepository reviewLikeRepository, VipLikeRepository vipLikeRepository) {
+        this.articleRepository = articleRepository;
+        this.reviewRepository = reviewRepository;
+        this.vipRepository = vipRepository;
+        this.userRepository = userRepository;
+        this.articleLikeRepository = articleLikeRepository;
+        this.reviewLikeRepository = reviewLikeRepository;
+        this.vipLikeRepository = vipLikeRepository;
+    }
 
     public List<Article> getAllArticle() {
         return articleRepository.findAll();
@@ -214,5 +222,10 @@ public class ArticleService {
     public Review findReviewId(Long reviewId) {
         return reviewRepository.findById(reviewId).orElseThrow(() ->
                 new RuntimeException("Review not found with id: " + reviewId));
+    }
+
+    public Vip findVipId(Long vipId) {
+        return vipRepository.findById(vipId).orElseThrow(() ->
+                new RuntimeException("Article not found with id: " + vipId));
     }
 }

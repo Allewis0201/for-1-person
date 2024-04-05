@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-@RequiredArgsConstructor
+
 public class VipService {
 
     private VipRepository vipRepository; // Changed from ArticleRepository to VipRepository
     private ReviewRepository reviewRepository;
+
+    public VipService(VipRepository vipRepository, ReviewRepository reviewRepository) {
+        this.vipRepository = vipRepository;
+        this.reviewRepository = reviewRepository;
+    }
 
     public List<Vip> getAllVip() { // Changed from Article to Vip
         return vipRepository.findAll();

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class CommentService {
 
     private UserRepository userRepository;
@@ -25,6 +24,19 @@ public class CommentService {
     private ArticleRepository articleRepository;
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
+
+    public CommentService(UserRepository userRepository, ArticleRecommendRepository articleRecommendRepository, ReviewRecommendRepository reviewRecommendRepository, VipRecommendRepository vipRecommendRepository, CommentCommonRepository commentCommonRepository, CommentVipRepository commentVipRepository, CommentReviewRepository commentReviewRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
+        this.userRepository = userRepository;
+        this.articleRecommendRepository = articleRecommendRepository;
+        this.reviewRecommendRepository = reviewRecommendRepository;
+        this.vipRecommendRepository = vipRecommendRepository;
+        this.commentCommonRepository = commentCommonRepository;
+        this.commentVipRepository = commentVipRepository;
+        this.commentReviewRepository = commentReviewRepository;
+        this.articleRepository = articleRepository;
+        this.reviewRepository = reviewRepository;
+        this.vipRepository = vipRepository;
+    }
 
     public List<CommentCommon> getAllCommentCommon() {
         return commentCommonRepository.findAll();

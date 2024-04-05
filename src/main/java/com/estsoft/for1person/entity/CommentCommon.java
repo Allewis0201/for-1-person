@@ -1,5 +1,7 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommentCommonViewResponse;
+import com.estsoft.for1person.dto.CommonViewResponse;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +13,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -38,7 +41,7 @@ public class CommentCommon {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Builder
     public CommentCommon(Article article, User user, String body, Boolean anonymous) {
@@ -52,5 +55,16 @@ public class CommentCommon {
     {
         this.body = body;
         this.anonymous = anonymous;
+    }
+
+    public CommentCommonViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return CommentCommonViewResponse.builder()
+                .commentCommonId(commentCommonId)
+                .user(user)
+                .body(body)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .build();
     }
 }
