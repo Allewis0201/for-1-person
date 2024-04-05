@@ -57,7 +57,7 @@
                 <td th:text="${board.articleId}">번호</td>
                 <td th:text="${board.title}"><a th:href="">제목</a></td>
                 <td th:text="${board.user.nickname}">작성자</td>
-                <td class="date" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td class="date" th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${board.views}">조회수</td>
                 <td th:text="${board.views}">추천</td>
             </tr>
