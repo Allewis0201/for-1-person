@@ -52,6 +52,26 @@ public class CommentController {
     public ResponseEntity<CommentVip> getVipComment(@PathVariable("comment_id") Long commentId) {
         return ResponseEntity.ok().body(commentService.getCommentVip(commentId));
     }
+
+    //==================================================================================================================
+    // common 하나의 댓글 상세 보기
+
+    @GetMapping("/api/comment/common/{article_id}")
+    public ResponseEntity<List<CommentCommon>> getArticleCommonComment(@PathVariable("article_id") Long articleId) {
+        return ResponseEntity.ok().body(commentService.getArticleCommonComment(articleId));
+    }
+
+    @GetMapping("/api/comment/review/{article_id}")
+    public ResponseEntity<List<CommentReview>> getArticleReviewComment(@PathVariable("article_id") Long articleId) {
+        return ResponseEntity.ok().body(commentService.getArticleReviewComment(articleId));
+    }
+
+
+    @GetMapping("/api/comment/vip/{article_id}")
+    public ResponseEntity<List<CommentVip>> getArticleVipComment(@PathVariable("article_id") Long articleId) {
+        return ResponseEntity.ok().body(commentService.getArticleVipComment(articleId));
+    }
+
     //==================================================================================================================
     // 댓글 쓰기
     // 댓글 내용을 받을 DTO 필요

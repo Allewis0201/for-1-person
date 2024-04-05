@@ -1,5 +1,7 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.CommonViewResponse;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -33,7 +36,7 @@ public class Article {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private Timestamp createdAt; // 생성 날짜
+    private LocalDateTime createdAt; // 생성 날짜
 
     @Column(nullable = false)
     private Integer need; // 필요
@@ -58,6 +61,20 @@ public class Article {
         this.title = title;
         this.content = content;
         this.anonymous = anonymous;
+    }
+
+    public CommonViewResponse toViewResponse() // 생성자를 사용해 객체 생성
+    {
+        return CommonViewResponse.builder()
+                .articleId(articleId)
+                .title(title)
+                .content(content)
+                .views(views)
+                .anonymous(anonymous)
+                .createdAt(createdAt)
+                .need(need)
+                .user(user)
+                .build();
     }
 }
 

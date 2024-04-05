@@ -205,6 +205,14 @@ public class ArticleService {
             VipLike tmp = vipLikeRepository.findByVipAndUser(vip, user).get();
             vipLikeRepository.delete(tmp);
         }
+    }
+    public Article findArticleId(Long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(() ->
+                new RuntimeException("Article not found with id: " + articleId));
+    }
 
+    public Review findReviewId(Long reviewId) {
+        return reviewRepository.findById(reviewId).orElseThrow(() ->
+                new RuntimeException("Review not found with id: " + reviewId));
     }
 }
