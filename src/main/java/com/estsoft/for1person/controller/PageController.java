@@ -86,7 +86,7 @@ public class PageController {
             Vip vip = articleService.findVipId(articleId);
             model.addAttribute("article", vip.toViewResponse());
         }
-        return "writeBulletin";
+        return "writeVIP";
     }
 
 
@@ -141,7 +141,7 @@ public class PageController {
         model.addAttribute("comments",comments);
 
 
-        return "detailCommon";
+        return "detailVIP";
     }
 
 

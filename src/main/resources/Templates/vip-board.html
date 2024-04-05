@@ -54,19 +54,19 @@
         </thead>
         <tbody>
         <tr th:each="vip : ${list}">
-            <td th:text="${vip.getArticleId()}">번호</td>
-            <td th:text="${vip.getTitle()}"><a th:href="">제목</a></td>
+            <td th:text="${vip.getVipId()}">번호</td>
+            <td><a th:href="@{'/vip/' + ${vip.VipId}}" th:text="${vip.title}">제목</a></td>
             <td th:text="${vip.getUser().getNickname()}">작성자</td>
-            <td class="date" th:text="${#temporals.format(board.getCreatedAt(),
-                        'yyyy-MM-dd HH:mm::ss')}">yyyy-MM-dd HH:mm::ss</td>
+            <td class="date" th:text="${#temporals.format(vip.getCreatedAt(),
+                        'yyyy-MM-dd HH:mm')}">yyyy-MM-dd HH:mm:ss</td>
             <td th:text="${vip.getViews()}">조회수</td>
             <td th:text="${vip.getViews()}">추천</td>
-            <td th:text="${vip.getNeed()}">권한</td>
         </tr>
         </tbody>
     </table>
     <!--게시글 리스트 목록 부분 -->
-    <div class="bottom" th:if="${page.totalPages > 0}">
+    <div class="bottom">
+        <!--페이징 부분-->
         <nav>
             <ul>
                 <li>
@@ -88,11 +88,11 @@
                 </li>
             </ul>
         </nav>
-        <!--페이징 부분 완료-->
+        <!--페이징 부분-->
     </div>
         <!--글 작성 버튼 부분-->
         <div class="btn-right">
-            <a class="btn" th:href="@{/write}">글작성</a>
+            <a class="btn" th:href="@{/newArticleVip}">글작성</a>
         </div>
     </div>
 </body>
