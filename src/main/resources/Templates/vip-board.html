@@ -54,13 +54,13 @@
         </thead>
         <tbody>
         <tr th:each="vip : ${list}">
-            <td th:text="${vip.getVipId()}">번호</td>
-            <td><a th:href="@{'/vip/' + ${vip.VipId}}" th:text="${vip.title}">제목</a></td>
-            <td th:text="${vip.getUser().getNickname()}">작성자</td>
-            <td class="date" th:text="${#temporals.format(vip.getCreatedAt(),
+            <td th:text="${vip.vipId()}">번호</td>
+            <td><a th:href="@{'/vip/' + ${vip.vipId}}" th:text="${vip.title}">제목</a></td>
+            <td th:text="${vip.user.nickname}">작성자</td>
+            <td class="date" th:text="${#temporals.format(vip.createdAt,
                         'yyyy-MM-dd HH:mm')}">yyyy-MM-dd HH:mm:ss</td>
-            <td th:text="${vip.getViews()}">조회수</td>
-            <td th:text="${vip.getViews()}">추천</td>
+            <td th:text="${vip.views}">조회수</td>
+            <td th:text="${vip.like}">추천</td>
         </tr>
         </tbody>
     </table>

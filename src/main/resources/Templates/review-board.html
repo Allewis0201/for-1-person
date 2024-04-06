@@ -60,7 +60,7 @@
             <td th:text="${review.score}"></td>
             <td th:text="${review.user.nickname}">작성자</td>
             <td class="date" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${review.views}"></td>
+            <td th:text="${review.like}"></td>
             <td>추천</td>
         </tr>
         </tbody>
