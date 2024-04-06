@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.redirectUrl) {
                     window.location.href = data.redirectUrl;
                 }
+                else{
+                    window.location.reload();
+                }
             })
             .catch(error => console.error('Error:', error));
 
