@@ -63,16 +63,15 @@
                 <img th:src="@{/Img/img_16.png}" alt="">
                 <p>댓글</p>
             </div>
-            <div class="btn2" th:if="${article.user.userId == #authentication.principal.username}">
-                <a th:href="@{/editArticleBulletin(articleId=${article.articleId})}">
-                    <button><img th:src="@{/Img/img_17.png}" alt=""> 글 수정</button>
+            <div class="btn2">
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/editArticleBulletin(articleId=${article.articleId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
+                </a>
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/deleteArticleCommon(articleId=${article.articleId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
                 </a>
                 <a th:href="@{/newArticleBulletin}">
                     <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
-                </a>
-
-                <a th:href="@{/deleteArticleCommon(articleId=${article.articleId})}">
-                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
                 </a>
             </div>
         </div>
@@ -80,10 +79,10 @@
             <div class="comment" th:if="${comments.size()} != 0">
                 <div class="comment2" th:each="comment : ${comments}">
                     <p class="user-nickname"  th:text="${comment.user.nickname}"></p>
-                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>
+                    <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
+<!--                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>-->
                     <!--날짜 입력-->
                     <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
-                    <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
                     <button type="button" th:if="${comment.user.userId == #authentication.principal.username}" th:attr="commentId=${comment.commentCommonId}" class="deleteCommentBtn">삭제</button>
                 </div>
                 <!--댓글내용 데이터 -->
