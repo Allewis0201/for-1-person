@@ -63,7 +63,7 @@
                 <img th:src="@{/Img/img_16.png}" alt="">
                 <p>댓글</p>
             </div>
-            <div class="btn2">
+            <div class="btn2" th:if="${article.user.userId == #authentication.principal.username}">
                 <a th:href="@{/editArticleBulletin(articleId=${article.articleId})}">
                     <button><img th:src="@{/Img/img_17.png}" alt=""> 글 수정</button>
                 </a>
