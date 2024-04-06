@@ -218,4 +218,43 @@ public class PageController {
     }
 
 
+    @GetMapping("/deleteArticleCommon")
+    public String deleteCommon(@RequestParam("articleId") Long articleId, Authentication authentication)
+    {
+        String userId = authentication.getName();
+
+        commentService.deleteAllArticleComment(articleId);
+        articleService.deleteLikeAllArticle(articleId);
+        articleService.deleteArticle(userId,articleId);
+
+        return "redirect:commons";
+    }
+
+
+    @GetMapping("/deleteArticleReview")
+    public String deleteReview(@RequestParam("articleId") Long articleId, Authentication authentication)
+    {
+        String userId = authentication.getName();
+
+        commentService.deleteAllReviewComment(articleId);
+        articleService.deleteLikeAllReview(articleId);
+        articleService.deleteReview(userId,articleId);
+
+        return "redirect:reviews";
+    }
+
+
+    @GetMapping("/deleteArticleVip")
+    public String deleteVip(@RequestParam("articleId") Long articleId, Authentication authentication)
+    {
+        String userId = authentication.getName();
+
+        commentService.deleteAllVipComment(articleId);
+        articleService.deleteLikeAllVip(articleId);
+        articleService.deleteVip(userId,articleId);
+
+        return "redirect:vips";
+    }
+
+
 }
