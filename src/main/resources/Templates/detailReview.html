@@ -84,10 +84,9 @@
                     <!--날짜 입력-->
                     <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
                     <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentReviewId}"></p>
-                    <button type="button" th:attr="commentId=${comment.commentReviewId}" class="deleteCommentBtn">삭제</button>
+                    <button type="button" th:if="${comment.user.userId == #authentication.principal.username}" th:attr="commentId=${comment.commentReviewId}" class="deleteCommentBtn">삭제</button>
                 </div>
                 <!--댓글내용 데이터 -->
-
             </div>
             <!--페이징 부분 시작-->
             <div class="bottom">
