@@ -18,6 +18,7 @@ public class VipViewResponse {
     private Boolean anonymous;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer like;
     private Integer need;
     private User user;
 

@@ -55,7 +55,7 @@
         <div class="editor">
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
-        <form class="btn">
+        <form class="btn" th:action="@{/article/review/like/{user_id}/{article_id}(user_id = ${user.userId}, article_id = ${article.reviewId})}">
             <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
@@ -64,15 +64,14 @@
                 <p>댓글</p>
             </div>
             <div class="btn2">
-                <a th:href="@{/editArticleReview(articleId=${article.reviewId})}">
-                    <button><img th:src="@{/Img/img_17.png}" alt=""> 글 수정</button>
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/editArticleReview(articleId=${article.reviewId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
+                </a>
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/deleteArticleReview(articleId=${article.reviewId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
                 </a>
                 <a th:href="@{/newArticleReview}">
                     <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
-                </a>
-
-                <a th:href="@{/deleteArticleReview(articleId=${article.reviewId})}">
-                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
                 </a>
             </div>
         </div>
@@ -80,14 +79,13 @@
             <div class="comment" th:if="${comments.size()} != 0">
                 <div class="comment2" th:each="comment : ${comments}">
                     <p class="user-nickname"  th:text="${comment.user.nickname}"></p>
-                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>
+<!--                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>-->
                     <!--날짜 입력-->
-                    <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
                     <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentReviewId}"></p>
-                    <button type="button" th:attr="commentId=${comment.commentReviewId}" class="deleteCommentBtn">삭제</button>
+                    <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
+                    <button type="button" th:if="${comment.user.userId == #authentication.principal.username}" th:attr="commentId=${comment.commentReviewId}" class="deleteCommentBtn">삭제</button>
                 </div>
                 <!--댓글내용 데이터 -->
-
             </div>
             <!--페이징 부분 시작-->
             <div class="bottom">

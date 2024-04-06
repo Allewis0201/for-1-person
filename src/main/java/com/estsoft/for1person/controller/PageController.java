@@ -115,6 +115,9 @@ public class PageController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
+
+
+        articleService.increaseCommonView(articleId);
         Article article = articleService.findArticleId(articleId);
         model.addAttribute("article", article.toViewResponse());
 
@@ -139,6 +142,8 @@ public class PageController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
+
+        articleService.increaseReviewView(reviewId);
         Review article = articleService.findReviewId(reviewId);
         model.addAttribute("article", article.toViewResponse());
 
@@ -164,6 +169,8 @@ public class PageController {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
+
+        articleService.increaseVipView(vipId);
         Vip vip = articleService.findVipId(vipId);
         model.addAttribute("article", vip.toViewResponse());
 
@@ -276,5 +283,30 @@ public class PageController {
         return "redirect:vips";
     }
 
+
+    @GetMapping("/article/common/like/{user_id}/{article_id}")
+    public String commonLike(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id)
+    {
+        articleService.likeArticle(user_id, article_id);
+
+        return "redirect:/common/" + article_id;
+    }
+
+    @GetMapping("/article/review/like/{user_id}/{article_id}")
+    public String reviewLike(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id)
+    {
+        articleService.likeReview(user_id, article_id);
+
+        return "redirect:/review/" + article_id;
+    }
+
+
+    @GetMapping("/article/vip/like/{user_id}/{article_id}")
+    public String vipLike(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id)
+    {
+        articleService.likeVip(user_id, article_id);
+
+        return "redirect:/vip/" + article_id;
+    }
 
 }

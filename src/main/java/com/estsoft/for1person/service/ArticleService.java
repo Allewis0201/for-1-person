@@ -1,9 +1,6 @@
 package com.estsoft.for1person.service;
 
-import com.estsoft.for1person.dto.AddArticleRequest;
-import com.estsoft.for1person.dto.AddReviewRequest;
-import com.estsoft.for1person.dto.AddVipRequest;
-import com.estsoft.for1person.dto.ArticleViewResponse;
+import com.estsoft.for1person.dto.*;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
@@ -281,6 +278,54 @@ public class ArticleService {
     }
 
 
+    @Transactional
+    public List<CommonViewResponse> getAllLikeArticle(List<CommonViewResponse> articles)
+    {
+
+        for(CommonViewResponse article : articles)
+        {
+            Article tmp = articleRepository.findById(article.getArticleId()).get();
+            Integer like = articleLikeRepository.countArticleLikeByArticle(tmp).get();
+            article.setLike(like);
+        }
+
+       return articles;
+    }
+
+
+    @Transactional
+    public List<ReviewViewResponse> getAllLikeReview(List<ReviewViewResponse> articles)
+    {
+
+        for(ReviewViewResponse article : articles)
+        {
+            Review tmp = reviewRepository.findById(article.getReviewId()).get();
+            Integer like = reviewLikeRepository.countArticleLikeByReview(tmp).get();
+            article.setLike(like);
+        }
+
+        return articles;
+    }
+
+
+
+    @Transactional
+    public List<VipViewResponse> getAllLikeVip(List<VipViewResponse> articles)
+    {
+
+        for(VipViewResponse article : articles)
+        {
+            Vip tmp = vipRepository.findById(article.getVipId()).get();
+            Integer like = vipLikeRepository.countArticleLikeByVip(tmp).get();
+            article.setLike(like);
+        }
+
+        return articles;
+    }
+
+
+
+
     public void deleteLikeAllArticle(Long articleId)
     {
         Article article = articleRepository.findById(articleId).get();
@@ -298,6 +343,32 @@ public class ArticleService {
     {
         Vip vip = vipRepository.findById(vipId).get();
         vipLikeRepository.deleteAllByVip(vip);
+    }
+
+
+    @Transactional
+    public void increaseCommonView(Long articleId)
+    {
+        Article article = articleRepository.findById(articleId).get();
+
+        article.setViews(article.getViews()+1);
+    }
+
+    @Transactional
+    public void increaseReviewView(Long reviewId)
+    {
+        Review review = reviewRepository.findById(reviewId).get();
+
+        review.setViews(review.getViews()+1);
+    }
+
+
+    @Transactional
+    public void increaseVipView(Long vipId)
+    {
+        Vip vip = vipRepository.findById(vipId).get();
+
+        vip.setViews(vip.getViews()+1);
     }
 
 

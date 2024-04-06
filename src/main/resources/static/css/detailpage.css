@@ -45,6 +45,10 @@ a {
 .editor{
     border: 1px solid #BDBDBD;
     height: 300px;
+
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 .btn{
     display: flex;
@@ -135,6 +139,13 @@ nav a img{
     background: none;
     margin-right: 10px;
 }
+
+.comment2 button{
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+    background: #ffffff;
+    padding : 3px;
+}
 .write-comments{
     border: 1px solid #BDBDBD;
     margin: 20px;
@@ -185,3 +196,4 @@ textarea {
 #to-top img{
     width: 30px;
 }
+
