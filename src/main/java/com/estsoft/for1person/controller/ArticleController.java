@@ -82,7 +82,7 @@ public class ArticleController {
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/reviews"));
     }
     @PostMapping("/api/vip/{user_id}")
-    public void createVip(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
+    public ResponseEntity<?> createVip(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddVipRequest request = AddVipRequest.builder().
                 title(title).
                 content(content).
@@ -92,6 +92,7 @@ public class ArticleController {
                 build();
 
         articleService.createVip(userId, request);
+        return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/vips"));
     }
     //==================================================================================================================
     // 아티클 수정
