@@ -1,6 +1,5 @@
 package com.estsoft.for1person.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.estsoft.for1person.dto.AddArticleRequest;
 import com.estsoft.for1person.dto.AddReviewRequest;
 import com.estsoft.for1person.dto.AddVipRequest;
@@ -8,7 +7,6 @@ import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.service.ArticleService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,19 +27,16 @@ public class ArticleController {
 
     // 모든 목록 출력
     @GetMapping("/api/common")
-    public ResponseEntity<Page<Article>> getAllArticle(@RequestParam(defaultValue = "0") int page,
-                                                       @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok().body(articleService.getAllArticlesPaged(page, size));
+    public ResponseEntity<List<Article>> getAllArticle() {
+        return ResponseEntity.ok().body(articleService.getAllArticle());
     }
     @GetMapping("/api/review")
-    public ResponseEntity<Page<Review>> getAllReview(@RequestParam(defaultValue = "0") int page,
-                                                     @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok().body(articleService.getAllReview(page, size));
+    public ResponseEntity<List<Review>> getAllReview() {
+        return ResponseEntity.ok().body(articleService.getAllReview());
     }
     @GetMapping("/api/vip")
-    public ResponseEntity<Page<Vip>> getAllVip(@RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size) {
-        return ResponseEntity.ok().body(articleService.getAllVip(page, size));
+    public ResponseEntity<List<Vip>> getAllVip() {
+        return ResponseEntity.ok().body(articleService.getAllVip());
     }
     //============================================================================================================
     // 하나의 아티클 상세 보기
