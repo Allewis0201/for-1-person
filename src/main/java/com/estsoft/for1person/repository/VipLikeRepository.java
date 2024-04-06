@@ -14,4 +14,6 @@ public interface VipLikeRepository extends JpaRepository<VipLike, Long> {
     Optional<VipLike> findByVipAndUser(Vip vip, User user);
 
     Optional<Integer> countArticleLikeByVip(Vip vip);
+
+    void deleteAllByVip(Vip vip);
 }

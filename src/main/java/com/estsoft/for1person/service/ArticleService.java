@@ -274,5 +274,25 @@ public class ArticleService {
     }
 
 
+    public void deleteLikeAllArticle(Long articleId)
+    {
+        Article article = articleRepository.findById(articleId).get();
+        articleLikeRepository.deleteAllByArticle(article);
+    }
+
+
+    public void deleteLikeAllReview(Long reviewId)
+    {
+        Review review = reviewRepository.findById(reviewId).get();
+        reviewLikeRepository.deleteAllByReview(review);
+    }
+
+    public void deleteLikeAllVip(Long vipId)
+    {
+        Vip vip = vipRepository.findById(vipId).get();
+        vipLikeRepository.deleteAllByVip(vip);
+    }
+
+
 
 }

@@ -55,6 +55,7 @@ public class ArticleController {
     //==================================================================================================================
     // 아티클 생성(글 쓰기)
     // 아티클 내용을 받을 DTO 필요
+
     @PostMapping("/api/common/{user_id}")
     public ResponseEntity<?> createArticle(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddArticleRequest request = AddArticleRequest.builder().

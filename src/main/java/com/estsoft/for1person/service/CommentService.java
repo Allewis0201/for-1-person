@@ -174,6 +174,33 @@ public class CommentService {
         //있으면 삭제 없으면 에러 반환
     }
 
+
+    public void deleteAllArticleComment(Long articleId)
+    {
+        Article article = articleRepository.findById(articleId).get();
+
+        commentCommonRepository.deleteAllByArticle(article);
+    }
+
+
+
+    public void deleteAllReviewComment(Long reviewId)
+    {
+        Review review = reviewRepository.findById(reviewId).get();
+
+        commentReviewRepository.deleteAllByReview(review);
+    }
+
+
+    public void deleteAllVipComment(Long vipId)
+    {
+        Vip vip = vipRepository.findById(vipId).get();
+
+        commentVipRepository.deleteAllByVip(vip);
+    }
+
+
+
     @Transactional
     public void recommendArticle(String userId, Long commentCommonId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
