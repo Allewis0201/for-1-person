@@ -173,7 +173,7 @@ public class PageController {
         model.addAttribute("comments",comments);
 
         Integer like = articleService.getLikeVip(vipId).get();
-        model.addAttribute("reviewLike",like);
+        model.addAttribute("vipLike",like);
 
 
         Integer commentCount = commentService.getCommentVipCount(vipId).get();

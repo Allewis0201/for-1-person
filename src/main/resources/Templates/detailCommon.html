@@ -36,16 +36,16 @@
                 <td colspan="4" class="data2" th:text="${user.nickname}">닉네임</td>
 
                 <th class="th3">추천</th>
-                <td class="data3">데이터</td>
+                <td class="data3" th:text="${articleLike}">추천수</td>
 
                 <th class="th4">댓글</th>
-                <td class="data4">데이터</td>
+                <td class="data4" th:text="${commentCount}">댓글수</td>
 
                 <th class="th5">조회수</th>
-                <td class="data5">데이터</td>
+                <td class="data5" th:text="${article.views}">조회수</td>
 
                 <th class="th6">작성일</th>
-                <td colspan="2">데이터</td>
+                <td colspan="2" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
             </tr>
             </tbody>
         </table>
