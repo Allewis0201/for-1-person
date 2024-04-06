@@ -66,6 +66,10 @@
                 <a th:href="@{/newArticleVip}">
                     <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
                 </a>
+
+                <a th:href="@{/deleteArticleVip(articleId=${article.vipId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
+                </a>
             </div>
         </div>
         <div>
