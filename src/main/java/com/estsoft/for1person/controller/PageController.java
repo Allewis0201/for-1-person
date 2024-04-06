@@ -9,6 +9,7 @@ import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -186,43 +187,52 @@ public class PageController {
 
 
     @GetMapping("/commons")
-    public String getCommons(Model model, Authentication authentication) {
-        List<CommonViewResponse> articles = articleService.getAllArticle().stream()
-                .map(Article::toViewResponse)
-                .toList();
+    public String getCommons(Model model, Authentication authentication,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-        model.addAttribute("list", articles);
+        model.addAttribute("user", user.orElse(null));
+
+        Page<Article> articlePage = articleService.getAllArticlesPaged(page, size);
+        model.addAttribute("list", articlePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", articlePage.getTotalPages());
 
         return "bulletinboard";
     }
 
     @GetMapping("/reviews")
-    public String getReviews(Model model, Authentication authentication) {
-        List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
-                .map(Review::toViewResponse)
-                .toList();
+    public String getReviews(Model model, Authentication authentication,
+                                                @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-        model.addAttribute("list", reviews);
+        model.addAttribute("user", user.orElse(null));
+
+        Page<Review> reviewpage = articleService.getAllReview(page, size);
+        model.addAttribute("list", reviewpage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", reviewpage.getTotalPages());
 
         return "review-board";
     }
 
     @GetMapping("/vips")
-    public String getVip(Model model, Authentication authentication) {
-        List<VipViewResponse> vips = articleService.getAllVip().stream()
-                .map(Vip::toViewResponse)
-                .toList();
+    public String getVip(Model model, Authentication authentication,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-        model.addAttribute("list", vips);
+        model.addAttribute("user", user.orElse(null));
+
+        Page<Vip> vippage = articleService.getAllVip(page, size);
+        model.addAttribute("list", vippage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", vippage.getTotalPages());
 
         return "vip-board";
     }
