@@ -171,7 +171,7 @@ public class ArticleService {
 
 
     @Transactional
-    public Optional<Integer> likeArticle(String userId, Long articleId) {
+    public void likeArticle(String userId, Long articleId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         Article article = articleRepository.findById(articleId).orElseThrow(NotFoundException::new);
@@ -185,22 +185,16 @@ public class ArticleService {
 
             articleLikeRepository.save(articleLike);
 
-
-            return articleLikeRepository.countArticleLikeByArticle(articleLike.getArticle());
         }
         // 좋아요 한 정보가 있다면
         else {
             ArticleLike tmp = articleLikeRepository.findByArticleAndUser(article, user).get();
             articleLikeRepository.delete(tmp);
-
-            Article article1 = articleRepository.findById(articleId).get();
-
-            return articleLikeRepository.countArticleLikeByArticle(article1);
         }
     }
 
     @Transactional
-    public Optional<Integer> likeReview(String userId, Long reviewId) {
+    public void likeReview(String userId, Long reviewId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundException::new);
@@ -214,23 +208,20 @@ public class ArticleService {
 
             reviewLikeRepository.save(reviewLike);
 
-            return reviewLikeRepository.countArticleLikeByReview(reviewLike.getReview());
+
         }
         // 좋아요 한 정보가 있다면
         else {
             ReviewLike tmp = reviewLikeRepository.findByReviewAndUser(review, user).get();
             reviewLikeRepository.delete(tmp);
 
-            Review review1 = reviewRepository.findById(reviewId).get();
-
-            return reviewLikeRepository.countArticleLikeByReview(review1);
         }
     }
 
 
 
     @Transactional
-    public Optional<Integer> likeVip(String userId, Long vipId) {
+    public void likeVip(String userId, Long vipId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         Vip vip = vipRepository.findById(vipId).orElseThrow(NotFoundException::new);
@@ -244,16 +235,41 @@ public class ArticleService {
 
             vipLikeRepository.save(vipLike);
 
-            return vipLikeRepository.countArticleLikeByVip(vipLike.getVip());
+
         }
         // 좋아요 한 정보가 있다면
         else {
             VipLike tmp = vipLikeRepository.findByVipAndUser(vip, user).get();
             vipLikeRepository.delete(tmp);
 
-            Vip vip1 = vipRepository.findById(vipId).get();
-
-            return vipLikeRepository.countArticleLikeByVip(vip1);
         }
     }
+
+    @Transactional
+    public Optional<Integer> getLikeArticle(Long articleId)
+    {
+        Article article = articleRepository.findById(articleId).get();
+
+        return articleLikeRepository.countArticleLikeByArticle(article);
+    }
+
+    @Transactional
+    public Optional<Integer> getLikeReview(Long reviewId)
+    {
+        Review review = reviewRepository.findById(reviewId).get();
+
+        return reviewLikeRepository.countArticleLikeByReview(review);
+    }
+
+
+    @Transactional
+    public Optional<Integer> getLikeVip(Long vipId)
+    {
+        Vip vip = vipRepository.findById(vipId).get();
+
+        return vipLikeRepository.countArticleLikeByVip(vip);
+    }
+
+
+
 }
