@@ -88,16 +88,16 @@ public class CommentController {
     }
 
     @PostMapping("/api/comment/review/{article_id}")
-    public void createCommentReview(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
+    public ResponseEntity<?> createCommentReview(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
-
         commentService.createCommentReview(userId,articleId,request);
+        return ResponseEntity.ok().body(Map.of("message", "Comment created successfully"));
     }
     @PostMapping("/api/comment/vip/{article_id}")
-    public void createCommentVip(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
+    public ResponseEntity<?> createCommentVip(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
-
         commentService.createCommentVip(userId,articleId,request);
+        return ResponseEntity.ok().body(Map.of("message", "Comment created successfully"));
     }
     //==================================================================================================================
     // 댓글 수정

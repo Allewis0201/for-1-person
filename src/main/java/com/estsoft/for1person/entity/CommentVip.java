@@ -46,13 +46,13 @@ public class CommentVip {
         this.vip = vip;
         this.user = user;
         this.body = body;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
     public void update(String body, Boolean anonymous)
     {
         this.body = body;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
     public CommentVipViewResponse toViewResponse() // 생성자를 사용해 객체 생성
