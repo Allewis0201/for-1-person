@@ -88,7 +88,7 @@ public class ArticleController {
                 title(title).
                 content(content).
                 views(0L).
-                need(1).
+                need(3).
                 anonymous(false).
                 build();
 
@@ -132,7 +132,6 @@ public class ArticleController {
     @GetMapping("/api/common/like/{user_id}/{article_id}")
     public void likeCommonArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeArticle(user_id, article_id);
-
 
     }
     @GetMapping("/api/review/like/{user_id}/{article_id}")
