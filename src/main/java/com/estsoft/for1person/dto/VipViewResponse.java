@@ -17,6 +17,7 @@ public class VipViewResponse {
     private Long views;
     private Boolean anonymous;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private Integer need;
     private User user;
 
