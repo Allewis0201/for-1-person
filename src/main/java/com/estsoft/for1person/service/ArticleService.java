@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -151,69 +152,8 @@ public class ArticleService {
         //있으면 삭제 없으면 에러 반환
     }
 
-    @Transactional
-    public void likeArticle(String userId, Long articleId) {
-        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
-        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
-        Article article = articleRepository.findById(articleId).orElseThrow(NotFoundException::new);
 
-        if(articleLikeRepository.findByArticleAndUser(article, user).isEmpty()){
 
-            ArticleLike articleLike = ArticleLike.builder()
-                    .user(user)
-                    .article(article)
-                    .build();
-
-            articleLikeRepository.save(articleLike);
-        }
-        // 좋아요 한 정보가 있다면
-        else {
-            ArticleLike tmp = articleLikeRepository.findByArticleAndUser(article, user).get();
-            articleLikeRepository.delete(tmp);
-        }
-    }
-    @Transactional
-    public void likeReview(String userId, Long reviewId) {
-        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
-        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
-        Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundException::new);
-
-        if(reviewLikeRepository.findByReviewAndUser(review, user).isEmpty()){
-
-            ReviewLike reviewLike = ReviewLike.builder()
-                    .user(user)
-                    .review(review)
-                    .build();
-
-            reviewLikeRepository.save(reviewLike);
-        }
-        // 좋아요 한 정보가 있다면
-        else {
-            ReviewLike tmp = reviewLikeRepository.findByReviewAndUser(review, user).get();
-            reviewLikeRepository.delete(tmp);
-        }
-    }
-    @Transactional
-    public void likeVip(String userId, Long vipId) {
-        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
-        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
-        Vip vip = vipRepository.findById(vipId).orElseThrow(NotFoundException::new);
-
-        if(vipLikeRepository.findByVipAndUser(vip, user).isEmpty()){
-
-            VipLike vipLike = VipLike.builder()
-                    .user(user)
-                    .vip(vip)
-                    .build();
-
-            vipLikeRepository.save(vipLike);
-        }
-        // 좋아요 한 정보가 있다면
-        else {
-            VipLike tmp = vipLikeRepository.findByVipAndUser(vip, user).get();
-            vipLikeRepository.delete(tmp);
-        }
-    }
     public Article findArticleId(Long articleId) {
         return articleRepository.findById(articleId).orElseThrow(() ->
                 new RuntimeException("Article not found with id: " + articleId));
@@ -227,5 +167,93 @@ public class ArticleService {
     public Vip findVipId(Long vipId) {
         return vipRepository.findById(vipId).orElseThrow(() ->
                 new RuntimeException("Article not found with id: " + vipId));
+    }
+
+
+    @Transactional
+    public Optional<Integer> likeArticle(String userId, Long articleId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        Article article = articleRepository.findById(articleId).orElseThrow(NotFoundException::new);
+
+        if(articleLikeRepository.findByArticleAndUser(article, user).isEmpty()){
+
+            ArticleLike articleLike = ArticleLike.builder()
+                    .user(user)
+                    .article(article)
+                    .build();
+
+            articleLikeRepository.save(articleLike);
+
+
+            return articleLikeRepository.countArticleLikeByArticle(articleLike.getArticle());
+        }
+        // 좋아요 한 정보가 있다면
+        else {
+            ArticleLike tmp = articleLikeRepository.findByArticleAndUser(article, user).get();
+            articleLikeRepository.delete(tmp);
+
+            Article article1 = articleRepository.findById(articleId).get();
+
+            return articleLikeRepository.countArticleLikeByArticle(article1);
+        }
+    }
+
+    @Transactional
+    public Optional<Integer> likeReview(String userId, Long reviewId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundException::new);
+
+        if(reviewLikeRepository.findByReviewAndUser(review, user).isEmpty()){
+
+            ReviewLike reviewLike = ReviewLike.builder()
+                    .user(user)
+                    .review(review)
+                    .build();
+
+            reviewLikeRepository.save(reviewLike);
+
+            return reviewLikeRepository.countArticleLikeByReview(reviewLike.getReview());
+        }
+        // 좋아요 한 정보가 있다면
+        else {
+            ReviewLike tmp = reviewLikeRepository.findByReviewAndUser(review, user).get();
+            reviewLikeRepository.delete(tmp);
+
+            Review review1 = reviewRepository.findById(reviewId).get();
+
+            return reviewLikeRepository.countArticleLikeByReview(review1);
+        }
+    }
+
+
+
+    @Transactional
+    public Optional<Integer> likeVip(String userId, Long vipId) {
+        // 만약 articleLike 정보가 있으면 좋아요 한 상태임
+        User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
+        Vip vip = vipRepository.findById(vipId).orElseThrow(NotFoundException::new);
+
+        if(vipLikeRepository.findByVipAndUser(vip, user).isEmpty()){
+
+            VipLike vipLike = VipLike.builder()
+                    .user(user)
+                    .vip(vip)
+                    .build();
+
+            vipLikeRepository.save(vipLike);
+
+            return vipLikeRepository.countArticleLikeByVip(vipLike.getVip());
+        }
+        // 좋아요 한 정보가 있다면
+        else {
+            VipLike tmp = vipLikeRepository.findByVipAndUser(vip, user).get();
+            vipLikeRepository.delete(tmp);
+
+            Vip vip1 = vipRepository.findById(vipId).get();
+
+            return vipLikeRepository.countArticleLikeByVip(vip1);
+        }
     }
 }

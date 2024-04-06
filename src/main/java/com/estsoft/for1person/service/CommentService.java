@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -174,7 +175,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void recommendArticle(String userId, Long commentCommonId) {
+    public Optional<Integer> recommendArticle(String userId, Long commentCommonId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentCommon comment = commentCommonRepository.findById(commentCommonId).orElseThrow(NotFoundException::new);
@@ -187,17 +188,24 @@ public class CommentService {
                     .build();
 
             articleRecommendRepository.save(articleRecommend);
+
+            return articleRecommendRepository.countArticleRecommendByCommentCommon(articleRecommend.getCommentCommon());
         }
+
 
         // 좋아요 한 정보가 있다면
         else {
             ArticleRecommend tmp = articleRecommendRepository.findByCommentCommonAndUser(comment, user).get();
             articleRecommendRepository.delete(tmp);
+
+            CommentCommon comment2 = commentCommonRepository.findById(commentCommonId).get();
+
+            return articleRecommendRepository.countArticleRecommendByCommentCommon(comment2);
         }
 
     }
     @Transactional
-    public void recommendReview(String userId, Long commentReviewId) {
+    public Optional<Integer> recommendReview(String userId, Long commentReviewId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentReview comment = commentReviewRepository.findById(commentReviewId).orElseThrow(NotFoundException::new);
@@ -210,18 +218,24 @@ public class CommentService {
                     .build();
 
             reviewRecommendRepository.save(reviewRecommend);
+
+            return reviewRecommendRepository.countReviewRecommendByCommentReview(reviewRecommend.getCommentReview());
         }
 
         // 좋아요 한 정보가 있다면
         else {
             ReviewRecommend tmp = reviewRecommendRepository.findByCommentReviewAndUser(comment, user).get();
             reviewRecommendRepository.delete(tmp);
+
+            CommentReview comment2 = commentReviewRepository.findById(commentReviewId).get();
+
+            return reviewRecommendRepository.countReviewRecommendByCommentReview(comment2);
         }
 
     }
 
     @Transactional
-    public void recommendVip(String userId, Long commentVipId) {
+    public Optional<Integer> recommendVip(String userId, Long commentVipId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentVip comment = commentVipRepository.findById(commentVipId).orElseThrow(NotFoundException::new);
@@ -234,12 +248,18 @@ public class CommentService {
                     .build();
 
             vipRecommendRepository.save(vipRecommend);
+
+            return vipRecommendRepository.countVipRecommendByCommentVip(vipRecommend.getCommentVip());
         }
 
         // 좋아요 한 정보가 있다면
         else {
             VipRecommend tmp = vipRecommendRepository.findByCommentVipAndUser(comment, user).get();
             vipRecommendRepository.delete(tmp);
+
+            CommentVip comment2 = commentVipRepository.findById(commentVipId).get();
+
+            return vipRecommendRepository.countVipRecommendByCommentVip(comment2);
         }
 
     }
