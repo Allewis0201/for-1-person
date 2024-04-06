@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -41,21 +42,21 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.getAllCommentVip());
     }
     //==================================================================================================================
-    // common 하나의 댓글 상세 보기
-    @GetMapping("/api/comment/common/{comment_id}")
-    public ResponseEntity<CommentCommon> getCommonComment(@PathVariable("comment_id") Long commentId) {
-        return ResponseEntity.ok().body(commentService.getCommentCommon(commentId));
-    }
-    // review 하나의 댓글 상세 보기
-    @GetMapping("/api/comment/review/{comment_id}")
-    public ResponseEntity<CommentReview> getReviewComment(@PathVariable("comment_id") Long commentId) {
-        return ResponseEntity.ok().body(commentService.getCommentReview(commentId));
-    }
-    // vip 하나의 댓글 상세 보기
-    @GetMapping("/api/comment/vip/{comment_id}")
-    public ResponseEntity<CommentVip> getVipComment(@PathVariable("comment_id") Long commentId) {
-        return ResponseEntity.ok().body(commentService.getCommentVip(commentId));
-    }
+//    // common 하나의 댓글 상세 보기
+//    @GetMapping("/api/comment/common/{comment_id}")
+//    public ResponseEntity<CommentCommon> getCommonComment(@PathVariable("comment_id") Long commentId) {
+//        return ResponseEntity.ok().body(commentService.getCommentCommon(commentId));
+//    }
+//    // review 하나의 댓글 상세 보기
+//    @GetMapping("/api/comment/review/{comment_id}")
+//    public ResponseEntity<CommentReview> getReviewComment(@PathVariable("comment_id") Long commentId) {
+//        return ResponseEntity.ok().body(commentService.getCommentReview(commentId));
+//    }
+//    // vip 하나의 댓글 상세 보기
+//    @GetMapping("/api/comment/vip/{comment_id}")
+//    public ResponseEntity<CommentVip> getVipComment(@PathVariable("comment_id") Long commentId) {
+//        return ResponseEntity.ok().body(commentService.getCommentVip(commentId));
+//    }
 
     //==================================================================================================================
     // common 하나의 댓글 상세 보기
@@ -80,11 +81,12 @@ public class CommentController {
     // 댓글 쓰기
     // 댓글 내용을 받을 DTO 필요
     @PostMapping("/api/comment/common/{article_id}")
-    public void createCommentCommon(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
+    public ResponseEntity<?> createCommentCommon(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
-
-        commentService.createCommentCommon(userId,articleId,request);
+        commentService.createCommentCommon(userId, articleId, request);
+        return ResponseEntity.ok().body(Map.of("message", "Comment created successfully"));
     }
+
     @PostMapping("/api/comment/review/{article_id}")
     public void createCommentReview(@PathVariable("article_id") Long articleId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();

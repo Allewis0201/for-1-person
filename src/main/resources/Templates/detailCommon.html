@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
     <script th:src="@{/js/modal.js}"></script>
+    <script th:src="@{/js/detailCommon.js}"></script>
     <!-- detail page 에서 사용할 추가 파일 -->
     <link rel="stylesheet" th:href="@{/css/detailpage.css}">
 </head>
@@ -69,26 +70,16 @@
             </div>
         </div>
         <div>
-            <div class="comment">
-                <div class="comment2">
-                    <p class="user">데이터</p>
+            <div class="comment" th:if="${comments.size()} != 0">
+                <div class="comment2" th:each="comment : ${comments}">
+                    <p class="user-nickname"  th:text="${comment.user.nickname}"></p>
+                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>
                     <!--날짜 입력-->
-                    <label><input></label>
+                    <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
                 </div>
                 <!--댓글내용 데이터 -->
-                <p>데이터</p>
+                <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
             </div>
-
-            <div class="comment" th:each="comment : ${comments}">    <!-- comment 갯수 만큼 반복 -->
-                <div class="comment2">
-
-                    <p class="user" th:text="${comment.user.nickname}">닉네임</p>
-                    <!--날짜 입력-->
-                    <label><input></label>
-                </div>
-                <p th:text="${comment.body}">내용</p>
-            </div>
-        </div>
         <!--페이징 부분 시작-->
         <div class="bottom">
             <nav>
@@ -114,21 +105,23 @@
             </nav>
             <!--페이징 부분 완료-->
         </div>
-        <form class="write-comments">
+            <form id="commentCommonForm" class="write-comments" th:action="@{/api/comment/common/{articleId}(articleId=${article.articleId})}" th:method="post">
+
+
             <div class="write-comment">
-                <p>댓글 작성</p>
-                <div class="checkbox">
-                    <label><input type="checkbox" value="익명체크">익명 체크</label>
-                    <button class="btn2">댓글 등록</button>
+                    <p>댓글 작성</p>
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="anonymous">익명 체크</label>
+                        <button class="btn2" type="submit">댓글 등록</button>
+                    </div>
                 </div>
-            </div>
-            <div class="write-comment2">
-                <label for="text-box"></label>
-                <textarea class="form-control" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ"
-                          rows="3"
-                          required></textarea>
-            </div>
-        </form>
+                <div class="write-comment2">
+                    <label for="text-box"></label>
+                    <textarea class="form-control"  name="body" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
+                              required></textarea>
+                </div>
+            </form>
+
         <div class="btn-up">
             <button id="to-top" onclick="window.scrollTo(0, 0);">
                 <img th:src="@{/Img/img_18.png}" alt=""></button>
