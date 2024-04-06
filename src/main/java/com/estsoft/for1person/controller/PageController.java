@@ -49,14 +49,11 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        if (articleId == null) {
-            model.addAttribute("article", new ArticleViewResponse());
-        } else {
-            Article article = articleService.findArticleId(articleId);
-            model.addAttribute("article", article.toViewResponse());
-        }
+        model.addAttribute("article", new ArticleViewResponse());
         return "writeBulletin";
     }
+
+
 
     @GetMapping("/newArticleReview")
     public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
@@ -64,12 +61,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        if (articleId == null) {
-            model.addAttribute("article", new ReviewViewResponse());
-        } else {
-            Review review = articleService.findReviewId(articleId);
-            model.addAttribute("article", review.toViewResponse());
-        }
+        model.addAttribute("article", new ReviewViewResponse());
         return "writeReview";
     }
 
@@ -80,16 +72,42 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        if (articleId == null) {
-            model.addAttribute("article", new VipViewResponse());
-        } else {
-            Vip vip = articleService.findVipId(articleId);
-            model.addAttribute("article", vip.toViewResponse());
-        }
+        model.addAttribute("article", new VipViewResponse());
         return "writeVIP";
     }
 
+    @GetMapping("/editArticleBulletin")
+    public String editArticleBulletin(@RequestParam("articleId") Long articleId, Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Article article = articleService.findArticleId(articleId);
+        model.addAttribute("article", article.toViewResponse());
+        return "editBulletin";
+    }
 
+    @GetMapping("/editArticleReview")
+    public String editArticleReview(@RequestParam("articleId") Long articleId, Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Review review = articleService.findReviewId(articleId);
+        model.addAttribute("article", review.toViewResponse());
+        return "editReview";
+    }
+
+    @GetMapping("/editArticleVip")
+    public String editArticleVip(@RequestParam("articleId") Long articleId, Model model, Authentication authentication){
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Vip vip = articleService.findVipId(articleId);
+        model.addAttribute("article", vip.toViewResponse());
+        return "editVip";
+    }
 
     @GetMapping("/common/{articleId}")
     public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication) {

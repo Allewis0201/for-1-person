@@ -54,7 +54,7 @@ public class Review {
         this.title = title;
         this.content = content;
         this.views = views;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.need = need;
         this.user = user;
         this.score = score;
@@ -64,7 +64,7 @@ public class Review {
     {
         this.title = title;
         this.content = content;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.score = score;
     }
 

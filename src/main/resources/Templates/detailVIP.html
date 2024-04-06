@@ -21,7 +21,7 @@
 
 <div class="detail-write">
     <!--게시판 위치 타임리프&데이터 필요 -->
-    <p class="path">일반게시판</p>
+    <p class="path">VIP게시판</p>
 
     <div class="content">
         <table class="table">
@@ -52,7 +52,7 @@
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
         <form class="btn">
-             <button class="btn1">추천</button>
+            <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
             <div class="comments-img">
@@ -60,7 +60,9 @@
                 <p>댓글</p>
             </div>
             <div class="btn2">
-                <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
+                <a th:href="@{/editArticleVip(articleId=${article.vipId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt=""> 글 수정</button>
+                </a>
                 <a th:href="@{/newArticleVip}">
                     <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
                 </a>

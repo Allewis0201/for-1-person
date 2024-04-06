@@ -5,10 +5,15 @@ package com.estsoft.for1person.controller;
 import com.estsoft.for1person.dto.AddArticleRequest;
 import com.estsoft.for1person.dto.AddReviewRequest;
 import com.estsoft.for1person.dto.AddVipRequest;
+import com.estsoft.for1person.entity.Article;
+import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.User;
+import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
@@ -92,45 +97,62 @@ public class EditorController {
     // 아티클 수정
     // 수정 내용을 담을 DTO 필요
     @PutMapping("/api/common/{article_id}")
-    public void updateArticle(@PathVariable("article_id") Long articleId,@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
         String userId = authentication.getName();
-        AddArticleRequest request = AddArticleRequest.builder().
-                title(title).
-                content(content).
-                views(0L).
-                need(1).
-                anonymous(false).
-                build();
-
-        articleService.updateArticle(userId, articleId, request);
+        Article updateArticle = articleService.updateArticle(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
     }
+
     @PutMapping("/api/review/{article_id}")
-    public void updateReview(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+    public ResponseEntity<Review> updateReview(@PathVariable("article_id") Long articleId, @RequestBody AddReviewRequest request, Authentication authentication) {
         String userId = authentication.getName();
-        AddReviewRequest request = AddReviewRequest.builder().
-                title(title).
-                content(content).
-                views(0L).
-                need(2).
-                anonymous(false).
-                score(3).
-                build();
-        articleService.updateReview(userId, articleId, request);
+
+        Review updateReview = articleService.updateReview(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateReview);
     }
 
     @PutMapping("/api/vip/{article_id}")
-    public void updateVip(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+    public ResponseEntity<Vip> updateVip(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
         String userId = authentication.getName();
-        AddVipRequest request = AddVipRequest.builder().
-                title(title).
-                content(content).
-                views(0L).
-                need(1).
-                anonymous(false).
-                build();
 
-        articleService.updateVip(userId, articleId, request);
+        Vip updateVip = articleService.updateVip(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateVip);
     }
+
+//    @PutMapping("/api/common/{article_id}")
+//    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+//        String userId = authentication.getName();
+//        Article updateArticle = articleService.updateArticle(userId, articleId, request);
+//        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
+//    }
+//
+//    @PutMapping("/api/review/{article_id}")
+//    public void updateReview(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddReviewRequest request = AddReviewRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(2).
+//                anonymous(false).
+//                score(3).
+//                build();
+//        articleService.updateReview(userId, articleId, request);
+//    }
+//
+//    @PutMapping("/api/vip/{article_id}")
+//    public void updateVip(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddVipRequest request = AddVipRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(1).
+//                anonymous(false).
+//                build();
+//
+//        articleService.updateVip(userId, articleId, request);
+//    }
 
     // 아티클 삭제
     @DeleteMapping("/api/common/{article_id}")

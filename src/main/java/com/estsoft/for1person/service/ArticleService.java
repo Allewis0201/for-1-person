@@ -6,7 +6,6 @@ import com.estsoft.for1person.dto.AddVipRequest;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +70,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public void updateArticle(String userId, Long articleId, AddArticleRequest request) {
+    public Article updateArticle(String userId, Long articleId, AddArticleRequest request) {
         Article article = articleRepository.findById(articleId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
         //맞으면 dto 내용을 article에 넣어서 변경
@@ -83,10 +82,11 @@ public class ArticleService {
         // 후 저장
 
         //articleRepository.save(article);
+        return article;
     }
 
     @Transactional
-    public void updateReview(String userId, Long reviewId, AddReviewRequest request) {
+    public Review updateReview(String userId, Long reviewId, AddReviewRequest request) {
         Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundException::new);
         //userId 맞는지 확인
         //맞으면 dto 내용을 review에 넣어서 변경
@@ -98,10 +98,12 @@ public class ArticleService {
 
         // 후 저장
         //reviewRepository.save(review);
+
+        return review;
     }
 
     @Transactional
-    public void updateVip(String userId, Long vipId, AddVipRequest request) { // Changed from Article to Vip, and parameter name from articleId to vipId
+    public Vip updateVip(String userId, Long vipId, AddArticleRequest request) { // Changed from Article to Vip, and parameter name from articleId to vipId
         Vip vip = vipRepository.findById(vipId).orElseThrow(NotFoundException::new); // Changed from Article to Vip
         //userId 맞는지 확인
         //맞으면 dto 내용을 vip에 넣어서 변경
@@ -114,6 +116,7 @@ public class ArticleService {
 
         // 후 저장
         //vipRepository.save(vip); // Changed from article to vip
+        return vip;
     }
 
     public void deleteArticle(String userId, Long articleId) {

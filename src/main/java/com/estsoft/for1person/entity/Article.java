@@ -51,7 +51,7 @@ public class Article {
         this.title = title;
         this.content = content;
         this.views = views;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.need = need;
         this.user = user;
     }
@@ -60,7 +60,7 @@ public class Article {
     {
         this.title = title;
         this.content = content;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
     public CommonViewResponse toViewResponse() // 생성자를 사용해 객체 생성

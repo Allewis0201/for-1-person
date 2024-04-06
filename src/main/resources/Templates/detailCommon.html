@@ -52,7 +52,7 @@
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
         <form class="btn">
-             <button class="btn1">추천</button>
+            <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
             <div class="comments-img">
@@ -60,7 +60,9 @@
                 <p>댓글</p>
             </div>
             <div class="btn2">
-                <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
+                <a th:href="@{/editArticleBulletin(articleId=${article.articleId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt=""> 글 수정</button>
+                </a>
                 <a th:href="@{/newArticleBulletin}">
                     <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
                 </a>
