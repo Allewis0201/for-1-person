@@ -76,9 +76,9 @@
                     <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>
                     <!--날짜 입력-->
                     <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
+                    <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
                 </div>
                 <!--댓글내용 데이터 -->
-                <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
             </div>
         <!--페이징 부분 시작-->
         <div class="bottom">
