@@ -205,12 +205,6 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
 
-
-//        List<Integer> likes = articleService.getAllLikeArticle(articles);
-//        model.addAttribute("likes",likes);
-
-
-
         return "bulletinboard";
     }
 
@@ -227,14 +221,19 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
 
-//        List<Integer> likes = articleService.getAllLikeReview(reviews);
-//        model.addAttribute("likes",likes);
 
         return "review-board";
     }
 
     @GetMapping("/vips")
     public String getVip(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        if (user.get().getAuthor()<3){
+            return "redirect:/commons?error=accessForbidden";
+        }
+        model.addAttribute("user", user.get());
+
         List<VipViewResponse> vips = articleService.getAllVip().stream()
                 .map(Vip::toViewResponse)
                 .toList();
@@ -242,13 +241,6 @@ public class PageController {
         List<VipViewResponse> result = articleService.getAllLikeVip(vips);
         model.addAttribute("list", result);
 
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-
-
-//        List<Integer> likes = articleService.getAllLikeVip(vips);
-//        model.addAttribute("likes",likes);
 
         return "vip-board";
     }
