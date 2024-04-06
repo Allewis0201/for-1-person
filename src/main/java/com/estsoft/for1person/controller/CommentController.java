@@ -135,16 +135,19 @@ public class CommentController {
     //==================================================================================================================
     //댓글 좋아요 기능, 이미 좋아요 되어 있으면 좋아요 취소
     @PostMapping("/common/like/{user_id}/{article_id}")
-    public void recommendArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        commentService.recommendArticle(user_id, article_id);
+    public Integer recommendArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        Integer result = commentService.recommendArticle(user_id, article_id).get();
+        return result;
     }
     @PostMapping("/review/like/{user_id}/{article_id}")
-    public void recommendReview(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        commentService.recommendReview(user_id, article_id);
+    public Integer recommendReview(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        Integer result = commentService.recommendReview(user_id, article_id).get();
+        return result;
     }
     @PostMapping("/vip/like/{user_id}/{article_id}")
-    public void recommendVip(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        commentService.recommendVip(user_id, article_id);
+    public Integer recommendVip(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        Integer result = commentService.recommendVip(user_id, article_id).get();
+        return result;
     }
 
 
