@@ -1,7 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 수정 버튼 이벤트 리스너
     const modifyButton = document.getElementById('modify-btn');
     if (modifyButton) {
         modifyButton.addEventListener('click', function(event) {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let title = document.getElementById('title').value;
             let content = myEditor.getData();
 
-            // 서버로 데이터 전송
             fetch(`/api/common/${articleId}`, {
                 method: 'PUT',
                 headers: {

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 수정 버튼 이벤트 리스너
     const modifyButton = document.getElementById('modify-btn');
     if (modifyButton) {
         modifyButton.addEventListener('click', function(event) {
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let content = myEditor.getData();
             let score = document.getElementById('score').value;
 
-            // 서버로 데이터 전송
             fetch(`/api/review/${articleId}`, {
                 method: 'PUT',
                 headers: {
@@ -34,18 +32,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function setInitialRating() {
-    const currentScore = parseInt(document.getElementById('score').value, 10); // 현재 별점 값
-    const stars = document.querySelectorAll('.star i');
-
-    stars.forEach((star, index) => {
-        if (index < currentScore) {
-            star.classList.remove('far');
-            star.classList.add('fas');
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    setInitialRating();
-});
