@@ -84,6 +84,7 @@
                     <!--날짜 입력-->
                     <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
                     <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentVipId}"></p>
+                    <button type="button" th:attr="commentId=${comment.commentVipId}" class="deleteCommentBtn">삭제</button>
                 </div>
                 <!--댓글내용 데이터 -->
 
