@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CommentVipRepository extends JpaRepository<CommentVip, Long> {
 
-    List<CommentVip> findAllByCommentVipId(Long articleId);
+    List<CommentVip> findAllByVip(Vip vip);
 
     void deleteAllByVip(Vip vip);
 }

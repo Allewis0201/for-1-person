@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CommentCommonRepository extends JpaRepository<CommentCommon, Long> {
-    List<CommentCommon> findAllByCommentCommonId(Long articleId);
+    List<CommentCommon> findAllByArticle(Article article);
 
     void deleteAllByArticle(Article article);
 }

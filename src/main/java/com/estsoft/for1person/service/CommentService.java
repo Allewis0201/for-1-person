@@ -5,7 +5,6 @@ import com.estsoft.for1person.dto.AddCommentRequest;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,15 +49,24 @@ public class CommentService {
     }
 
     public List<CommentCommon> getArticleCommonComment(Long articleId) {
-        return commentCommonRepository.findAllByCommentCommonId(articleId);
+
+        Article article = articleRepository.findById(articleId).get();
+
+        return commentCommonRepository.findAllByArticle(article);
     }
 
     public List<CommentVip> getArticleVipComment(Long articleId) {
-        return commentVipRepository.findAllByCommentVipId(articleId);
+
+        Vip vip = vipRepository.findById(articleId).get();
+
+        return commentVipRepository.findAllByVip(vip);
     }
 
     public List<CommentReview> getArticleReviewComment(Long articleId) {
-        return commentReviewRepository.findAllByCommentReviewId(articleId);
+
+        Review review = reviewRepository.findById(articleId).get();
+
+        return commentReviewRepository.findAllByReview(review);
     }
 
 
