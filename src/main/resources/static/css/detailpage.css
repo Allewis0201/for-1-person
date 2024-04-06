@@ -135,6 +135,13 @@ nav a img{
     background: none;
     margin-right: 10px;
 }
+
+.comment2 button{
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+    background: #ffffff;
+    padding : 3px;
+}
 .write-comments{
     border: 1px solid #BDBDBD;
     margin: 20px;
