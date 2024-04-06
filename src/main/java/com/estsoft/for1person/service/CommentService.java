@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -187,12 +188,19 @@ public class CommentService {
                     .build();
 
             articleRecommendRepository.save(articleRecommend);
+
+
         }
+
 
         // 좋아요 한 정보가 있다면
         else {
             ArticleRecommend tmp = articleRecommendRepository.findByCommentCommonAndUser(comment, user).get();
             articleRecommendRepository.delete(tmp);
+
+
+
+
         }
 
     }
@@ -210,12 +218,16 @@ public class CommentService {
                     .build();
 
             reviewRecommendRepository.save(reviewRecommend);
+
+
         }
 
         // 좋아요 한 정보가 있다면
         else {
             ReviewRecommend tmp = reviewRecommendRepository.findByCommentReviewAndUser(comment, user).get();
             reviewRecommendRepository.delete(tmp);
+
+
         }
 
     }
@@ -234,14 +246,43 @@ public class CommentService {
                     .build();
 
             vipRecommendRepository.save(vipRecommend);
+
+
         }
 
         // 좋아요 한 정보가 있다면
         else {
             VipRecommend tmp = vipRecommendRepository.findByCommentVipAndUser(comment, user).get();
             vipRecommendRepository.delete(tmp);
+
         }
 
+    }
+
+
+    @Transactional
+    public Optional<Integer> getRecommendArticle(Long commentCommonId)
+    {
+        CommentCommon commentCommon = commentCommonRepository.findById(commentCommonId).get();
+
+        return articleRecommendRepository.countArticleRecommendByCommentCommon(commentCommon);
+    }
+
+    @Transactional
+    public Optional<Integer> getRecommendReview(Long commentReviewId)
+    {
+        CommentReview commentReview = commentReviewRepository.findById(commentReviewId).get();
+
+        return reviewRecommendRepository.countReviewRecommendByCommentReview(commentReview);
+    }
+
+
+    @Transactional
+    public Optional<Integer> getRecommendVip(Long commentVipId)
+    {
+        CommentVip commentVip = commentVipRepository.findById(commentVipId).get();
+
+        return vipRecommendRepository.countVipRecommendByCommentVip(commentVip);
     }
 
 

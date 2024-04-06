@@ -128,17 +128,42 @@ public class ArticleController {
 
     //==================================================================================================================
     //게시글 좋아요 기능, 이미 좋아요 되어 있으면 좋아요 취소
-    @PostMapping("/api/common/like/{user_id}/{article_id}")
+    @GetMapping("/api/common/like/{user_id}/{article_id}")
     public void likeCommonArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeArticle(user_id, article_id);
+
+
     }
-    @PostMapping("/api/review/like/{user_id}/{article_id}")
+    @GetMapping("/api/review/like/{user_id}/{article_id}")
     public void likeReviewArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeReview(user_id, article_id);
+
+
     }
-    @PostMapping("/api/vip/like/{user_id}/{article_id}")
+    @GetMapping("/api/vip/like/{user_id}/{article_id}")
     public void likeVipArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeVip(user_id, article_id);
     }
+
+    @GetMapping("/api/common/like/{article_id}")
+    public Integer getLikeCommonArticle(@PathVariable("article_id") Long article_id)
+    {
+        return articleService.getLikeArticle(article_id).get();
+    }
+
+    @GetMapping("/api/review/like/{article_id}")
+    public Integer getLikeReviewArticle(@PathVariable("article_id") Long article_id)
+    {
+        return articleService.getLikeReview(article_id).get();
+    }
+
+
+    @GetMapping("/api/vip/like/{article_id}")
+    public Integer getLikeVipArticle(@PathVariable("article_id") Long article_id)
+    {
+        return articleService.getLikeVip(article_id).get();
+    }
+
+
 
 }
