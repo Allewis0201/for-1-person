@@ -35,7 +35,7 @@
                 <td colspan="4" class="data2" th:text="${user.nickname}">닉네임</td>
 
                 <th class="th3">추천</th>
-                <td class="data3" >데이터</td>
+                <td class="data3">데이터</td>
 
                 <th class="th4">댓글</th>
                 <td class="data4">데이터</td>
@@ -52,7 +52,7 @@
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
         <form class="btn">
-             <button class="btn1">추천</button>
+            <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
             <div class="comments-img">
@@ -74,51 +74,63 @@
                 <!--댓글내용 데이터 -->
                 <p>데이터</p>
             </div>
-            <!--페이징 부분 시작-->
-            <div class="bottom">
-                <nav>
-                    <ul>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                        <li><a>5</a></li>
-                        <li>
-                            <a><img th:src="@{/Img/img_12.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_13.png}" alt=""></a>
-                        </li>
-                    </ul>
-                </nav>
-                <!--페이징 부분 완료-->
-            </div>
-            <form class="write-comments">
-                <div class="write-comment">
-                    <p>댓글 작성</p>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="익명체크">익명 체크</label>
-                        <button class="btn2">댓글 등록</button>
-                    </div>
+
+            <div class="comment" th:each="comment : ${comments}">    <!-- comment 갯수 만큼 반복 -->
+                <div class="comment2">
+
+                    <p class="user" th:text="${comment.user.nickname}">닉네임</p>
+                    <!--날짜 입력-->
+                    <label><input></label>
                 </div>
-                <div class="write-comment2">
-                    <label for="text-box"></label>
-                    <textarea class="form-control" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
-                              required></textarea>
-                </div>
-            </form>
-            <div class="btn-up">
-                <button id="to-top" onclick="window.scrollTo(0, 0);">
-                    <img th:src="@{/Img/img_18.png}" alt=""></button>
+                <p th:text="${comment.body}">내용</p>
             </div>
         </div>
+        <!--페이징 부분 시작-->
+        <div class="bottom">
+            <nav>
+                <ul>
+                    <li>
+                        <a><img th:src="@{/Img/img_10.png}" alt=""></a>
+                    </li>
+                    <li>
+                        <a><img th:src="@{/Img/img_10.png}" alt=""></a>
+                    </li>
+                    <li><a>1</a></li>
+                    <li><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                    <li>
+                        <a><img th:src="@{/Img/img_12.png}" alt=""></a>
+                    </li>
+                    <li>
+                        <a><img th:src="@{/Img/img_13.png}" alt=""></a>
+                    </li>
+                </ul>
+            </nav>
+            <!--페이징 부분 완료-->
+        </div>
+        <form class="write-comments">
+            <div class="write-comment">
+                <p>댓글 작성</p>
+                <div class="checkbox">
+                    <label><input type="checkbox" value="익명체크">익명 체크</label>
+                    <button class="btn2">댓글 등록</button>
+                </div>
+            </div>
+            <div class="write-comment2">
+                <label for="text-box"></label>
+                <textarea class="form-control" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ"
+                          rows="3"
+                          required></textarea>
+            </div>
+        </form>
+        <div class="btn-up">
+            <button id="to-top" onclick="window.scrollTo(0, 0);">
+                <img th:src="@{/Img/img_18.png}" alt=""></button>
+        </div>
     </div>
+</div>
 </div>
 </body>
 </html>
