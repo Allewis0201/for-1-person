@@ -198,10 +198,12 @@ public class PageController {
                 .map(Article::toViewResponse)
                 .toList();
 
+        List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
+        model.addAttribute("list", result);
+
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        model.addAttribute("list", articles);
 
         return "bulletinboard";
     }
@@ -212,24 +214,33 @@ public class PageController {
                 .map(Review::toViewResponse)
                 .toList();
 
+        List<ReviewViewResponse> result = articleService.getAllLikeReview(reviews);
+        model.addAttribute("list", result);
+
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
-        model.addAttribute("list", reviews);
+
 
         return "review-board";
     }
 
     @GetMapping("/vips")
     public String getVip(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        if (user.get().getAuthor()<3){
+            return "redirect:/commons?error=accessForbidden";
+        }
+        model.addAttribute("user", user.get());
+
         List<VipViewResponse> vips = articleService.getAllVip().stream()
                 .map(Vip::toViewResponse)
                 .toList();
 
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-        model.addAttribute("list", vips);
+        List<VipViewResponse> result = articleService.getAllLikeVip(vips);
+        model.addAttribute("list", result);
+
 
         return "vip-board";
     }

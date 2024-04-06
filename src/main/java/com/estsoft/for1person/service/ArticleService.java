@@ -366,5 +366,15 @@ public class ArticleService {
     }
 
 
+    public List<UserViewResponse> getAllArticleByUserId(List<UserViewResponse> users) {
 
+        for(UserViewResponse user : users)
+        {
+            User tmp = userRepository.findByUserId(user.getUserId()).get();
+            Integer count = articleRepository.countArticleByUser(tmp) + reviewRepository.countReviewByUser(tmp) + vipRepository.countVipByUser(tmp);
+            user.setArticleCount(count);
+        }
+
+        return users;
+    }
 }

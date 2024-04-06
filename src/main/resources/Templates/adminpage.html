@@ -71,8 +71,8 @@
             <th class="th-title2">아이디</th>
             <th class="th-title3">닉네임</th>
             <th class="th-title4">회원등급</th>
-<!--            <th class="th-title5">게시글수</th>-->
-<!--            <th class="th-title6">댓글수</th>-->
+            <th class="th-title5">게시글수</th>
+            <th class="th-title6">댓글수</th>
         </tr>
         </thead>
         <tbody>
@@ -86,8 +86,8 @@
                 <span th:case="3">VIP</span>
                 <span th:case="4">운영자</span>
             </td>
-<!--            <td>게시글의 수</td>-->
-<!--            <td>댓글의 수</td>-->
+            <td th:text="${user.articleCount}">게시글의 수</td>
+            <td th:text="${user.commentCount}">댓글의 수</td>
         </tr>
         </tbody>
     </table>

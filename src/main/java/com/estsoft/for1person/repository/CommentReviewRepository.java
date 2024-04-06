@@ -3,6 +3,7 @@ package com.estsoft.for1person.repository;
 import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.CommentReview;
 import com.estsoft.for1person.entity.Review;
+import com.estsoft.for1person.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +18,6 @@ public interface CommentReviewRepository extends JpaRepository<CommentReview, Lo
     void deleteAllByReview(Review review);
 
     Optional<Integer> countCommentReviewByReview(Review review);
+
+    Integer countCommentReviewByUser(User user);
 }

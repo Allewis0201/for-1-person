@@ -1,5 +1,6 @@
 package com.estsoft.for1person.entity;
 
+import com.estsoft.for1person.dto.UserViewResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
@@ -49,7 +50,7 @@ public class User implements UserDetails {
         this.userId = userId;
         this.password = password;
         this.nickname = nickname;
-        this.author = author == null ? 1: author; // 기본 디폴트 값은 '1'로 설정함
+        this.author = author == null ? 4: author; // 기본 디폴트 값은 '1'로 설정함
         this.createdAt = createdAt;
         this.status = status;
     }
@@ -98,4 +99,20 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    public UserViewResponse toViewResponse()
+    {
+        return UserViewResponse.builder()
+                .userId(userId)
+                .password(password)
+                .nickname(nickname)
+                .author(author)
+                .createdAt(createdAt)
+                .status(status)
+                .articleCount(0)
+                .commentCount(0)
+                .build();
+    }
+
 }

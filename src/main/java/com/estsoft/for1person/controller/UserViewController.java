@@ -1,7 +1,10 @@
 package com.estsoft.for1person.controller;
 
+import com.estsoft.for1person.dto.UserViewResponse;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.entity.User;
+import com.estsoft.for1person.service.ArticleService;
+import com.estsoft.for1person.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +20,13 @@ import java.util.Optional;
 public class UserViewController {
 
     private UserRepository userRepository;
+    private ArticleService articleService;
+    private CommentService commentService;
 
-    @Autowired
-    public UserViewController(UserRepository userRepository){
+    public UserViewController(UserRepository userRepository, ArticleService articleService, CommentService commentService) {
         this.userRepository = userRepository;
+        this.articleService = articleService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/login")
@@ -29,12 +35,12 @@ public class UserViewController {
     }
 
     @GetMapping("/membership")
-    public String membership(){
+    public String membership() {
         return "membership";
     }
 
     @GetMapping("/mainScreen")
-    public String mainScreen(Model model, Authentication authentication){
+    public String mainScreen(Model model, Authentication authentication) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
@@ -51,35 +57,41 @@ public class UserViewController {
 
     @GetMapping("/admin")
     public String admin(Model model, Authentication authentication, @RequestParam(required = false) String searchType,
-                        @RequestParam(required = false) String searchKey){
+                        @RequestParam(required = false) String searchKey) {
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
         model.addAttribute("total", userRepository.countAllUsers());
 
-        if (searchType !=null && searchKey !=null && !searchKey.isEmpty()){
+        if (searchType != null && searchKey != null && !searchKey.isEmpty()) {
             List<User> result = new ArrayList<>();
-            if ("searchId".equals(searchType)){
-                if(userRepository.findByUserId(searchKey).isPresent()){
+            if ("searchId".equals(searchType)) {
+                if (userRepository.findByUserId(searchKey).isPresent()) {
                     result.add(userRepository.findByUserId(searchKey).get());
                 }
-            }
-            else if ("searchNickname".equals(searchType)){
-                if(userRepository.findByNickname(searchKey).isPresent()){
+            } else if ("searchNickname".equals(searchType)) {
+                if (userRepository.findByNickname(searchKey).isPresent()) {
                     result.add(userRepository.findByNickname(searchKey).get());
                 }
             }
 
-            if(result.isEmpty()){
+            if (result.isEmpty()) {
                 model.addAttribute("message", "존재하지 않는 회원입니다.");
-            }
-            else {
+            } else {
                 model.addAttribute("userList", result);
                 return "adminpage";
             }
         }
         List<User> userList = userRepository.findAll();
-        model.addAttribute("userList", userList);
+
+        List<UserViewResponse> resultList = userList.stream()
+                .map(User::toViewResponse)
+                .toList();
+
+        List<UserViewResponse> resultList2 = articleService.getAllArticleByUserId(resultList);
+        List<UserViewResponse> resultList3 = commentService.getAllCommentByUserId(resultList2);
+
+        model.addAttribute("userList", resultList3);
         return "adminpage";
     }
 }

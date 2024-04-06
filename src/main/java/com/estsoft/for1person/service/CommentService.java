@@ -2,6 +2,7 @@ package com.estsoft.for1person.service;
 
 
 import com.estsoft.for1person.dto.AddCommentRequest;
+import com.estsoft.for1person.dto.UserViewResponse;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
@@ -340,5 +341,15 @@ public class CommentService {
         Vip vip = vipRepository.findById(articleId).get();
 
         return commentVipRepository.countCommentVipByVip(vip);
+    }
+
+    public List<UserViewResponse> getAllCommentByUserId(List<UserViewResponse> users) {
+        for(UserViewResponse user : users)
+        {
+            User tmp = userRepository.findByUserId(user.getUserId()).get();
+            Integer count = commentCommonRepository.countCommentCommonByUser(tmp) + commentReviewRepository.countCommentReviewByUser(tmp) + commentVipRepository.countCommentVipByUser(tmp);
+            user.setCommentCount(count);
+        }
+        return users;
     }
 }
