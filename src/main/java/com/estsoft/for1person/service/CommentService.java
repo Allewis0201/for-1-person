@@ -175,7 +175,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Optional<Integer> recommendArticle(String userId, Long commentCommonId) {
+    public void recommendArticle(String userId, Long commentCommonId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentCommon comment = commentCommonRepository.findById(commentCommonId).orElseThrow(NotFoundException::new);
@@ -189,7 +189,7 @@ public class CommentService {
 
             articleRecommendRepository.save(articleRecommend);
 
-            return articleRecommendRepository.countArticleRecommendByCommentCommon(articleRecommend.getCommentCommon());
+
         }
 
 
@@ -198,14 +198,14 @@ public class CommentService {
             ArticleRecommend tmp = articleRecommendRepository.findByCommentCommonAndUser(comment, user).get();
             articleRecommendRepository.delete(tmp);
 
-            CommentCommon comment2 = commentCommonRepository.findById(commentCommonId).get();
 
-            return articleRecommendRepository.countArticleRecommendByCommentCommon(comment2);
+
+
         }
 
     }
     @Transactional
-    public Optional<Integer> recommendReview(String userId, Long commentReviewId) {
+    public void recommendReview(String userId, Long commentReviewId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentReview comment = commentReviewRepository.findById(commentReviewId).orElseThrow(NotFoundException::new);
@@ -219,7 +219,7 @@ public class CommentService {
 
             reviewRecommendRepository.save(reviewRecommend);
 
-            return reviewRecommendRepository.countReviewRecommendByCommentReview(reviewRecommend.getCommentReview());
+
         }
 
         // 좋아요 한 정보가 있다면
@@ -227,15 +227,13 @@ public class CommentService {
             ReviewRecommend tmp = reviewRecommendRepository.findByCommentReviewAndUser(comment, user).get();
             reviewRecommendRepository.delete(tmp);
 
-            CommentReview comment2 = commentReviewRepository.findById(commentReviewId).get();
 
-            return reviewRecommendRepository.countReviewRecommendByCommentReview(comment2);
         }
 
     }
 
     @Transactional
-    public Optional<Integer> recommendVip(String userId, Long commentVipId) {
+    public void recommendVip(String userId, Long commentVipId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
         User user = userRepository.findByUserId(userId).orElseThrow(NotFoundException::new);
         CommentVip comment = commentVipRepository.findById(commentVipId).orElseThrow(NotFoundException::new);
@@ -249,7 +247,7 @@ public class CommentService {
 
             vipRecommendRepository.save(vipRecommend);
 
-            return vipRecommendRepository.countVipRecommendByCommentVip(vipRecommend.getCommentVip());
+
         }
 
         // 좋아요 한 정보가 있다면
@@ -257,11 +255,34 @@ public class CommentService {
             VipRecommend tmp = vipRecommendRepository.findByCommentVipAndUser(comment, user).get();
             vipRecommendRepository.delete(tmp);
 
-            CommentVip comment2 = commentVipRepository.findById(commentVipId).get();
-
-            return vipRecommendRepository.countVipRecommendByCommentVip(comment2);
         }
 
+    }
+
+
+    @Transactional
+    public Optional<Integer> getRecommendArticle(Long commentCommonId)
+    {
+        CommentCommon commentCommon = commentCommonRepository.findById(commentCommonId).get();
+
+        return articleRecommendRepository.countArticleRecommendByCommentCommon(commentCommon);
+    }
+
+    @Transactional
+    public Optional<Integer> getRecommendReview(Long commentReviewId)
+    {
+        CommentReview commentReview = commentReviewRepository.findById(commentReviewId).get();
+
+        return reviewRecommendRepository.countReviewRecommendByCommentReview(commentReview);
+    }
+
+
+    @Transactional
+    public Optional<Integer> getRecommendVip(Long commentVipId)
+    {
+        CommentVip commentVip = commentVipRepository.findById(commentVipId).get();
+
+        return vipRecommendRepository.countVipRecommendByCommentVip(commentVip);
     }
 
 

@@ -134,20 +134,38 @@ public class CommentController {
     }
     //==================================================================================================================
     //댓글 좋아요 기능, 이미 좋아요 되어 있으면 좋아요 취소
-    @PostMapping("/common/like/{user_id}/{article_id}")
-    public Integer recommendArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        Integer result = commentService.recommendArticle(user_id, article_id).get();
-        return result;
+    @GetMapping("/common/like/{user_id}/{article_id}")
+    public void recommendArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendArticle(user_id, article_id);
     }
-    @PostMapping("/review/like/{user_id}/{article_id}")
-    public Integer recommendReview(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        Integer result = commentService.recommendReview(user_id, article_id).get();
-        return result;
+    @GetMapping("/review/like/{user_id}/{article_id}")
+    public void recommendReview(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendReview(user_id, article_id);
+
     }
-    @PostMapping("/vip/like/{user_id}/{article_id}")
-    public Integer recommendVip(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
-        Integer result = commentService.recommendVip(user_id, article_id).get();
-        return result;
+    @GetMapping("/vip/like/{user_id}/{article_id}")
+    public void recommendVip(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
+        commentService.recommendVip(user_id, article_id);
+    }
+
+
+    @GetMapping("/api/common/recommend/{article_id}")
+    public Integer getLikeCommonArticle(@PathVariable("article_id") Long article_id)
+    {
+        return commentService.getRecommendArticle(article_id).get();
+    }
+
+    @GetMapping("/api/review/recommend/{article_id}")
+    public Integer getLikeReviewArticle(@PathVariable("article_id") Long review_id)
+    {
+        return commentService.getRecommendReview(review_id).get();
+    }
+
+
+    @GetMapping("/api/vip/recommend/{article_id}")
+    public Integer getLikeVipArticle(@PathVariable("article_id") Long vip_id)
+    {
+        return commentService.getRecommendVip(vip_id).get();
     }
 
 
