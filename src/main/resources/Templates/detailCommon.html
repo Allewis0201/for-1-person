@@ -29,7 +29,7 @@
             <tbody>
             <tr class="table1">
                 <th>제목</th>
-                <td colspan="13" th:text="${article.title}">타이틀</td>
+                <td colspan="14" th:text="${article.title}">타이틀</td>
             </tr>
             <tr class="table2">
                 <th class="th2">닉네임</th>
@@ -46,6 +46,9 @@
 
                 <th class="th6">작성일</th>
                 <td colspan="2" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
+
+                <th class="th7">수정시간</th>
+                <td colspan="2" th:text="${#temporals.format(article.updatedAt, 'yyyy-MM-dd HH:mm')}">수정 시간</td>
             </tr>
             </tbody>
         </table>
