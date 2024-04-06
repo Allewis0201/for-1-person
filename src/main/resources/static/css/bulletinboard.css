@@ -114,3 +114,7 @@ nav a img{
     border-radius: 15px;
     text-decoration: none;
 }
+.btn-right {
+    display: flex;
+    justify-content: right;
+}
