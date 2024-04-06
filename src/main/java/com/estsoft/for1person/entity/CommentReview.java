@@ -23,11 +23,11 @@ public class CommentReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentReviewId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_writer_id")
     private Review review;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_writer_id")
     private User user;
 
@@ -46,13 +46,13 @@ public class CommentReview {
         this.review = review;
         this.user = user;
         this.body = body;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
     public void update(String body, Boolean anonymous)
     {
         this.body = body;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
 
