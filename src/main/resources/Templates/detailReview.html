@@ -55,7 +55,7 @@
         <div class="editor">
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
-        <form class="btn">
+        <form class="btn" th:action="@{/article/review/like/{user_id}/{article_id}(user_id = ${user.userId}, article_id = ${article.reviewId})}">
             <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
