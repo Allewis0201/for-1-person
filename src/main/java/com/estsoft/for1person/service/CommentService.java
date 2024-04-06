@@ -321,4 +321,23 @@ public class CommentService {
     }
 
 
+    public Optional<Integer> getCommentCommonCount(Long articleId) {
+
+        Article article = articleRepository.findById(articleId).get();
+
+        return commentCommonRepository.countCommentCommonByArticle(article);
+    }
+
+    public Optional<Integer> getCommentReviewCount(Long articleId) {
+
+        Review review = reviewRepository.findById(articleId).get();
+
+        return commentReviewRepository.countCommentReviewByReview(review);
+    }
+
+    public Optional<Integer> getCommentVipCount(Long articleId) {
+        Vip vip = vipRepository.findById(articleId).get();
+
+        return commentVipRepository.countCommentVipByVip(vip);
+    }
 }

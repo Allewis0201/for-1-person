@@ -126,6 +126,9 @@ public class PageController {
         Integer like = articleService.getLikeArticle(articleId).get();
         model.addAttribute("articleLike",like);
 
+        Integer commentCount = commentService.getCommentCommonCount(articleId).get();
+        model.addAttribute("commentCount",commentCount);
+
 
         return "detailCommon";
     }
@@ -146,6 +149,9 @@ public class PageController {
 
         Integer like = articleService.getLikeReview(reviewId).get();
         model.addAttribute("reviewLike",like);
+
+        Integer commentCount = commentService.getCommentReviewCount(reviewId).get();
+        model.addAttribute("commentCount",commentCount);
 
 
 
@@ -168,6 +174,10 @@ public class PageController {
 
         Integer like = articleService.getLikeVip(vipId).get();
         model.addAttribute("reviewLike",like);
+
+
+        Integer commentCount = commentService.getCommentVipCount(vipId).get();
+        model.addAttribute("commentCount",commentCount);
 
 
 

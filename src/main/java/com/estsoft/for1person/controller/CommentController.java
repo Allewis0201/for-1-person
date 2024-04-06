@@ -171,4 +171,25 @@ public class CommentController {
     }
 
 
+
+    @GetMapping("/api/comment/common/count/{article_id}")
+    public Integer getCommentCommonCount(@PathVariable("article_id") Long article_id)
+    {
+        return commentService.getCommentCommonCount(article_id).get();
+    }
+
+    @GetMapping("/api/comment/review/count/{article_id}")
+    public Integer getCommentReviewCount(@PathVariable("article_id") Long article_id)
+    {
+        return commentService.getCommentReviewCount(article_id).get();
+    }
+
+
+    @GetMapping("/api/comment/vip/count/{article_id}")
+    public Integer getCommentVipCount(@PathVariable("article_id") Long article_id)
+    {
+        return commentService.getCommentVipCount(article_id).get();
+    }
+
+
 }
