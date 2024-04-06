@@ -215,12 +215,15 @@ public class PageController {
 
     @GetMapping("/vips")
     public String getVip(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        if (user.get().getAuthor()<3){
+            return "redirect:/commons?error=accessForbidden";
+        }
+
         List<VipViewResponse> vips = articleService.getAllVip().stream()
                 .map(Vip::toViewResponse)
                 .toList();
-
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
         model.addAttribute("list", vips);
 
