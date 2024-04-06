@@ -22,6 +22,7 @@ public class ReviewViewResponse {
     private Boolean anonymous;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Integer like;
     private Integer need;
     private Integer score;
     private User user;
