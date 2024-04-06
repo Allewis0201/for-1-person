@@ -118,6 +118,7 @@ public class CommentService {
         {
             //맞으면 dto 내용을 comment에 넣어서 변경
             commentCommon.update(request.getBody(),request.getAnonymous());
+            commentCommonRepository.save(commentCommon);
 
         }
 

@@ -103,9 +103,10 @@ public class CommentController {
     // 댓글 수정
     // 수정 내용을 담을 DTO 필요
     @PostMapping("/api/comment/common/{article_id}/{comment_id}")
-    public void updateCommentCommon(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
+    public ResponseEntity<?> updateCommentCommon(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
         commentService.updateCommentCommon(userId,articleId,commentId,request);
+        return ResponseEntity.ok().body(Map.of("message", "Comment created successfully"));
     }
     @PostMapping("/api/comment/review/{article_id}/{comment_id}")
     public void updateCommentReview(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
