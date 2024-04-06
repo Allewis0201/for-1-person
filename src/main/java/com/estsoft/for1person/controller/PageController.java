@@ -105,6 +105,10 @@ public class PageController {
                 .toList();
         model.addAttribute("comments",comments);
 
+        Integer like = articleService.getLikeArticle(articleId).get();
+        model.addAttribute("articleLike",like);
+
+
         return "detailCommon";
     }
 
@@ -121,6 +125,10 @@ public class PageController {
                 .map(CommentReview::toViewResponse)
                 .toList();
         model.addAttribute("comments",comments);
+
+        Integer like = articleService.getLikeReview(reviewId).get();
+        model.addAttribute("reviewLike",like);
+
 
 
         return "detailReview";
@@ -139,6 +147,10 @@ public class PageController {
                 .map(CommentVip::toViewResponse)
                 .toList();
         model.addAttribute("comments",comments);
+
+        Integer like = articleService.getLikeVip(vipId).get();
+        model.addAttribute("reviewLike",like);
+
 
 
         return "detailVIP";
