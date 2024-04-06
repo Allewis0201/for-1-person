@@ -54,7 +54,7 @@
         </thead>
         <tbody>
         <tr th:each="vip : ${list}">
-            <td th:text="${vip.vipId()}">번호</td>
+            <td th:text="${vip.vipId}">번호</td>
             <td><a th:href="@{'/vip/' + ${vip.vipId}}" th:text="${vip.title}">제목</a></td>
             <td th:text="${vip.user.nickname}">작성자</td>
             <td class="date" th:text="${#temporals.format(vip.createdAt,
