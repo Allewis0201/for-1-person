@@ -106,18 +106,21 @@
                 <!--페이징 부분 완료-->
             </div>
             <form id="commentReviewForm" class="write-comments" th:action="@{/api/comment/review/{articleId}(articleId=${article.reviewId})}" th:method="post">
+
                 <div class="write-comment">
                     <p>댓글 작성</p>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="익명체크">익명 체크</label>
-                        <button class="btn2">댓글 등록</button>
+                        <label><input type="checkbox" name="anonymous">익명 체크</label>
+                        <button class="btn2" type = "submit">댓글 등록</button>
                     </div>
                 </div>
                 <div class="write-comment2">
                     <label for="text-box"></label>
-                    <textarea class="form-control" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
+                    <textarea class="form-control" name="body" id = "text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
                               required></textarea>
                 </div>
+
+
             </form>
             <div class="btn-up">
                 <button id="to-top" onclick="window.scrollTo(0, 0);">
