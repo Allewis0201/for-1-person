@@ -26,14 +26,15 @@
     <!--구분선 & 검색란 시작-->
     <section class="dividing-line">
         <div class="search1">
-            <label>
-                <select class="choice" name="searchType">
-                    <option value="title">제목</option>
-                    <option value="author">작성자</option>
-                </select>
-            </label>
-            <!-- 검색부분-->
             <form class="searching" action="">
+                <label>
+                    <select class="choice" name="searchType">
+                        <option value="title">제목</option>
+                        <option value="author">작성자</option>
+                    </select>
+                </label>
+                <!-- 검색부분-->
+
                 <label class="searchKey"><input name="searchKey" alt=""></label>
                 <button type="submit"><img th:src="@{/Img/img_9.png}" alt=""></button>
             </form>
