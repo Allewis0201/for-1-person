@@ -14,19 +14,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 
+
+// 게시글 CRUD 및 게시글 좋아요 CRD 기능 컨트롤러
+
+// 게시판 (목록, 상세보기, 글쓰기, 댓글, 글 수정, 글 삭제)
+// 유저 정보 관리를 어떻게 하는지에 따라서 달라짐 (user_id가 필요 없을 수도)
+
 @RestController
 public class ArticleController {
 
 
     private ArticleService articleService;
-    // 게시판 (목록, 상세보기, 글쓰기, 댓글, 글 수정, 글 삭제)
-    // 유저 정보 관리를 어떻게 하는지에 따라서 달라짐 (user_id가 필요 없을 수도)
+
 
     public ArticleController(ArticleService articleService) {
         this.articleService = articleService;
     }
 
-    // 모든 목록 출력
+    //============================================================================================================
+    // 게시판 모든 목록 리스트로 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common")
     public ResponseEntity<List<Article>> getAllArticle() {
         return ResponseEntity.ok().body(articleService.getAllArticle());
@@ -39,11 +45,8 @@ public class ArticleController {
     public ResponseEntity<List<Vip>> getAllVip() {
         return ResponseEntity.ok().body(articleService.getAllVip());
     }
-
-
-
-
-    // 모든 목록 출력
+    //============================================================================================================
+    // 게시판 모든 목록 페이지로 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common2")
     public ResponseEntity<Page<Article>> getAllArticle(@RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "10") int size) {
@@ -59,12 +62,8 @@ public class ArticleController {
                                                @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllVipPaged(page, size));
     }
-
-
-
-
     //============================================================================================================
-    // 하나의 아티클 상세 보기
+    // 게시글 1개 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common/{article_id}")
     public ResponseEntity<Article> getArticle(@PathVariable("article_id") Long articleId) {
         return ResponseEntity.ok().body(articleService.getArticle(articleId));
@@ -78,9 +77,7 @@ public class ArticleController {
         return ResponseEntity.ok().body(articleService.getVip(articleId));
     }
     //==================================================================================================================
-    // 아티클 생성(글 쓰기)
-    // 아티클 내용을 받을 DTO 필요
-
+    // 게시글 등록(일반, 리뷰, VIP)
     @PostMapping("/api/common/{user_id}")
     public ResponseEntity<?> createArticle(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddArticleRequest request = AddArticleRequest.builder().
@@ -153,7 +150,9 @@ public class ArticleController {
 //    }
 
     //==================================================================================================================
-    //게시글 좋아요 기능, 이미 좋아요 되어 있으면 좋아요 취소
+    // 특정 게시글 추천 기능
+    // (추천은 게시글당 동일 유저가 최대 1개까지만 가능)
+    // (추천을 안 눌렀을 때 누르면 추천이 되고 추천이 눌러져있을 때 누르면 추천이 해제됨)
     @GetMapping("/api/common/like/{user_id}/{article_id}")
     public void likeCommonArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeArticle(user_id, article_id);
@@ -170,6 +169,8 @@ public class ArticleController {
         articleService.likeVip(user_id, article_id);
     }
 
+    //==================================================================================================================
+    // 특정 게시글 추천 수 반환
     @GetMapping("/api/common/like/{article_id}")
     public Integer getLikeCommonArticle(@PathVariable("article_id") Long article_id)
     {
@@ -181,14 +182,12 @@ public class ArticleController {
     {
         return articleService.getLikeReview(article_id).get();
     }
-
-
     @GetMapping("/api/vip/like/{article_id}")
     public Integer getLikeVipArticle(@PathVariable("article_id") Long article_id)
     {
         return articleService.getLikeVip(article_id).get();
     }
-
+    //==================================================================================================================
 
 
 }

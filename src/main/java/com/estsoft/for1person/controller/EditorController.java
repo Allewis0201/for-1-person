@@ -94,8 +94,7 @@ public class EditorController {
     }
 
     //==================================================================================================================
-    // 아티클 수정
-    // 수정 내용을 담을 DTO 필요
+    // 게시글 수정(일반, 리뷰, VIP)
     @PutMapping("/api/common/{article_id}")
     public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
         String userId = authentication.getName();
@@ -154,7 +153,8 @@ public class EditorController {
 //        articleService.updateVip(userId, articleId, request);
 //    }
 
-    // 아티클 삭제
+    //==================================================================================================================
+    // 게시글 삭제(일반, 리뷰, VIP)
     @DeleteMapping("/api/common/{article_id}")
     public void deleteArticle(@PathVariable("article_id") Long articleId, Authentication authentication) {
         String userId = authentication.getName();

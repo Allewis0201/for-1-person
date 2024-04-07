@@ -28,12 +28,15 @@ public class UserController {
         this.encoder = encoder;
     }
 
+    //==================================================================================================================
+    // 회원가입 처리 후 로그인 뷰로 이동
     @PostMapping("/user")
     public String signup(AddUserRequest request){
         userService.save(request); // 회원가입(저장)
         return "redirect:/login"; // 회원가입 처리 후 로그인 페이지로 이동
     }
-
+    //==================================================================================================================
+    // 회원탈퇴 처리 후 로그아웃으로 이동
     @PostMapping("/delete-account")
     public String deleteId(Authentication authentication) {
         String userId = authentication.getName();
@@ -41,12 +44,15 @@ public class UserController {
         return "redirect:/logout";
     }
 
+    //==================================================================================================================
+    // 로그아웃 처리 후 로그인 뷰로 이동
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
     }
-
+    //==================================================================================================================
+    // 회원가입 때 아이디 중복체크 기능
     @GetMapping("/checkUsername")
     @ResponseBody
     public Map<String, Boolean> checkUsername(@RequestParam("userId") String userId) {
@@ -56,6 +62,8 @@ public class UserController {
         return response;
     }
 
+    //==================================================================================================================
+    // 회원가입 때 닉네임 중복체크 기능
     @GetMapping("/checkNickname")
     @ResponseBody
     public Map<String, Boolean> checkNickname(@RequestParam("nickname") String nickname) {
@@ -64,6 +72,9 @@ public class UserController {
         response.put("isAvailable", isAvailable);
         return response;
     }
+
+    //==================================================================================================================
+    // 계정 정보 변경 후 내 정보 뷰로 이동
     @PostMapping("/updateInfo")
     public String updateInfo( @RequestParam("password") String password, Authentication authentication){
         String userId = authentication.getName();
@@ -72,6 +83,8 @@ public class UserController {
         return "redirect:/myInformation";
     }
 
+    //==================================================================================================================
+    // 권한 변경 후 관리 뷰로 이동
     @PostMapping("/updateAuthor")
     public String updateUserAuthor(@RequestParam("userIdCollect") List<String> userIds, @RequestParam("changeAuthor") Integer changeAuthor, Authentication authentication) {
         for (String userId : userIds) {
@@ -79,4 +92,5 @@ public class UserController {
         }
         return "redirect:/admin";
     }
+    //==================================================================================================================
 }
