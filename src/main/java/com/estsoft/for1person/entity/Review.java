@@ -31,7 +31,7 @@ public class Review {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false, length = 100000)
+    @Column(nullable = false, length = 1000000)
     private Long views;
 
     @Column(nullable = false)
