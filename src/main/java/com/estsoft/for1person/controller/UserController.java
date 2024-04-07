@@ -23,7 +23,7 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder encoder;
 
-    public UserController(UserService userService, PasswordEncoder encoder){
+    public UserController(UserService userService, PasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
     }
@@ -31,10 +31,11 @@ public class UserController {
     //==================================================================================================================
     // 회원가입 처리 후 로그인 뷰로 이동
     @PostMapping("/user")
-    public String signup(AddUserRequest request){
+    public String signup(AddUserRequest request) {
         userService.save(request); // 회원가입(저장)
         return "redirect:/login"; // 회원가입 처리 후 로그인 페이지로 이동
     }
+
     //==================================================================================================================
     // 회원탈퇴 처리 후 로그아웃으로 이동
     @PostMapping("/delete-account")
@@ -51,6 +52,7 @@ public class UserController {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
     }
+
     //==================================================================================================================
     // 회원가입 때 아이디 중복체크 기능
     @GetMapping("/checkUsername")
@@ -76,10 +78,10 @@ public class UserController {
     //==================================================================================================================
     // 계정 정보 변경 후 내 정보 뷰로 이동
     @PostMapping("/updateInfo")
-    public String updateInfo( @RequestParam("password") String password, Authentication authentication){
+    public String updateInfo(@RequestParam("password") String password, Authentication authentication) {
         String userId = authentication.getName();
         String changePassword = encoder.encode(password);
-        userService.updateProfile(userId,changePassword);
+        userService.updateProfile(userId, changePassword);
         return "redirect:/myInformation";
     }
 

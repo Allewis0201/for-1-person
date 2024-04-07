@@ -1,15 +1,15 @@
 package com.estsoft.for1person.controller;
 
 import com.estsoft.for1person.dto.UserViewResponse;
-import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.entity.User;
+import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.ArticleService;
 import com.estsoft.for1person.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -17,17 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class UserViewController {
 
-    private UserRepository userRepository;
-    private ArticleService articleService;
-    private CommentService commentService;
+    private final UserRepository userRepository;
+    private final ArticleService articleService;
+    private final CommentService commentService;
 
-    public UserViewController(UserRepository userRepository, ArticleService articleService, CommentService commentService) {
-        this.userRepository = userRepository;
-        this.articleService = articleService;
-        this.commentService = commentService;
-    }
 
     //==================================================================================================================
     // 로그인 페이지로 이동

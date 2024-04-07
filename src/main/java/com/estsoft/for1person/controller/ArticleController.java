@@ -26,7 +26,7 @@ import java.util.List;
 public class ArticleController {
 
 
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
 
     public ArticleController(ArticleService articleService) {
@@ -39,14 +39,17 @@ public class ArticleController {
     public ResponseEntity<List<Article>> getAllArticle() {
         return ResponseEntity.ok().body(articleService.getAllArticle());
     }
+
     @GetMapping("/api/review")
     public ResponseEntity<List<Review>> getAllReview() {
         return ResponseEntity.ok().body(articleService.getAllReview());
     }
+
     @GetMapping("/api/vip")
     public ResponseEntity<List<Vip>> getAllVip() {
         return ResponseEntity.ok().body(articleService.getAllVip());
     }
+
     //============================================================================================================
     // 게시판 모든 목록 페이지로 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common2")
@@ -54,30 +57,36 @@ public class ArticleController {
                                                        @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllArticlesPaged(page, size));
     }
+
     @GetMapping("/api/review2")
     public ResponseEntity<Page<Review>> getAllReview(@RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllReviewPaged(page, size));
     }
+
     @GetMapping("/api/vip2")
     public ResponseEntity<Page<Vip>> getAllVip(@RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllVipPaged(page, size));
     }
+
     //============================================================================================================
     // 게시글 1개 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common/{article_id}")
     public ResponseEntity<Article> getArticle(@PathVariable("article_id") Long articleId) {
         return ResponseEntity.ok().body(articleService.getArticle(articleId));
     }
+
     @GetMapping("/api/review/{article_id}")
     public ResponseEntity<Review> getReview(@PathVariable("article_id") Long articleId) {
         return ResponseEntity.ok().body(articleService.getReview(articleId));
     }
+
     @GetMapping("/api/vip/{article_id}")
     public ResponseEntity<Vip> getVip(@PathVariable("article_id") Long articleId) {
         return ResponseEntity.ok().body(articleService.getVip(articleId));
     }
+
     //==================================================================================================================
     // 게시글 등록(일반, 리뷰, VIP)
     @PostMapping("/api/common/{user_id}")
@@ -93,6 +102,7 @@ public class ArticleController {
         articleService.createArticle(userId, request);
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/commons"));
     }
+
     @PostMapping("/api/review/{user_id}")
     public ResponseEntity<?> createReview(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("score") Integer score) {
         AddReviewRequest request = AddReviewRequest.builder().
@@ -106,6 +116,7 @@ public class ArticleController {
         articleService.createReview(userId, request);
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/reviews"));
     }
+
     @PostMapping("/api/vip/{user_id}")
     public ResponseEntity<?> createVip(@PathVariable("user_id") String userId, @RequestParam("title") String title, @RequestParam("content") String content) {
         AddVipRequest request = AddVipRequest.builder().
@@ -119,6 +130,7 @@ public class ArticleController {
         articleService.createVip(userId, request);
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/vips"));
     }
+
     //==================================================================================================================
     // 특정 게시글 추천 기능
     // (추천은 게시글당 동일 유저가 최대 1개까지만 가능)
@@ -128,12 +140,14 @@ public class ArticleController {
         articleService.likeArticle(user_id, article_id);
 
     }
+
     @GetMapping("/api/review/like/{user_id}/{article_id}")
     public void likeReviewArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeReview(user_id, article_id);
 
 
     }
+
     @GetMapping("/api/vip/like/{user_id}/{article_id}")
     public void likeVipArticle(@PathVariable("user_id") String user_id, @PathVariable("article_id") Long article_id) {
         articleService.likeVip(user_id, article_id);
@@ -142,19 +156,17 @@ public class ArticleController {
     //==================================================================================================================
     // 특정 게시글 추천 수 반환
     @GetMapping("/api/common/like/{article_id}")
-    public Integer getLikeCommonArticle(@PathVariable("article_id") Long article_id)
-    {
+    public Integer getLikeCommonArticle(@PathVariable("article_id") Long article_id) {
         return articleService.getLikeArticle(article_id).get();
     }
 
     @GetMapping("/api/review/like/{article_id}")
-    public Integer getLikeReviewArticle(@PathVariable("article_id") Long article_id)
-    {
+    public Integer getLikeReviewArticle(@PathVariable("article_id") Long article_id) {
         return articleService.getLikeReview(article_id).get();
     }
+
     @GetMapping("/api/vip/like/{article_id}")
-    public Integer getLikeVipArticle(@PathVariable("article_id") Long article_id)
-    {
+    public Integer getLikeVipArticle(@PathVariable("article_id") Long article_id) {
         return articleService.getLikeVip(article_id).get();
     }
 
@@ -184,7 +196,6 @@ public class ArticleController {
     }
 
 
-
     //==================================================================================================================
     // 게시글 삭제(일반, 리뷰, VIP)
     @DeleteMapping("/api/common/{article_id}")
@@ -192,6 +203,7 @@ public class ArticleController {
         String userId = authentication.getName();
         articleService.deleteArticle(userId, articleId);
     }
+
     @DeleteMapping("/api/review/{article_id}")
     public void deleteReview(@PathVariable("article_id") Long articleId, Authentication authentication) {
         String userId = authentication.getName();
@@ -256,10 +268,6 @@ public class ArticleController {
 //    }
 
 
-
-
-
-
     // 뷰 DTO를 사용한 업데이트 함수(현재 사용하지 않음)
 //    @PutMapping("/api/common/{article_id}")
 //    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
@@ -295,7 +303,6 @@ public class ArticleController {
 //
 //        articleService.updateVip(userId, articleId, request);
 //    }
-
 
 
     // 아티클 수정 (현재 사용하지 않음)
