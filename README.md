@@ -8,10 +8,10 @@
 
 ---
 
-| 김용준 | 권은아                                                                                                                                                   | 김소희 | 박종호 |
-| --- |-------------------------------------------------------------------------------------------------------------------------------------------------------| --- | --- |
-| 사진 | 사진                                                                                                                                                    | 사진 | 사진(사랑해요) |
-|  | • 로그인 API/UI <br/>• 회원가입 API/UI <br/>• 마이페이지 API/UI <br/>• 운영자페이지 API/UI <br/>• 헤더 API/UI <br/>• 댓글 삽입/삭제 UI<br/> • 글 상세보기/글 작성 UI <br/>• 글 수정 API/UI |  |  |
+| [김용준](https://github.com/Allewis0201) | [권은아](https://github.com/827euni)                                                                                                        | [김소희](https://github.com/sohee99)                                                                                                                       | [박종호](https://github.com/penameyo)                                                            |
+| --- |------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| 사진 | 사진                                                                                                         | 사진                                                                                                                        | 사진(사랑해요)                                                       |
+|• ERD 설계 <br/>• 에디터 적용 <br/>• 게시판 API/ UI <br/>• 게시글 API/UI <br/>• 게시글 추천 API/UI <br/>• 댓글 API/UI<br/>• 운영자 페이지 API/UI  | • 로그인/회원가입 API/UI <br/>• 마이페이지 API/UI <br/>• 운영자페이지 API/UI <br/>• 헤더 API/UI <br/>• 댓글 UI<br/> • 게시글 API/UI | • 화면설계<br/>• 로그인/회원가입 UI<br/> • 마이페이지 UI<br/> • 운영자페이지 UI<br/> • 헤더/메인페이지 UI<br/> • 게시판/게시글 UI<br/> • 댓글 UI<br/> • PPT 작성 | • ERD 구현<br/>• 순서도 작성<br/> • 게시글 API<br/> • 게시판 API<br/> • 댓글 API|
 
 ## 🗺️ 프로젝트 목표
 
@@ -42,7 +42,7 @@
 
 ### 개발 일정
 
-2024년 3월 25일 ~ 2024년 4월 5일
+2024년 3월 22일 ~ 2024년 4월 5일
 
 ## 📜 요구사항 및 기능 명세
 
@@ -86,14 +86,96 @@
 
 ---
 
-이후 작성(팀장님이^^)
+| 기능설명 | url | http Method | 함수 | 연결되는 HTML 파일 |
+| --- | --- | --- | --- | --- |
+| 일반 게시판 게시글 목록 가져오기 | /api/common | GET | getAllArticle() | X |
+| 리뷰 게시판 게시글 목록 가져오기 | /api/review | GET | getAllReview() | X |
+| Vip 게시판 게시글 목록 가져오기 | /api/vip | GET | getAllVip() | X |
+| 일반  게시판 목록 페이지로 가져오기 | /api/common2 | GET | getAllArticlePage() | X |
+| 리뷰 게시판 목록 페이지로 가져오기 | /api/review | GET | getAllReviewPage() | X |
+| VIP 게시판 목록 페이지로 가져오기 | /api/vip2 | GET | getAllVipPage() | X |
+| 일반 게시글 1개 가져오기 | /api/common/{article_id} | GET | getArticle() | X |
+| 리뷰 게시글 1개 가져오기 | /api/review/{article_id} | GET | getReview() | X |
+| Vip 게시글 1개 가져오기 | /api/vip/{article_id} | GET | getVip() | X |
+| 일반 게시글 생성 | /api/common/{user_id} | POST | createArticle() | X |
+| 리뷰 게시글 생성 | /api/review/{user_id} | POST | createReview() | X |
+| Vip 게시글 생성 | /api/vip/{user_id} | POST | createVip() | X |
+| 일반 게시글 수정 | /api/common/{article_id} | PUT | updateArticle() | X |
+| 리뷰 게시글 수정 | /api/review/{article_id} | PUT | updateReview() | X |
+| Vip 게시글 수정 | /api/vip/{article_id} | PUT | updateVip() | X |
+| 일반 게시글 삭제 | /api/common/{article_id} | DELETE | deleteArticle() | X |
+| 리뷰 게시글 삭제 | /api/review/{article_id} | DELETE | deleteReview() | X |
+| Vip 게시글 삭제 | /api/vip/{article_id} | DELETE | deleteVip() | X |
+| 일반 게시글 좋아요 기능 | /api/common/like/{user_id}/{article_id} | GET | likeCommonArticle() | X |
+| 리뷰 게시글 좋아요 기능 | /api/review/like/{user_id}/{article_id} | GET | likeReviewArticle() | X |
+| Vip 게시글 좋아요 기능 | /api/vip/like/{user_id}/{article_id} | GET | likeVipArticle() | X |
+| 일반 게시글 추천 수 반환 | /api/common/like/{article_id} | GET | getLikeCommonArticle() | X |
+| 리뷰 게시글 추천 수 반환 | /api/review/like/{article_id} | GET | getLikeReviewArticle() | X |
+| VIP 게시글 추천 수 반환 | /api/vip/like/{article_id} | GET | getLikeVipArticle() | X |
+| 일반 게시판 모든 댓글 가져오기 | /api/comment/common | GET | getAllCommentCommon() | X |
+| 리뷰 게시판 모든 댓글 가져오기 | /api/comment/review | GET | getAllCommentReveiw() | X |
+| Vip 게시판 모든 댓글 가져오기 | /api/comment/vip | GET | getAllCommentVip() | X |
+| 일반 게시판 댓글 1개 가져오기 | /api/comment/common/{comment_id} | GET | getCommonComment() | X |
+| 리뷰 게시판 댓글 1개 가져오기 | /api/comment/review/{comment_id} | GET | getReveiwComment() | X |
+| Vip 게시판 댓글 1개 가져오기 | /api/comment/vip/{comment_id} | GET | getVipComment() | X |
+| 일반 게시판 특정 게시글에 달린 모든 댓글 가져오기 | /api/comment/common/{article_id} | GET | getArticleCommonComment() | X |
+| 리뷰 게시판 특정 게시글에 달린 모든 댓글 가져오기 | /api/comment/review/{article_id} | GET | getArticleReviewComment() | X |
+| Vip 게시판 특정 게시글에 달린 모든 댓글 가져오기 | /api/comment/vip/{article_id} | GET | getArticleVipComment() | X |
+| 일반 게시판 댓글 쓰기 | /api/comment/common/{article_id} | POST | createCommentCommon() | X |
+| 리뷰 게시판 댓글 쓰기 | /api/comment/review/{article_id} | POST | createCommentReveiw() | X |
+| Vip 게시판 댓글 쓰기 | /api/comment/vip/{article_id} | POST | createCommentVip() | X |
+| 일반 게시판 댓글 수정 | /api/comment/common/{article_id}/{comment_id} | PUT | updateCommentCommon() | X |
+| 리뷰 게시판 댓글 수정 | /api/comment/review/{article_id}/{comment_id} | PUT | updateCommentReveiw() | X |
+| Vip 게시판 댓글 수정 | /api/comment/vip/{article_id}/{comment_id} | PUT | updateCommentVip() | X |
+| 일반 게시판 댓글 삭제 | /api/comment/common/{comment_id} | DELETE | deleteCommonComment() | X |
+| 리뷰 게시판 댓글 삭제 | /api/comment/review/{comment_id} | DELETE | deleteReviewComment() | X |
+| Vip 게시판 댓글 삭제 | /api/comment/vip/{comment_id} | DELETE | deleteVipComment() | X |
+| 일반 게시글 댓글 좋아요 기능 | /common/like/{user_id}/{article_id} | GET | recommendArticle() | X |
+| 리뷰 게시글 댓글 좋아요 기능 | /review/like/{user_id}/{article_id} | GET | recommendReveiw | X |
+| Vip 게시글 댓글 좋아요 기능 | /vip/like/{user_id}/{article_id} | GET | recommendVip() | X |
+| 일반 게시글 특정 댓글 추천 수 반환 | /api/common/recommend/{article_id} | GET | getLikeCommonArticle() | X |
+| 리뷰 게시글 특정 댓글 추천 수 반환 | /api/review/recommend/{article_id} | GET | getLikeReviewArticle() | X |
+| VIP 게시글 특정 댓글 추천 수 반환 | /api/vip/recommend/{article_id} | GET | getLikeVipArticle() | X |
+| 일반 게시글에 달린 댓글 수 반환 | /api/comment/common/count/{article_id} | GET | getCommentCommonCount() | X |
+| 리뷰 게시글에 달린 댓글 수 반환 | /api/comment/review/count/{article_id} | GET | getCommentReviewCount() | X |
+| VIP 게시글에 달린 댓글 수 반환 | /api/comment/vip/count/{article_id} | GET | getCommentVipCount() | X |
+| 일반 게시판 전체 뷰 | /commons | GET | getCommons() | bulletinboard.html |
+| 리뷰 게시판 뷰 | /reviews | GET | getReviews() | review-board.html |
+| Vip 게시판 뷰 | /vips | GET | getVip() | vip-board.html |
+| 일반 게시판 글 작성 뷰 | /newArticleBulletin | GET | newArticleBulletin() | writeBulletin.html |
+| 리뷰 게시판 글 작성 뷰 | /newArticleReview | GET | newArticleReview() | writeReview.html |
+| Vip 게시판 글 작성 뷰 | /newArticleVip | GET | newArticleVip() | writeVip.html |
+| 일반 게시판 게시글 상세 뷰 | /common/{articleId} | GET | showArticleCommon() | detailCommon.html |
+| 리뷰 게시판 게시글 상세 뷰 | /review/{articleId} | GET | showArticleReview() | detailReveiw.html |
+| Vip 게시판 게시글 상세 뷰 | /vip/{articleId} | GET | showArticleVip() | detailVIP.html |
+| 일반 게시글 수정 뷰 | /editArticleBulletin | GET | editArticleBulletin() | editBulletin.html |
+| 리뷰 게시글 수정 뷰 | /editArticleReview | GET | editArticleReview() | editReview.html |
+| VIP 게시글 수정 뷰 | /editArticleVip | GET | editArticleVip() | editVip.html |
+| 일반 게시글 삭제 후 일반 게시판으로 이동 | /deleteArticleCommon | GET | deleteCommon() | redirect:commons |
+| 리뷰 게시글 삭제 후 리뷰 게시판으로 이동 | /deleteArticleReview | GET | deleteReview() | redirect:reviews |
+| VIP 게시글 삭제 후 VIP 게시판으로 이동 | /deleteArticleVip | GET | deleteVip() | redirect:vips |
+| 일반 게시글 추천 처리 후 일반 게시글 상세로 이동 | /article/common/like/{user_id}/{article_id} | GET | commonLike() | redirect:/common/ + article_id |
+| 리뷰 게시글 추천 처리 후 리뷰 게시글 상세로 이동 | /article/review/like/{user_id}/{article_id} | GET | reviewLike() | redirect:/review/ + article_id |
+| VIP 게시글 추천 처리 후 VIP 게시글 상세로 이동 | /article/vip/like/{user_id}/{article_id} | GET | vipLike() | redirect:/vip/ + article_id |
+| 회원 가입 | /user | POST | signup() | redirect:/login |
+| 회원 탈퇴 | /delete-account | POST | deleteId() | redirect:/logout |
+| 로그아웃 | /logout | GET | logout() | redirect:/login |
+| 아이디 중복 체크 | /checkUsername | GET | checkUsername() | X |
+| 닉네임 중복 체크 | /checkNickname | GET | checkNickname() | X |
+| 내 정보 수정 | /updateInfo | POST | updateInfo() | redirect:/myInformation |
+| 권한 수정 | /updateAuthor | POST | updateUserAuthor() | redirect:/admin |
+| 로그인 뷰 | /login | GET | login() | login.html |
+| 회원가입 뷰 | /merbership | GET | membership() | membership.html |
+| 메인 화면 뷰 | /mainScreen | GET | mainScreen() | mainScreen.html |
+| 내 정보 뷰 | /myInformaion | GET | myInformation() | myInformation.html |
+| 관리 뷰 | /admin | GET | admin() | adminpage.html |
 
 ## 📂 프로젝트 구조
 
 ---
 
 ```java
-📁 1인분이용
+📁1인분이요~
     ├─main
     │  ├─java
     │  │  └─com
@@ -109,7 +191,6 @@
     │  │              ├─controller
     │  │              │      ArticleController.java
     │  │              │      CommentController.java
-    │  │              │      EditorController.java
     │  │              │      PageController.java
     │  │              │      UserController.java
     │  │              │      UserViewController.java
@@ -165,10 +246,8 @@
     │  │              └─service
     │  │                      ArticleService.java
     │  │                      CommentService.java
-    │  │                      ReviewService.java
     │  │                      UserDetailService.java
     │  │                      UserService.java
-    │  │                      VipService.java
     │  │                      
     │  └─resources
     │      │  application.properties
@@ -244,7 +323,6 @@
     │              editVIP.html
     │              header.html
     │              login.html
-    │              main.html
     │              mainScreen.html
     │              membership.html
     │              myInformation.html
@@ -253,6 +331,14 @@
     │              writeBulletin.html
     │              writeReview.html
     │              writeVIP.html
+    │              
+    └─test
+        └─java
+            └─com
+                └─estsoft
+                    └─for1person
+                            For1PersonApplicationTests.java
+                            
 
 ```
 
