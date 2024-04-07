@@ -6,14 +6,13 @@ import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.repository.ArticleRepository;
 import com.estsoft.for1person.repository.ReviewRepository;
 import com.estsoft.for1person.repository.UserRepository;
-import com.estsoft.for1person.entity.Article;
-import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.VipRepository;
-import com.estsoft.for1person.service.*;
+import com.estsoft.for1person.service.ArticleService;
+import com.estsoft.for1person.service.CommentService;
+import com.estsoft.for1person.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -22,25 +21,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Slf4j
 public class PageController {
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
-    private CommentService commentService;
-    private UserService userService;
-    private UserRepository userRepository;
+    private final CommentService commentService;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    private ReviewRepository reviewRepository;
-    private VipRepository vipRepository;
+    private final ReviewRepository reviewRepository;
+    private final VipRepository vipRepository;
 
-    public PageController(ArticleService articleService,CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
+    public PageController(ArticleService articleService, CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
         this.articleService = articleService;
         this.commentService = commentService;
         this.userService = userService;
@@ -328,8 +326,6 @@ public class PageController {
         model.addAttribute("user", user.get());
 
 
-
-
         if (searchType != null && searchKey != null && !searchKey.isEmpty()) {
             List<ReviewViewResponse> searchList = new ArrayList<>();
             if ("title".equals(searchType)) {
@@ -420,8 +416,6 @@ public class PageController {
         }
 
         model.addAttribute("user", user.get());
-
-
 
 
         if (searchType != null && searchKey != null && !searchKey.isEmpty()) {
