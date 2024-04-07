@@ -25,6 +25,7 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User implements UserDetails {
 
+    private static int count = 0;
     @Id
     @Column(name = "user_id")
     private String userId;
@@ -50,9 +51,11 @@ public class User implements UserDetails {
         this.userId = userId;
         this.password = password;
         this.nickname = nickname;
-        this.author = author == null ? 1: author; // 기본 디폴트 값은 '1'로 설정함
+        this.author = (count == 0) ? 4: 1; // 기본 디폴트 값은 '1'로 설정함
         this.createdAt = createdAt;
         this.status = status;
+
+        count++;
     }
 
 
