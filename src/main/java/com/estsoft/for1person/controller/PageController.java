@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -480,6 +481,7 @@ public class PageController {
 
     //==================================================================================================================
     // 일반 게시글 삭제 처리 후 일반 전체 게시판으로 이동
+    @Transactional
     @GetMapping("/deleteArticleCommon")
     public String deleteCommon(@RequestParam("articleId") Long articleId, Authentication authentication) {
         String userId = authentication.getName();
@@ -493,6 +495,7 @@ public class PageController {
 
     //==================================================================================================================
     // 리뷰 게시글 삭제 처리 후 리뷰 전체 게시판으로 이동
+    @Transactional
     @GetMapping("/deleteArticleReview")
     public String deleteReview(@RequestParam("articleId") Long articleId, Authentication authentication) {
         String userId = authentication.getName();
@@ -506,6 +509,7 @@ public class PageController {
 
     //==================================================================================================================
     // Vip 게시글 삭제 처리 후 Vip 전체 게시판으로 이동
+    @Transactional
     @GetMapping("/deleteArticleVip")
     public String deleteVip(@RequestParam("articleId") Long articleId, Authentication authentication) {
         String userId = authentication.getName();
