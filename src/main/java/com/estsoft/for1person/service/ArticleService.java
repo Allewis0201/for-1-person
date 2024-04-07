@@ -4,9 +4,7 @@ import com.estsoft.for1person.dto.*;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -394,4 +392,16 @@ public class ArticleService {
 
         return users;
     }
+
+    public <T> Page<T> toPageFromList(List<T> result, int page, int size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min((start+pageRequest.getPageSize()), result.size());
+
+        Page<T> pageResult = new PageImpl<>(result.subList(start,end), pageRequest, result.size());
+
+        return pageResult;
+    }
+
 }

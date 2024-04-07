@@ -6,11 +6,9 @@ import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.User;
-import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.util.List;
-import java.util.Optional;
 
 @Controller
+@Slf4j
 public class PageController {
     private ArticleService articleService;
     private ReviewService reviewService;
@@ -213,7 +208,7 @@ public class PageController {
     @GetMapping("/commons")
     public String getCommons(Model model, Authentication authentication,
                              @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "10") int size) {
+                             @RequestParam(defaultValue = "2") int size) {
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
@@ -228,13 +223,16 @@ public class PageController {
         List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
 
 
-        Page<Article> articlePage = articleService.getAllArticlesPaged(page, size);
+
+        //Page<Article> articlePage = articleService.getAllArticlesPaged(page, size);
+
+        Page<CommonViewResponse> pageResult =  articleService.toPageFromList(result, page, size);
 
 
 
-        model.addAttribute("list", result);
+        model.addAttribute("list", pageResult.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", articlePage.getTotalPages());
+        model.addAttribute("totalPages", pageResult.getTotalPages());
 
         return "bulletinboard";
     }
@@ -259,14 +257,8 @@ public class PageController {
     @GetMapping("/reviews")
     public String getReviews(Model model, Authentication authentication,
                              @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "10") int size) {
-        List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
-                .map(Review::toViewResponse)
-                .toList();
+                             @RequestParam(defaultValue = "2") int size) {
 
-        List<ReviewViewResponse> result = articleService.getAllLikeReview(reviews);
-
-        Page<Review> reviewPage = articleService.getAllReviewPaged(page, size);
 
 
         String username = authentication.getName();
@@ -274,9 +266,19 @@ public class PageController {
         model.addAttribute("user", user.get());
 
 
-        model.addAttribute("list", result);
+        List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
+                .map(Review::toViewResponse)
+                .toList();
+
+        List<ReviewViewResponse> result = articleService.getAllLikeReview(reviews);
+
+        //Page<Review> reviewPage = articleService.getAllReviewPaged(page, size);
+
+        Page<ReviewViewResponse> pageResult =  articleService.toPageFromList(result, page, size);
+
+        model.addAttribute("list", pageResult.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", reviewPage.getTotalPages());
+        model.addAttribute("totalPages", pageResult.getTotalPages());
 
         return "review-board";
     }
@@ -306,7 +308,7 @@ public class PageController {
     @GetMapping("/vips")
     public String getVips(Model model, Authentication authentication,
                              @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "10") int size) {
+                             @RequestParam(defaultValue = "2") int size) {
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
@@ -321,11 +323,14 @@ public class PageController {
                 .toList();
 
         List<VipViewResponse> result = articleService.getAllLikeVip(vips);
-        Page<Vip> vipPage = articleService.getAllVipPaged(page, size);
 
-        model.addAttribute("list", result);
+        //Page<Vip> vipPage = articleService.getAllVipPaged(page, size);
+
+        Page<VipViewResponse> pageResult =  articleService.toPageFromList(result, page, size);
+
+        model.addAttribute("list", pageResult.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", vipPage.getTotalPages());
+        model.addAttribute("totalPages", pageResult.getTotalPages());
 
 
         return "vip-board";
