@@ -7,6 +7,7 @@ import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.service.ArticleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,30 @@ public class ArticleController {
     public ResponseEntity<List<Vip>> getAllVip() {
         return ResponseEntity.ok().body(articleService.getAllVip());
     }
+
+
+
+
+    // 모든 목록 출력
+    @GetMapping("/api/common2")
+    public ResponseEntity<Page<Article>> getAllArticle(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok().body(articleService.getAllArticlesPaged(page, size));
+    }
+    @GetMapping("/api/review2")
+    public ResponseEntity<Page<Review>> getAllReview(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok().body(articleService.getAllReviewPaged(page, size));
+    }
+    @GetMapping("/api/vip2")
+    public ResponseEntity<Page<Vip>> getAllVip(@RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok().body(articleService.getAllVipPaged(page, size));
+    }
+
+
+
+
     //============================================================================================================
     // 하나의 아티클 상세 보기
     @GetMapping("/api/common/{article_id}")

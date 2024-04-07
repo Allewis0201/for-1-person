@@ -4,6 +4,9 @@ import com.estsoft.for1person.dto.*;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +42,20 @@ public class ArticleService {
     }
     public List<Vip> getAllVip() {
         return vipRepository.findAll();
+    }
+
+
+    public Page<Article> getAllArticlesPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAll(pageable);
+    }
+    public Page<Review> getAllReviewPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return reviewRepository.findAll(pageable);
+    }
+    public Page<Vip> getAllVipPaged(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return vipRepository.findAll(pageable);
     }
 
 

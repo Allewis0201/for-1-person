@@ -9,6 +9,7 @@ import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.repository.UserRepository;
 import com.estsoft.for1person.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -192,46 +193,127 @@ public class PageController {
     }
 
 
+//    @GetMapping("/commons2")
+//    public String getCommons(Model model, Authentication authentication) {
+//        List<CommonViewResponse> articles = articleService.getAllArticle().stream()
+//                .map(Article::toViewResponse)
+//                .toList();
+//
+//        List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
+//        model.addAttribute("list", result);
+//
+//        String username = authentication.getName();
+//        Optional<User> user = userRepository.findByUserId(username);
+//        model.addAttribute("user", user.get());
+//
+//        return "bulletinboard";
+//    }
+
+
     @GetMapping("/commons")
-    public String getCommons(Model model, Authentication authentication) {
+    public String getCommons(Model model, Authentication authentication,
+                             @RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size) {
+
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.orElse(null));
+
+
+
         List<CommonViewResponse> articles = articleService.getAllArticle().stream()
                 .map(Article::toViewResponse)
                 .toList();
 
         List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
-        model.addAttribute("list", result);
 
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
+
+        Page<Article> articlePage = articleService.getAllArticlesPaged(page, size);
+
+
+
+        model.addAttribute("list", result);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", articlePage.getTotalPages());
 
         return "bulletinboard";
     }
 
+//    @GetMapping("/reviews2")
+//    public String getReviews(Model model, Authentication authentication) {
+//        List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
+//                .map(Review::toViewResponse)
+//                .toList();
+//
+//        List<ReviewViewResponse> result = articleService.getAllLikeReview(reviews);
+//        model.addAttribute("list", result);
+//
+//        String username = authentication.getName();
+//        Optional<User> user = userRepository.findByUserId(username);
+//        model.addAttribute("user", user.get());
+//
+//
+//        return "review-board";
+//    }
+
     @GetMapping("/reviews")
-    public String getReviews(Model model, Authentication authentication) {
+    public String getReviews(Model model, Authentication authentication,
+                             @RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size) {
         List<ReviewViewResponse> reviews = articleService.getAllReview().stream()
                 .map(Review::toViewResponse)
                 .toList();
 
         List<ReviewViewResponse> result = articleService.getAllLikeReview(reviews);
-        model.addAttribute("list", result);
+
+        Page<Review> reviewPage = articleService.getAllReviewPaged(page, size);
+
 
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("user", user.get());
 
 
+        model.addAttribute("list", result);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", reviewPage.getTotalPages());
+
         return "review-board";
     }
 
+
+
+//    @GetMapping("/vips")
+//    public String getVip(Model model, Authentication authentication) {
+//        String username = authentication.getName();
+//        Optional<User> user = userRepository.findByUserId(username);
+//        if (user.get().getAuthor()<3){
+//            return "redirect:/commons?error=accessForbidden";
+//        }
+//        model.addAttribute("user", user.get());
+//
+//        List<VipViewResponse> vips = articleService.getAllVip().stream()
+//                .map(Vip::toViewResponse)
+//                .toList();
+//
+//        List<VipViewResponse> result = articleService.getAllLikeVip(vips);
+//        model.addAttribute("list", result);
+//
+//
+//        return "vip-board";
+//    }
+
     @GetMapping("/vips")
-    public String getVip(Model model, Authentication authentication) {
+    public String getVips(Model model, Authentication authentication,
+                             @RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size) {
+
         String username = authentication.getName();
         Optional<User> user = userRepository.findByUserId(username);
         if (user.get().getAuthor()<3){
             return "redirect:/commons?error=accessForbidden";
         }
+
         model.addAttribute("user", user.get());
 
         List<VipViewResponse> vips = articleService.getAllVip().stream()
@@ -239,7 +321,11 @@ public class PageController {
                 .toList();
 
         List<VipViewResponse> result = articleService.getAllLikeVip(vips);
+        Page<Vip> vipPage = articleService.getAllVipPaged(page, size);
+
         model.addAttribute("list", result);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", vipPage.getTotalPages());
 
 
         return "vip-board";

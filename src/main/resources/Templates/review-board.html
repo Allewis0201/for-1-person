@@ -68,34 +68,36 @@
     <!--게시판 리스트 부분 종료-->
     <!--페이징 부분 시작-->
     <div class="bottom">
-        <nav>
-            <ul>
-                <li>
-                    <a>
-                        <img th:src="@{/Img/img_10.png}" alt="">
+        <!-- 페이징 부분 -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item" th:if="${currentPage != 0}">
+                    <a class="page-link" th:href="@{/reviews(page=0)}">
+                        <img th:src="@{/Img/img_10.png}" alt="처음">
                     </a>
                 </li>
-                <li>
-                    <a>
-                        <img th:src="@{/Img/img_11.png}" alt="">
+                <li class="page-item" th:if="${currentPage != 0}">
+                    <a class="page-link" th:href="@{/reviews(page=${currentPage - 1})}" aria-label="Previous">
+                        <img th:src="@{/Img/img_11.png}" alt="이전">
                     </a>
                 </li>
-                <li>
-                    <a></a>
+                <li th:each="i : ${#numbers.sequence(0, totalPages -1)}" class="page-item"
+                    th:classappend="${currentPage == i} ? 'active'">
+                    <a class="page-link" th:href="@{/reviews(page=${i})}" th:text="${i + 1}"></a>
                 </li>
-                <li>
-                    <a>
-                        <img th:src="@{/Img/img_12.png}" alt="">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/reviews(page=${currentPage + 1})}" aria-label="Next">
+                        <img th:src="@{/Img/img_12.png}" alt="다음">
                     </a>
                 </li>
-                <li >
-                    <a>
-                        <img th:src="@{/Img/img_13.png}" alt="">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/reviews(page=${totalPages - 1})}">
+                        <img th:src="@{/Img/img_13.png}" alt="마지막">
                     </a>
                 </li>
             </ul>
         </nav>
-        <!--페이징 부분 완료-->
+        <!-- 페이징 부분 -->
     </div>
     <!--글 작성 버튼 시작-->
     <div class="btn-right">
