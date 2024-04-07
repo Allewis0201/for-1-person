@@ -96,7 +96,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Article article = articleService.findArticleId(articleId);
+        Article article = articleService.getArticle(articleId);
         model.addAttribute("article", article.toViewResponse());
         return "editBulletin";
     }
@@ -109,7 +109,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Review review = articleService.findReviewId(articleId);
+        Review review = articleService.getReview(articleId);
         model.addAttribute("article", review.toViewResponse());
         return "editReview";
     }
@@ -122,7 +122,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Vip vip = articleService.findVipId(articleId);
+        Vip vip = articleService.getVip(articleId);
         model.addAttribute("article", vip.toViewResponse());
         return "editVip";
     }
@@ -137,7 +137,7 @@ public class PageController {
 
 
         articleService.increaseCommonView(articleId);
-        Article article = articleService.findArticleId(articleId);
+        Article article = articleService.getArticle(articleId);
         model.addAttribute("article", article.toViewResponse());
 
 
@@ -165,7 +165,7 @@ public class PageController {
         model.addAttribute("user", user.get());
 
         articleService.increaseReviewView(reviewId);
-        Review article = articleService.findReviewId(reviewId);
+        Review article = articleService.getReview(reviewId);
         model.addAttribute("article", article.toViewResponse());
 
 
@@ -193,7 +193,7 @@ public class PageController {
         model.addAttribute("user", user.get());
 
         articleService.increaseVipView(vipId);
-        Vip vip = articleService.findVipId(vipId);
+        Vip vip = articleService.getVip(vipId);
         model.addAttribute("article", vip.toViewResponse());
 
 
