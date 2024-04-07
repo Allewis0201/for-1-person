@@ -13,4 +13,7 @@ public interface VipRepository extends JpaRepository<Vip, Long> {
 
     Integer countVipByUser(User user);
 
+    List<Vip> findAllByTitle(String searchKey);
+
+    List<Vip> findAllByUser(User findUser);
 }

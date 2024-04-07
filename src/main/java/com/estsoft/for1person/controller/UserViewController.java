@@ -29,16 +29,22 @@ public class UserViewController {
         this.commentService = commentService;
     }
 
+    //==================================================================================================================
+    // 로그인 페이지로 이동
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    //==================================================================================================================
+    // 회원가입 페이지로 이동
     @GetMapping("/membership")
     public String membership() {
         return "membership";
     }
 
+    //==================================================================================================================
+    // 메인 페이지로 이동
     @GetMapping("/mainScreen")
     public String mainScreen(Model model, Authentication authentication) {
         String username = authentication.getName();
@@ -47,6 +53,8 @@ public class UserViewController {
         return "mainScreen";
     }
 
+    //==================================================================================================================
+    // 계정 정보 페이지로 이동
     @GetMapping("/myInformation")
     public String myInformation(Model model, Authentication authentication) {
         String username = authentication.getName();
@@ -55,6 +63,8 @@ public class UserViewController {
         return "myInformation";
     }
 
+    //==================================================================================================================
+    // 관리 페이지로 이동
     @GetMapping("/admin")
     public String admin(Model model, Authentication authentication, @RequestParam(required = false) String searchType,
                         @RequestParam(required = false) String searchKey) {
@@ -94,4 +104,5 @@ public class UserViewController {
         model.addAttribute("userList", resultList3);
         return "adminpage";
     }
+    //==================================================================================================================
 }
