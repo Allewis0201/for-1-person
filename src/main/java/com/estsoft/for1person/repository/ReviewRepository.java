@@ -12,4 +12,8 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Integer countReviewByUser(User user);
+
+    List<Review> findAllByTitle(String searchKey);
+
+    List<Review> findAllByUser(User findUser);
 }
