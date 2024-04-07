@@ -230,7 +230,7 @@ public class PageController {
     @GetMapping("/commons")
     public String getCommons(Model model, Authentication authentication,
                              @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "2") int size,
+                             @RequestParam(defaultValue = "10") int size,
                              @RequestParam(required = false) String searchType,
                              @RequestParam(required = false) String searchKey) {
 
@@ -316,7 +316,7 @@ public class PageController {
     @GetMapping("/reviews")
     public String getReviews(Model model, Authentication authentication,
                              @RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "2") int size,
+                             @RequestParam(defaultValue = "10") int size,
                              @RequestParam(required = false) String searchType,
                              @RequestParam(required = false) String searchKey) {
 
@@ -405,7 +405,7 @@ public class PageController {
     @GetMapping("/vips")
     public String getVips(Model model, Authentication authentication,
                           @RequestParam(defaultValue = "0") int page,
-                          @RequestParam(defaultValue = "2") int size,
+                          @RequestParam(defaultValue = "10") int size,
                           @RequestParam(required = false) String searchType,
                           @RequestParam(required = false) String searchKey) {
 

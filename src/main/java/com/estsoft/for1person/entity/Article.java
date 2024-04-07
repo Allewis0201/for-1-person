@@ -28,7 +28,7 @@ public class Article {
     @Column(nullable = false)
     private String title; // 제목
 
-    @Column(nullable = false, length = 100000)
+    @Column(nullable = false, length = 1000000)
     private String content; // 내용
 
     @Column(nullable = false)
