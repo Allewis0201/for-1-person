@@ -85,6 +85,8 @@
 ## 🗒️API 명세서
 
 ---
+현재 함수 이름이 아래 표에서 빠져있으며, 전문은 해당 [노션 링크](https://www.notion.so/oreumi/API-8dcf98b75b7d44858c79f9e4434798a6)에 있습니다.
+
 
 | 기능설명 | url | http Method | 연결되는 HTML 파일 |
 | --- | --- | --- | --- |
