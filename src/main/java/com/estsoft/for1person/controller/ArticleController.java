@@ -8,7 +8,9 @@ import com.estsoft.for1person.entity.Review;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.service.ArticleService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -118,38 +120,6 @@ public class ArticleController {
         return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl", "/vips"));
     }
     //==================================================================================================================
-    // 아티클 수정
-    // 수정 내용을 담을 DTO 필요
-//    @PostMapping("/api/common/{user_id}/{article_id}")
-//    public void updateArticle(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
-//        articleService.updateArticle(userId, articleId);
-//    }
-//    @PostMapping("/api/review/{user_id}/{article_id}")
-//    public void updateReview(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
-//        articleService.updateReview(userId, articleId);
-//    }
-//
-//    @PostMapping("/api/vip/{user_id}/{article_id}")
-//    public void updateVip(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
-//        articleService.updateVip(userId, articleId);
-//    }
-
-    // 아티클 삭제
-//    @DeleteMapping("/api/common/{user_id}/{article_id}")
-//    public void deleteArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-//        articleService.deleteArticle(userId, articleId);
-//    }
-//    @DeleteMapping("/api/review/{user_id}/{article_id}")
-//    public void deleteReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-//        articleService.deleteReview(userId, articleId);
-//    }
-//
-//    @DeleteMapping("/api/vip/{user_id}/{article_id}")
-//    public void deleteVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
-//        articleService.deleteVip(userId, articleId);
-//    }
-
-    //==================================================================================================================
     // 특정 게시글 추천 기능
     // (추천은 게시글당 동일 유저가 최대 1개까지만 가능)
     // (추천을 안 눌렀을 때 누르면 추천이 되고 추천이 눌러져있을 때 누르면 추천이 해제됨)
@@ -187,7 +157,177 @@ public class ArticleController {
     {
         return articleService.getLikeVip(article_id).get();
     }
-    //==================================================================================================================
 
+    //==================================================================================================================
+    // 게시글 수정(일반, 리뷰, VIP)
+    @PutMapping("/api/common/{article_id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+        Article updateArticle = articleService.updateArticle(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
+    }
+
+    @PutMapping("/api/review/{article_id}")
+    public ResponseEntity<Review> updateReview(@PathVariable("article_id") Long articleId, @RequestBody AddReviewRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+
+        Review updateReview = articleService.updateReview(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateReview);
+    }
+
+    @PutMapping("/api/vip/{article_id}")
+    public ResponseEntity<Vip> updateVip(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+
+        Vip updateVip = articleService.updateVip(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateVip);
+    }
+
+
+
+    //==================================================================================================================
+    // 게시글 삭제(일반, 리뷰, VIP)
+    @DeleteMapping("/api/common/{article_id}")
+    public void deleteArticle(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteArticle(userId, articleId);
+    }
+    @DeleteMapping("/api/review/{article_id}")
+    public void deleteReview(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteReview(userId, articleId);
+    }
+
+    @DeleteMapping("/api/vip/{article_id}")
+    public void deleteVip(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteVip(userId, articleId);
+    }
+
+
+    // 게시글 생성(일반, 리뷰, VIP)
+    // 생성 코드 중복되서 주석처리(해당 코드는 유저 아이디를 PathVariable로 받아오지않음
+//    @PostMapping("/api/common/test")
+//    public String createArticleTest(@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddArticleRequest request = AddArticleRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(1).
+//                anonymous(false).
+//                build();
+//
+//        articleService.createArticle(userId, request);
+//
+//        return "Data received and stored.";
+//    }
+//
+//    @PostMapping("/api/review/test")
+//    public String createReviewTest(@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddReviewRequest request = AddReviewRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(2).
+//                anonymous(false).
+//                score(3).
+//                build();
+//        articleService.createReview(userId, request);
+//
+//        return "Data received and stored.";
+//    }
+//
+//    @PostMapping("/api/vip/test")
+//    public String createVip(@RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddVipRequest request = AddVipRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(1).
+//                anonymous(false).
+//                build();
+//
+//        articleService.createVip(userId, request);
+//
+//        return "Data received and stored.";
+//    }
+
+
+
+
+
+
+    // 뷰 DTO를 사용한 업데이트 함수(현재 사용하지 않음)
+//    @PutMapping("/api/common/{article_id}")
+//    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+//        String userId = authentication.getName();
+//        Article updateArticle = articleService.updateArticle(userId, articleId, request);
+//        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
+//    }
+//
+//    @PutMapping("/api/review/{article_id}")
+//    public void updateReview(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddReviewRequest request = AddReviewRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(2).
+//                anonymous(false).
+//                score(3).
+//                build();
+//        articleService.updateReview(userId, articleId, request);
+//    }
+//
+//    @PutMapping("/api/vip/{article_id}")
+//    public void updateVip(@PathVariable("article_id") Long articleId, @RequestParam("title") String title, @RequestParam("content") String content, Authentication authentication) {
+//        String userId = authentication.getName();
+//        AddVipRequest request = AddVipRequest.builder().
+//                title(title).
+//                content(content).
+//                views(0L).
+//                need(1).
+//                anonymous(false).
+//                build();
+//
+//        articleService.updateVip(userId, articleId, request);
+//    }
+
+
+
+    // 아티클 수정 (현재 사용하지 않음)
+    // 수정 내용을 담을 DTO 필요
+//    @PostMapping("/api/common/{user_id}/{article_id}")
+//    public void updateArticle(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateArticle(userId, articleId);
+//    }
+//    @PostMapping("/api/review/{user_id}/{article_id}")
+//    public void updateReview(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateReview(userId, articleId);
+//    }
+//
+//    @PostMapping("/api/vip/{user_id}/{article_id}")
+//    public void updateVip(@PathVariable("user_id") String userId, @PathVariable("article_id") Long articleId) {
+//        articleService.updateVip(userId, articleId);
+//    }
+
+    // 아티클 삭제
+//    @DeleteMapping("/api/common/{user_id}/{article_id}")
+//    public void deleteArticle(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteArticle(userId, articleId);
+//    }
+//    @DeleteMapping("/api/review/{user_id}/{article_id}")
+//    public void deleteReview(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteReview(userId, articleId);
+//    }
+//
+//    @DeleteMapping("/api/vip/{user_id}/{article_id}")
+//    public void deleteVip(@PathVariable("user_id") Long userId, @PathVariable("article_id") Long articleId, @PathVariable String article_id) {
+//        articleService.deleteVip(userId, articleId);
+//    }
 
 }
+

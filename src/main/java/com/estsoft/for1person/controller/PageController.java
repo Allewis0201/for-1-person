@@ -29,8 +29,7 @@ import java.util.List;
 @Slf4j
 public class PageController {
     private ArticleService articleService;
-    private ReviewService reviewService;
-    private VipService vipService;
+
     private CommentService commentService;
     private UserService userService;
     private UserRepository userRepository;
@@ -40,10 +39,8 @@ public class PageController {
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
 
-    public PageController(ArticleService articleService, ReviewService reviewService, VipService vipService, CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
+    public PageController(ArticleService articleService,CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
         this.articleService = articleService;
-        this.reviewService = reviewService;
-        this.vipService = vipService;
         this.commentService = commentService;
         this.userService = userService;
         this.userRepository = userRepository;
