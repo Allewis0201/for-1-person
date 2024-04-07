@@ -2,17 +2,17 @@ package com.estsoft.for1person.service;
 
 
 import com.estsoft.for1person.dto.AddCommentRequest;
+import com.estsoft.for1person.dto.UserViewResponse;
 import com.estsoft.for1person.entity.*;
 import com.estsoft.for1person.exception.NotFoundException;
 import com.estsoft.for1person.repository.*;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class CommentService {
 
     private UserRepository userRepository;
@@ -26,6 +26,21 @@ public class CommentService {
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
 
+    public CommentService(UserRepository userRepository, ArticleRecommendRepository articleRecommendRepository, ReviewRecommendRepository reviewRecommendRepository, VipRecommendRepository vipRecommendRepository, CommentCommonRepository commentCommonRepository, CommentVipRepository commentVipRepository, CommentReviewRepository commentReviewRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
+        this.userRepository = userRepository;
+        this.articleRecommendRepository = articleRecommendRepository;
+        this.reviewRecommendRepository = reviewRecommendRepository;
+        this.vipRecommendRepository = vipRecommendRepository;
+        this.commentCommonRepository = commentCommonRepository;
+        this.commentVipRepository = commentVipRepository;
+        this.commentReviewRepository = commentReviewRepository;
+        this.articleRepository = articleRepository;
+        this.reviewRepository = reviewRepository;
+        this.vipRepository = vipRepository;
+    }
+
+    //============================================================================================================
+    // 모든 댓글을 반환하는 기능 (일반, 리뷰, VIP)
     public List<CommentCommon> getAllCommentCommon() {
         return commentCommonRepository.findAll();
     }
@@ -36,18 +51,32 @@ public class CommentService {
         return commentReviewRepository.findAll();
     }
 
+
+    //============================================================================================================
+    // 특정 게시글에 적힌 모든 댓글을 반환하는 기능 (일반, 리뷰, VIP)
     public List<CommentCommon> getArticleCommonComment(Long articleId) {
-        return commentCommonRepository.findAllByCommentCommonId(articleId);
+
+        Article article = articleRepository.findById(articleId).get();
+
+        return commentCommonRepository.findAllByArticle(article);
     }
 
     public List<CommentVip> getArticleVipComment(Long articleId) {
-        return commentVipRepository.findAllByCommentVipId(articleId);
+
+        Vip vip = vipRepository.findById(articleId).get();
+
+        return commentVipRepository.findAllByVip(vip);
     }
 
     public List<CommentReview> getArticleReviewComment(Long articleId) {
-        return commentReviewRepository.findAllByCommentReviewId(articleId);
+
+        Review review = reviewRepository.findById(articleId).get();
+
+        return commentReviewRepository.findAllByReview(review);
     }
 
+    //============================================================================================================
+    // 특정 댓글을 반환하는 기능 (일반, 리뷰, VIP)
 
     public CommentCommon getCommentCommon(Long commentId) {
         return commentCommonRepository.findById(commentId).orElseThrow();
@@ -60,7 +89,9 @@ public class CommentService {
         return commentReviewRepository.findById(commentId).orElseThrow();
     }
 
-    //dto 대체
+    //============================================================================================================
+    // 댓글을 생성하는 기능 (일반, 리뷰, VIP)
+    
     public void createCommentCommon(String userId, Long articleId, AddCommentRequest request) {
         User user = userRepository.findByUserId(userId).get();
         Article article = articleRepository.findById(articleId).get();
@@ -69,8 +100,7 @@ public class CommentService {
         commentCommonRepository.save(commentCommon);
     }
     public void createCommentVip(String userId, Long articleId, AddCommentRequest request) {
-
-
+        
         User user = userRepository.findByUserId(userId).get();
         Vip vip = vipRepository.findById(articleId).get();
 
@@ -88,6 +118,9 @@ public class CommentService {
         commentReviewRepository.save(commentReview);
 
     }
+    
+    //============================================================================================================
+    // 댓글을 수정하는 기능 (일반, 리뷰, VIP) (기능 작성은 했으나 시간 부족으로 적용하진 못했음)
 
     @Transactional
     public void updateCommentCommon(String userId, Long articleId, Long commentId, AddCommentRequest request) {
@@ -97,10 +130,9 @@ public class CommentService {
         {
             //맞으면 dto 내용을 comment에 넣어서 변경
             commentCommon.update(request.getBody(),request.getAnonymous());
+            commentCommonRepository.save(commentCommon);
 
         }
-
-        // 후 저장
     }
     @Transactional
     public void updateCommentReview(String userId, Long articleId, Long commentId, AddCommentRequest request) {
@@ -112,7 +144,6 @@ public class CommentService {
             commentVip.update(request.getBody(),request.getAnonymous());
 
         }
-        // 후 저장
 
     }
     @Transactional
@@ -125,8 +156,10 @@ public class CommentService {
             commentReview.update(request.getBody(),request.getAnonymous());
 
         }
-        // 후 저장
     }
+
+    //============================================================================================================
+    // 댓글을 삭제하는 기능 (일반, 리뷰, VIP)
 
     public void deleteCommonComment(String userId, Long commentId) {
         //있는지 확인
@@ -161,6 +194,32 @@ public class CommentService {
         //있으면 삭제 없으면 에러 반환
     }
 
+    //============================================================================================================
+    // 특정 게시글의 댓글을 모두 삭제하는 기능 (일반, 리뷰, VIP)
+
+    public void deleteAllArticleComment(Long articleId)
+    {
+        Article article = articleRepository.findById(articleId).get();
+
+        commentCommonRepository.deleteAllByArticle(article);
+    }
+
+    public void deleteAllReviewComment(Long reviewId)
+    {
+        Review review = reviewRepository.findById(reviewId).get();
+
+        commentReviewRepository.deleteAllByReview(review);
+    }
+
+    public void deleteAllVipComment(Long vipId)
+    {
+        Vip vip = vipRepository.findById(vipId).get();
+
+        commentVipRepository.deleteAllByVip(vip);
+    }
+
+    //============================================================================================================
+    // 댓글 추천 기능 (일반, 리뷰, VIP) (기능 작성은 했으나 시간 부족으로 적용하진 못했음)
     @Transactional
     public void recommendArticle(String userId, Long commentCommonId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
@@ -176,13 +235,11 @@ public class CommentService {
 
             articleRecommendRepository.save(articleRecommend);
         }
-
         // 좋아요 한 정보가 있다면
         else {
             ArticleRecommend tmp = articleRecommendRepository.findByCommentCommonAndUser(comment, user).get();
             articleRecommendRepository.delete(tmp);
         }
-
     }
     @Transactional
     public void recommendReview(String userId, Long commentReviewId) {
@@ -199,13 +256,11 @@ public class CommentService {
 
             reviewRecommendRepository.save(reviewRecommend);
         }
-
         // 좋아요 한 정보가 있다면
         else {
             ReviewRecommend tmp = reviewRecommendRepository.findByCommentReviewAndUser(comment, user).get();
             reviewRecommendRepository.delete(tmp);
         }
-
     }
 
     @Transactional
@@ -220,17 +275,79 @@ public class CommentService {
                     .commentVip(comment)
                     .user(user)
                     .build();
-
             vipRecommendRepository.save(vipRecommend);
         }
-
         // 좋아요 한 정보가 있다면
         else {
             VipRecommend tmp = vipRecommendRepository.findByCommentVipAndUser(comment, user).get();
             vipRecommendRepository.delete(tmp);
         }
+    }
 
+    //============================================================================================================
+    // 댓글 추천 수 반환 기능 (일반, 리뷰, VIP) (기능 작성은 했으나 시간 부족으로 적용하진 못했음)
+
+    @Transactional
+    public Optional<Integer> getRecommendArticle(Long commentCommonId)
+    {
+        CommentCommon commentCommon = commentCommonRepository.findById(commentCommonId).get();
+
+        return articleRecommendRepository.countArticleRecommendByCommentCommon(commentCommon);
+    }
+
+    @Transactional
+    public Optional<Integer> getRecommendReview(Long commentReviewId)
+    {
+        CommentReview commentReview = commentReviewRepository.findById(commentReviewId).get();
+
+        return reviewRecommendRepository.countReviewRecommendByCommentReview(commentReview);
     }
 
 
+    @Transactional
+    public Optional<Integer> getRecommendVip(Long commentVipId)
+    {
+        CommentVip commentVip = commentVipRepository.findById(commentVipId).get();
+
+        return vipRecommendRepository.countVipRecommendByCommentVip(commentVip);
+    }
+
+
+    //============================================================================================================
+    // 게시글에 달린 댓글 수 반환 (일반, 리뷰, VIP)
+
+    public Optional<Integer> getCommentCommonCount(Long articleId) {
+
+        Article article = articleRepository.findById(articleId).get();
+
+        return commentCommonRepository.countCommentCommonByArticle(article);
+    }
+
+    public Optional<Integer> getCommentReviewCount(Long articleId) {
+
+        Review review = reviewRepository.findById(articleId).get();
+
+        return commentReviewRepository.countCommentReviewByReview(review);
+    }
+
+    public Optional<Integer> getCommentVipCount(Long articleId) {
+        Vip vip = vipRepository.findById(articleId).get();
+
+        return commentVipRepository.countCommentVipByVip(vip);
+    }
+
+    //============================================================================================================
+    // 유저가 지금까지 작성한 댓글 수 반환 (일반, 리뷰, VIP)
+
+    public List<UserViewResponse> getAllCommentByUserId(List<UserViewResponse> users) {
+        for(UserViewResponse user : users)
+        {
+            User tmp = userRepository.findByUserId(user.getUserId()).get();
+            Integer count = commentCommonRepository.countCommentCommonByUser(tmp) + commentReviewRepository.countCommentReviewByUser(tmp) + commentVipRepository.countCommentVipByUser(tmp);
+            user.setCommentCount(count);
+        }
+        return users;
+    }
+
+    //============================================================================================================
 }

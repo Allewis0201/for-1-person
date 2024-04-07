@@ -30,6 +30,7 @@
 .user-info{
     font-size: 20px;
     margin-bottom: 20px;
+    padding-top : 40px;
 }
 .backGround,
 .information1{
@@ -58,4 +59,27 @@
     color:white;
     padding:9px;
     border: none;
+}
+#btn_close_modal:hover{
+    background-color: #FF695B;
+}
+.page-link button{
+    padding: 9px;
+    border-radius: 30px;
+    color : white;
+    border : none;
+    background-color: #FFBAB3;;
+}
+.page-link button:hover{
+    background-color: #FF695B;
+}
+.backGround button{
+    padding: 9px;
+    border-radius: 30px;
+    color : white;
+    border : none;
+    background-color: #FFBAB3;;
+}
+.backGround button:hover{
+    background-color: #FF695B;
 }

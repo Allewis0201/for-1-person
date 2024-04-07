@@ -8,10 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -38,6 +41,10 @@ public class Review {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     @Column(nullable = false)
     private Integer need;
 
@@ -54,7 +61,7 @@ public class Review {
         this.title = title;
         this.content = content;
         this.views = views;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.need = need;
         this.user = user;
         this.score = score;
@@ -64,7 +71,7 @@ public class Review {
     {
         this.title = title;
         this.content = content;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.score = score;
     }
 
@@ -77,6 +84,7 @@ public class Review {
                 .views(views)
                 .anonymous(anonymous)
                 .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .need(need)
                 .user(user)
                 .score(score)

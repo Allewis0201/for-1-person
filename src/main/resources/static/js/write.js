@@ -10,4 +10,5 @@ function rateStar(star) {
             star.classList.add('far');
         }
     });
+    document.getElementById('score').value = rating;
 }

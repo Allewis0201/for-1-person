@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ReviewViewResponse {
@@ -20,6 +21,8 @@ public class ReviewViewResponse {
     private Long views;
     private Boolean anonymous;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Integer like;
     private Integer need;
     private Integer score;
     private User user;

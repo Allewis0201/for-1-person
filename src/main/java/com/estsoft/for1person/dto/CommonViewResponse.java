@@ -21,6 +21,9 @@ public class CommonViewResponse {
     private Long views; // 조회수
     private Boolean anonymous; // 익명 여부
     private LocalDateTime createdAt; // 생성 날짜
+    private Integer like;
+
+    private LocalDateTime updatedAt;
     private Integer need; // 필요
     private User user; // 작성자 정보 (FK)
 }

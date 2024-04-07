@@ -1,5 +1,6 @@
 package com.estsoft.for1person.repository;
 
+import com.estsoft.for1person.entity.Article;
 import com.estsoft.for1person.entity.User;
 import com.estsoft.for1person.entity.Vip;
 import com.estsoft.for1person.entity.VipLike;
@@ -11,4 +12,8 @@ import java.util.Optional;
 @Repository
 public interface VipLikeRepository extends JpaRepository<VipLike, Long> {
     Optional<VipLike> findByVipAndUser(Vip vip, User user);
+
+    Optional<Integer> countArticleLikeByVip(Vip vip);
+
+    void deleteAllByVip(Vip vip);
 }

@@ -8,10 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -38,6 +41,10 @@ public class Article {
     @Column(nullable = false)
     private LocalDateTime createdAt; // 생성 날짜
 
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
     @Column(nullable = false)
     private Integer need; // 필요
 
@@ -51,7 +58,7 @@ public class Article {
         this.title = title;
         this.content = content;
         this.views = views;
-        this.anonymous = anonymous;
+        this.anonymous = false;
         this.need = need;
         this.user = user;
     }
@@ -60,7 +67,7 @@ public class Article {
     {
         this.title = title;
         this.content = content;
-        this.anonymous = anonymous;
+        this.anonymous = false;
     }
 
     public CommonViewResponse toViewResponse() // 생성자를 사용해 객체 생성
@@ -72,6 +79,7 @@ public class Article {
                 .views(views)
                 .anonymous(anonymous)
                 .createdAt(createdAt)
+                .updatedAt(updatedAt)
                 .need(need)
                 .user(user)
                 .build();

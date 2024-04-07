@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>detail page</title>
+    <title>글 상세 페이지</title>
     <!-- header 에서 사용된 파일 -->
     <link rel="stylesheet" th:href="@{/css/mainScreen.css}">
     <link rel="stylesheet" th:href="@{/css/modal.css}">
     <script th:src="@{/js/modal.js}"></script>
+    <script th:src="@{/js/detailCommon.js}"></script>
     <!-- detail page 에서 사용할 추가 파일 -->
     <link rel="stylesheet" th:href="@{/css/detailpage.css}">
 </head>
@@ -28,31 +29,34 @@
             <tbody>
             <tr class="table1">
                 <th>제목</th>
-                <td colspan="13" th:text="${article.title}">타이틀</td>
+                <td colspan="11" th:text="${article.title}">타이틀</td>
             </tr>
             <tr class="table2">
                 <th class="th2">닉네임</th>
-                <td colspan="4" class="data2" th:text="${user.nickname}">닉네임</td>
+                <td class="data2" th:text="${article.user.nickname}">닉네임</td>
 
                 <th class="th3">추천</th>
-                <td class="data3" >데이터</td>
+                <td class="data3" th:text="${articleLike}">추천수</td>
 
                 <th class="th4">댓글</th>
-                <td class="data4">데이터</td>
+                <td class="data4" th:text="${commentCount}">댓글수</td>
 
                 <th class="th5">조회수</th>
-                <td class="data5">데이터</td>
+                <td class="data5" th:text="${article.views}">조회수</td>
 
                 <th class="th6">작성일</th>
-                <td colspan="2">데이터</td>
+                <td th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
+
+                <th class="th7">수정시간</th>
+                <td th:text="${#temporals.format(article.updatedAt, 'yyyy-MM-dd HH:mm')}">수정 시간</td>
             </tr>
             </tbody>
         </table>
         <div class="editor">
             <p th:utext="${article.content}" value="기본값"></p>
         </div>
-        <form class="btn">
-             <button class="btn1">추천</button>
+        <form class="btn" th:action="@{/article/common/like/{user_id}/{article_id}(user_id = ${user.userId}, article_id = ${article.articleId})}">
+            <button class="btn1">추천</button>
         </form>
         <div class="comments-title">
             <div class="comments-img">
@@ -60,65 +64,77 @@
                 <p>댓글</p>
             </div>
             <div class="btn2">
-                <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
-                <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/editArticleBulletin(articleId=${article.articleId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 수정</button>
+                </a>
+                <a th:if="${article.user.userId == #authentication.principal.username}" th:href="@{/deleteArticleCommon(articleId=${article.articleId})}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 삭제</button>
+                </a>
+                <a th:href="@{/newArticleBulletin}">
+                    <button><img th:src="@{/Img/img_17.png}" alt="">글 쓰기</button>
+                </a>
             </div>
         </div>
         <div>
-            <div class="comment">
-                <div class="comment2">
-                    <p class="user">데이터</p>
+            <div class="comment" th:if="${comments.size()} != 0">
+                <div class="comment2" th:each="comment : ${comments}">
+                    <p class="user-nickname"  th:text="${comment.user.nickname}"></p>
+                    <p class="comment3" th:text="${comment.body}" th:id="'comment-' + ${comment.commentCommonId}"></p>
+<!--                    <label><input type="checkbox" th:checked="${comment.anonymous}" disabled>익명 체크</label>-->
                     <!--날짜 입력-->
-                    <label><input></label>
+                    <label><input th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></label>
+                    <button type="button" th:if="${comment.user.userId == #authentication.principal.username}" th:attr="commentId=${comment.commentCommonId}" class="deleteCommentBtn">삭제</button>
                 </div>
                 <!--댓글내용 데이터 -->
-                <p>데이터</p>
             </div>
-            <!--페이징 부분 시작-->
-            <div class="bottom">
-                <nav>
-                    <ul>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                        <li><a>5</a></li>
-                        <li>
-                            <a><img th:src="@{/Img/img_12.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_13.png}" alt=""></a>
-                        </li>
-                    </ul>
-                </nav>
-                <!--페이징 부분 완료-->
-            </div>
-            <form class="write-comments">
-                <div class="write-comment">
+        <!--페이징 부분 시작-->
+        <div class="bottom">
+            <nav>
+                <ul>
+                    <li>
+                        <a><img th:src="@{/Img/img_10.png}" alt=""></a>
+                    </li>
+                    <li>
+                        <a><img th:src="@{/Img/img_10.png}" alt=""></a>
+                    </li>
+                    <li><a>1</a></li>
+                    <li><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                    <li>
+                        <a><img th:src="@{/Img/img_12.png}" alt=""></a>
+                    </li>
+                    <li>
+                        <a><img th:src="@{/Img/img_13.png}" alt=""></a>
+                    </li>
+                </ul>
+            </nav>
+            <!--페이징 부분 완료-->
+        </div>
+            <form id="commentCommonForm" class="write-comments" th:action="@{/api/comment/common/{articleId}(articleId=${article.articleId})}" th:method="post">
+
+
+            <div class="write-comment">
                     <p>댓글 작성</p>
                     <div class="checkbox">
-                        <label><input type="checkbox" value="익명체크">익명 체크</label>
-                        <button class="btn2">댓글 등록</button>
+                        <label><input type="checkbox" name="anonymous">익명 체크</label>
+                        <button class="btn2" type="submit">댓글 등록</button>
                     </div>
                 </div>
                 <div class="write-comment2">
                     <label for="text-box"></label>
-                    <textarea class="form-control" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
+                    <textarea class="form-control"  name="body" id="text-box" placeholder="정치 · 잡담 · 혐오 글/ 댓글 작성하지 마세요.마음이 아파요 ..ㅜ" rows="3"
                               required></textarea>
                 </div>
             </form>
-            <div class="btn-up">
-                <button id="to-top" onclick="window.scrollTo(0, 0);">
-                    <img th:src="@{/Img/img_18.png}" alt=""></button>
-            </div>
+
+        <div class="btn-up">
+            <button id="to-top" onclick="window.scrollTo(0, 0);">
+                <img th:src="@{/Img/img_18.png}" alt=""></button>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

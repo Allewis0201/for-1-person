@@ -22,13 +22,14 @@ public class WebSecurityConfig {
                 .requestMatchers("/static/**")
                 .requestMatchers("/css/**")
                 .requestMatchers("/js/**")
-                .requestMatchers("/Img/**");
+                .requestMatchers("/Img/**")
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth ->              // 인증, 인가 설정
-                        auth.requestMatchers("/login", "/mainScreen", "/membership", "/user","/admin", "/checkUsername", "/checkNickname", "/updateInfo", "/updateAuthor", "/userList").permitAll()
+                        auth.requestMatchers("/login", "/membership", "/user","/admin", "/checkUsername", "/checkNickname", "/updateInfo", "/updateAuthor", "/userList").permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(auth -> auth.loginPage("/login")
                         .defaultSuccessUrl("/mainScreen"))

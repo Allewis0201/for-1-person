@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface VipRecommendRepository extends JpaRepository<VipRecommend, Long> {
     Optional<VipRecommend> findByCommentVipAndUser(CommentVip commentVip, User user);
+
+    Optional<Integer> countVipRecommendByCommentVip(CommentVip commentVip);
 }
