@@ -57,11 +57,11 @@
         <tr th:each="review : ${list}">
             <td th:text="${review.reviewId}">번호</td>
             <td><a th:href="@{'/review/' + ${review.reviewId}}" th:text="${review.title}">제목</a></td>
-            <td th:text="${review.score}"></td>
+            <td th:text="${review.score}">별점</td>
             <td th:text="${review.user.nickname}">작성자</td>
-            <td class="date" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${review.like}"></td>
-            <td>추천</td>
+            <td class="date" th:text="${#temporals.format(review.createdAt, 'yyyy-MM-dd HH:mm')}">날짜</td>
+            <td th:text="${review.views}">조회수</td>
+            <td th:text="${review.like}">추천</td>
         </tr>
         </tbody>
     </table>
