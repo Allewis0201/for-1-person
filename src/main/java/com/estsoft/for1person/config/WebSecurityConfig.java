@@ -22,7 +22,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/static/**")
                 .requestMatchers("/css/**")
                 .requestMatchers("/js/**")
-                .requestMatchers("/Img/**");
+                .requestMatchers("/Img/**")
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
     }
 
     @Bean
