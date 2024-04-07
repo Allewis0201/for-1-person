@@ -48,182 +48,6 @@ public class PageController {
         this.vipRepository = vipRepository;
     }
 
-    //==================================================================================================================
-    // 일반 게시글 생성 뷰
-    @GetMapping("/newArticleBulletin")
-    public String newArticleBulletin(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        model.addAttribute("article", new ArticleViewResponse());
-        return "writeBulletin";
-    }
-
-    //==================================================================================================================
-    // 리뷰 게시글 생성 뷰
-    @GetMapping("/newArticleReview")
-    public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        model.addAttribute("article", new ReviewViewResponse());
-        return "writeReview";
-    }
-
-    //==================================================================================================================
-    // VIP 게시글 생성 뷰
-    @GetMapping("/newArticleVip")
-    public String newArticleVip(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        model.addAttribute("article", new VipViewResponse());
-        return "writeVIP";
-    }
-
-    //==================================================================================================================
-    // 일반 게시글 수정 뷰
-    @GetMapping("/editArticleBulletin")
-    public String editArticleBulletin(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        Article article = articleService.getArticle(articleId);
-        model.addAttribute("article", article.toViewResponse());
-        return "editBulletin";
-    }
-
-    //==================================================================================================================
-    // 리뷰 게시글 수정 뷰
-    @GetMapping("/editArticleReview")
-    public String editArticleReview(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        Review review = articleService.getReview(articleId);
-        model.addAttribute("article", review.toViewResponse());
-        return "editReview";
-    }
-
-    //==================================================================================================================
-    // VIP 게시글 수정 뷰
-    @GetMapping("/editArticleVip")
-    public String editArticleVip(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("userId", user.get().getUserId());
-        model.addAttribute("user", user.get());
-        Vip vip = articleService.getVip(articleId);
-        model.addAttribute("article", vip.toViewResponse());
-        return "editVip";
-    }
-
-    //==================================================================================================================
-    // 일반 게시글 상세 뷰
-    @GetMapping("/common/{articleId}")
-    public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-
-
-        articleService.increaseCommonView(articleId);
-        Article article = articleService.getArticle(articleId);
-        model.addAttribute("article", article.toViewResponse());
-
-
-        List<CommentCommonViewResponse> comments = commentService.getArticleCommonComment(articleId).stream()
-                .map(CommentCommon::toViewResponse)
-                .toList();
-        model.addAttribute("comments", comments);
-
-        Integer like = articleService.getLikeArticle(articleId).get();
-        model.addAttribute("articleLike", like);
-
-        Integer commentCount = commentService.getCommentCommonCount(articleId).get();
-        model.addAttribute("commentCount", commentCount);
-
-        return "detailCommon";
-    }
-
-    //==================================================================================================================
-    // 리뷰 게시글 상세 뷰
-
-    @GetMapping("/review/{reviewId}")
-    public String showArticleReview(@PathVariable Long reviewId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-
-        articleService.increaseReviewView(reviewId);
-        Review article = articleService.getReview(reviewId);
-        model.addAttribute("article", article.toViewResponse());
-
-
-        List<CommentReviewViewResponse> comments = commentService.getArticleReviewComment(reviewId).stream()
-                .map(CommentReview::toViewResponse)
-                .toList();
-        model.addAttribute("comments", comments);
-
-        Integer like = articleService.getLikeReview(reviewId).get();
-        model.addAttribute("reviewLike", like);
-
-        Integer commentCount = commentService.getCommentReviewCount(reviewId).get();
-        model.addAttribute("commentCount", commentCount);
-
-
-        return "detailReview";
-    }
-
-    //==================================================================================================================
-    // Vip 게시글 상세 뷰
-    @GetMapping("/vip/{vipId}")
-    public String showArticleVip(@PathVariable Long vipId, Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
-
-        articleService.increaseVipView(vipId);
-        Vip vip = articleService.getVip(vipId);
-        model.addAttribute("article", vip.toViewResponse());
-
-
-        List<CommentVipViewResponse> comments = commentService.getArticleVipComment(vipId).stream()
-                .map(CommentVip::toViewResponse)
-                .toList();
-        model.addAttribute("comments", comments);
-
-        Integer like = articleService.getLikeVip(vipId).get();
-        model.addAttribute("vipLike", like);
-
-
-        Integer commentCount = commentService.getCommentVipCount(vipId).get();
-        model.addAttribute("commentCount", commentCount);
-
-        return "detailVIP";
-    }
-
-
-//    @GetMapping("/commons2")
-//    public String getCommons(Model model, Authentication authentication) {
-//        List<CommonViewResponse> articles = articleService.getAllArticle().stream()
-//                .map(Article::toViewResponse)
-//                .toList();
-//
-//        List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
-//        model.addAttribute("list", result);
-//
-//        String username = authentication.getName();
-//        Optional<User> user = userRepository.findByUserId(username);
-//        model.addAttribute("user", user.get());
-//
-//        return "bulletinboard";
-//    }
 
     //==================================================================================================================
     // 일반 게시판 전체 뷰
@@ -471,6 +295,191 @@ public class PageController {
 
         return "vip-board";
     }
+
+
+
+    //==================================================================================================================
+    // 일반 게시글 생성 뷰
+    @GetMapping("/newArticleBulletin")
+    public String newArticleBulletin(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        model.addAttribute("article", new ArticleViewResponse());
+        return "writeBulletin";
+    }
+
+    //==================================================================================================================
+    // 리뷰 게시글 생성 뷰
+    @GetMapping("/newArticleReview")
+    public String newArticleReview(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        model.addAttribute("article", new ReviewViewResponse());
+        return "writeReview";
+    }
+
+    //==================================================================================================================
+    // VIP 게시글 생성 뷰
+    @GetMapping("/newArticleVip")
+    public String newArticleVip(@RequestParam(required = false) Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        model.addAttribute("article", new VipViewResponse());
+        return "writeVIP";
+    }
+
+
+
+    //==================================================================================================================
+    // 일반 게시글 상세 뷰
+    @GetMapping("/common/{articleId}")
+    public String showArticleCommon(@PathVariable Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+
+
+        articleService.increaseCommonView(articleId);
+        Article article = articleService.getArticle(articleId);
+        model.addAttribute("article", article.toViewResponse());
+
+
+        List<CommentCommonViewResponse> comments = commentService.getArticleCommonComment(articleId).stream()
+                .map(CommentCommon::toViewResponse)
+                .toList();
+        model.addAttribute("comments", comments);
+
+        Integer like = articleService.getLikeArticle(articleId).get();
+        model.addAttribute("articleLike", like);
+
+        Integer commentCount = commentService.getCommentCommonCount(articleId).get();
+        model.addAttribute("commentCount", commentCount);
+
+        return "detailCommon";
+    }
+
+    //==================================================================================================================
+    // 리뷰 게시글 상세 뷰
+
+    @GetMapping("/review/{reviewId}")
+    public String showArticleReview(@PathVariable Long reviewId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+
+        articleService.increaseReviewView(reviewId);
+        Review article = articleService.getReview(reviewId);
+        model.addAttribute("article", article.toViewResponse());
+
+
+        List<CommentReviewViewResponse> comments = commentService.getArticleReviewComment(reviewId).stream()
+                .map(CommentReview::toViewResponse)
+                .toList();
+        model.addAttribute("comments", comments);
+
+        Integer like = articleService.getLikeReview(reviewId).get();
+        model.addAttribute("reviewLike", like);
+
+        Integer commentCount = commentService.getCommentReviewCount(reviewId).get();
+        model.addAttribute("commentCount", commentCount);
+
+
+        return "detailReview";
+    }
+
+    //==================================================================================================================
+    // Vip 게시글 상세 뷰
+    @GetMapping("/vip/{vipId}")
+    public String showArticleVip(@PathVariable Long vipId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("user", user.get());
+
+        articleService.increaseVipView(vipId);
+        Vip vip = articleService.getVip(vipId);
+        model.addAttribute("article", vip.toViewResponse());
+
+
+        List<CommentVipViewResponse> comments = commentService.getArticleVipComment(vipId).stream()
+                .map(CommentVip::toViewResponse)
+                .toList();
+        model.addAttribute("comments", comments);
+
+        Integer like = articleService.getLikeVip(vipId).get();
+        model.addAttribute("vipLike", like);
+
+
+        Integer commentCount = commentService.getCommentVipCount(vipId).get();
+        model.addAttribute("commentCount", commentCount);
+
+        return "detailVIP";
+    }
+
+
+    //==================================================================================================================
+    // 일반 게시글 수정 뷰
+    @GetMapping("/editArticleBulletin")
+    public String editArticleBulletin(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Article article = articleService.getArticle(articleId);
+        model.addAttribute("article", article.toViewResponse());
+        return "editBulletin";
+    }
+
+    //==================================================================================================================
+    // 리뷰 게시글 수정 뷰
+    @GetMapping("/editArticleReview")
+    public String editArticleReview(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Review review = articleService.getReview(articleId);
+        model.addAttribute("article", review.toViewResponse());
+        return "editReview";
+    }
+
+    //==================================================================================================================
+    // VIP 게시글 수정 뷰
+    @GetMapping("/editArticleVip")
+    public String editArticleVip(@RequestParam("articleId") Long articleId, Model model, Authentication authentication) {
+        String username = authentication.getName();
+        Optional<User> user = userRepository.findByUserId(username);
+        model.addAttribute("userId", user.get().getUserId());
+        model.addAttribute("user", user.get());
+        Vip vip = articleService.getVip(articleId);
+        model.addAttribute("article", vip.toViewResponse());
+        return "editVip";
+    }
+
+
+
+
+//    @GetMapping("/commons2")
+//    public String getCommons(Model model, Authentication authentication) {
+//        List<CommonViewResponse> articles = articleService.getAllArticle().stream()
+//                .map(Article::toViewResponse)
+//                .toList();
+//
+//        List<CommonViewResponse> result = articleService.getAllLikeArticle(articles);
+//        model.addAttribute("list", result);
+//
+//        String username = authentication.getName();
+//        Optional<User> user = userRepository.findByUserId(username);
+//        model.addAttribute("user", user.get());
+//
+//        return "bulletinboard";
+//    }
+
 
 
     //==================================================================================================================
