@@ -47,11 +47,18 @@ public class UserViewController {
     // 메인 페이지로 이동
     @GetMapping("/mainScreen")
     public String mainScreen(Model model, Authentication authentication) {
-        String username = authentication.getName();
-        Optional<User> user = userRepository.findByUserId(username);
-        model.addAttribute("user", user.get());
+        if (authentication != null) {
+            String username = authentication.getName();
+            Optional<User> user = userRepository.findByUserId(username);
+            model.addAttribute("user", user.orElse(null));
+        }
+        else {
+            model.addAttribute("user", null);
+        }
         return "mainScreen";
     }
+
+
 
     //==================================================================================================================
     // 계정 정보 페이지로 이동
