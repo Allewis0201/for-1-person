@@ -29,8 +29,7 @@ import java.util.List;
 @Slf4j
 public class PageController {
     private ArticleService articleService;
-    private ReviewService reviewService;
-    private VipService vipService;
+
     private CommentService commentService;
     private UserService userService;
     private UserRepository userRepository;
@@ -40,10 +39,8 @@ public class PageController {
     private ReviewRepository reviewRepository;
     private VipRepository vipRepository;
 
-    public PageController(ArticleService articleService, ReviewService reviewService, VipService vipService, CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
+    public PageController(ArticleService articleService,CommentService commentService, UserService userService, UserRepository userRepository, ArticleRepository articleRepository, ReviewRepository reviewRepository, VipRepository vipRepository) {
         this.articleService = articleService;
-        this.reviewService = reviewService;
-        this.vipService = vipService;
         this.commentService = commentService;
         this.userService = userService;
         this.userRepository = userRepository;
@@ -96,7 +93,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Article article = articleService.findArticleId(articleId);
+        Article article = articleService.getArticle(articleId);
         model.addAttribute("article", article.toViewResponse());
         return "editBulletin";
     }
@@ -109,7 +106,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Review review = articleService.findReviewId(articleId);
+        Review review = articleService.getReview(articleId);
         model.addAttribute("article", review.toViewResponse());
         return "editReview";
     }
@@ -122,7 +119,7 @@ public class PageController {
         Optional<User> user = userRepository.findByUserId(username);
         model.addAttribute("userId", user.get().getUserId());
         model.addAttribute("user", user.get());
-        Vip vip = articleService.findVipId(articleId);
+        Vip vip = articleService.getVip(articleId);
         model.addAttribute("article", vip.toViewResponse());
         return "editVip";
     }
@@ -137,7 +134,7 @@ public class PageController {
 
 
         articleService.increaseCommonView(articleId);
-        Article article = articleService.findArticleId(articleId);
+        Article article = articleService.getArticle(articleId);
         model.addAttribute("article", article.toViewResponse());
 
 
@@ -165,7 +162,7 @@ public class PageController {
         model.addAttribute("user", user.get());
 
         articleService.increaseReviewView(reviewId);
-        Review article = articleService.findReviewId(reviewId);
+        Review article = articleService.getReview(reviewId);
         model.addAttribute("article", article.toViewResponse());
 
 
@@ -193,7 +190,7 @@ public class PageController {
         model.addAttribute("user", user.get());
 
         articleService.increaseVipView(vipId);
-        Vip vip = articleService.findVipId(vipId);
+        Vip vip = articleService.getVip(vipId);
         model.addAttribute("article", vip.toViewResponse());
 
 

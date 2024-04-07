@@ -20,6 +20,8 @@ public class UserDetailService implements UserDetailsService {
         this.encoder = new BCryptPasswordEncoder();
     }
 
+    //============================================================================================================
+    // 사용자 정보를 가져옴
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         User user = userRepository.findByUserId(userId)

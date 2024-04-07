@@ -32,6 +32,8 @@ public class ArticleService {
         this.vipLikeRepository = vipLikeRepository;
     }
 
+    //============================================================================================================
+    // 게시판 모든 목록 리스트로 반환(일반, 리뷰, VIP)
     public List<Article> getAllArticle() {
         return articleRepository.findAll();
     }
@@ -42,7 +44,8 @@ public class ArticleService {
         return vipRepository.findAll();
     }
 
-
+    //============================================================================================================
+    // 게시판 모든 목록 페이지로 반환(일반, 리뷰, VIP)
     public Page<Article> getAllArticlesPaged(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return articleRepository.findAll(pageable);
@@ -56,7 +59,8 @@ public class ArticleService {
         return vipRepository.findAll(pageable);
     }
 
-
+    //============================================================================================================
+    // 게시글 1개 반환(일반, 리뷰, VIP)
     public Article getArticle(Long articleId) {
         return articleRepository.findById(articleId).orElseThrow();
     }
@@ -67,6 +71,8 @@ public class ArticleService {
         return vipRepository.findById(articleId).orElseThrow();
     }
 
+    //============================================================================================================
+    // 게시글 생성(일반, 리뷰, VIP)
     public void createArticle(String userId, AddArticleRequest request) {
         User user = userRepository.findByUserId(userId).get();
         Article article = request.toEntity(user);
@@ -82,7 +88,8 @@ public class ArticleService {
         Vip article = request.toEntity(user);
         vipRepository.save(article);
     }
-
+    //============================================================================================================
+    // 게시글 수정(일반, 리뷰, VIP)
     @Transactional
     public Article updateArticle(String userId, Long articleId, AddArticleRequest request) {
         Article article = articleRepository.findById(articleId).orElseThrow(NotFoundException::new);
@@ -133,6 +140,8 @@ public class ArticleService {
         return vip;
     }
 
+    //============================================================================================================
+    // 게시글 삭제(일반, 리뷰, VIP)
     public void deleteArticle(String userId, Long articleId) {
         //계정이 있는지 확인
         Article article = articleRepository.findById(articleId).get();
@@ -170,22 +179,29 @@ public class ArticleService {
 
 
 
-    public Article findArticleId(Long articleId) {
-        return articleRepository.findById(articleId).orElseThrow(() ->
-                new RuntimeException("Article not found with id: " + articleId));
-    }
-
-    public Review findReviewId(Long reviewId) {
-        return reviewRepository.findById(reviewId).orElseThrow(() ->
-                new RuntimeException("Review not found with id: " + reviewId));
-    }
-
-    public Vip findVipId(Long vipId) {
-        return vipRepository.findById(vipId).orElseThrow(() ->
-                new RuntimeException("Article not found with id: " + vipId));
-    }
-
-
+    //============================================================================================================
+    // 게시글 1개 가져오기(일반, 리뷰, VIP) (중복 코드)
+//    public Article findArticleId(Long articleId) {
+//        return articleRepository.findById(articleId).orElseThrow(() ->
+//                new RuntimeException("Article not found with id: " + articleId));
+//    }
+//
+//    public Review findReviewId(Long reviewId) {
+//        return reviewRepository.findById(reviewId).orElseThrow(() ->
+//                new RuntimeException("Review not found with id: " + reviewId));
+//    }
+//
+//    public Vip findVipId(Long vipId) {
+//        return vipRepository.findById(vipId).orElseThrow(() ->
+//                new RuntimeException("Article not found with id: " + vipId));
+//    }
+    
+    
+    //============================================================================================================
+    // 게시글 추천 기능
+    // (추천은 게시글당 동일 유저가 최대 1개까지만 가능)
+    // (추천을 안 눌렀을 때 누르면 추천이 되고 추천이 눌러져있을 때 누르면 추천이 해제됨)
+    
     @Transactional
     public void likeArticle(String userId, Long articleId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
@@ -234,8 +250,6 @@ public class ArticleService {
         }
     }
 
-
-
     @Transactional
     public void likeVip(String userId, Long vipId) {
         // 만약 articleLike 정보가 있으면 좋아요 한 상태임
@@ -260,6 +274,9 @@ public class ArticleService {
 
         }
     }
+
+    //============================================================================================================
+    // 특정 게시글 추천 수 가져오는 기능 (일반, 리뷰, Vip)
 
     @Transactional
     public Optional<Integer> getLikeArticle(Long articleId)
@@ -286,6 +303,9 @@ public class ArticleService {
         return vipLikeRepository.countArticleLikeByVip(vip);
     }
 
+
+    //============================================================================================================
+    // 모든 게시글 추천 수를 리스트로 가져오는 기능 (일반, 리뷰, VIP)
 
     @Transactional
     public List<CommonViewResponse> getAllLikeArticle(List<CommonViewResponse> articles)
@@ -317,7 +337,6 @@ public class ArticleService {
     }
 
 
-
     @Transactional
     public List<VipViewResponse> getAllLikeVip(List<VipViewResponse> articles)
     {
@@ -332,15 +351,14 @@ public class ArticleService {
         return articles;
     }
 
-
-
+    //============================================================================================================
+    // 게시글에 있는 추천을 모두 지우는 기능 (일반, 리뷰, VIP)
 
     public void deleteLikeAllArticle(Long articleId)
     {
         Article article = articleRepository.findById(articleId).get();
         articleLikeRepository.deleteAllByArticle(article);
     }
-
 
     public void deleteLikeAllReview(Long reviewId)
     {
@@ -354,6 +372,9 @@ public class ArticleService {
         vipLikeRepository.deleteAllByVip(vip);
     }
 
+
+    //============================================================================================================
+    // 조회수 자동으로 증가시키는 기능 (일반, 리뷰, VIP)
 
     @Transactional
     public void increaseCommonView(Long articleId)
@@ -381,6 +402,9 @@ public class ArticleService {
     }
 
 
+    //============================================================================================================
+    // 유저가 작성한 모든 게시물 수를 반환하는 기능
+
     public List<UserViewResponse> getAllArticleByUserId(List<UserViewResponse> users) {
 
         for(UserViewResponse user : users)
@@ -393,6 +417,8 @@ public class ArticleService {
         return users;
     }
 
+    //============================================================================================================
+    // 리스트를 페이지로 변환하는 함수
     public <T> Page<T> toPageFromList(List<T> result, int page, int size) {
 
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -403,5 +429,6 @@ public class ArticleService {
 
         return pageResult;
     }
+    //============================================================================================================
 
 }
