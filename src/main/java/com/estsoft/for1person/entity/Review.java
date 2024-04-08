@@ -28,10 +28,10 @@ public class Review {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000000)
     private String content;
 
-    @Column(nullable = false, length = 1000000)
+    @Column(nullable = false)
     private Long views;
 
     @Column(nullable = false)
