@@ -45,9 +45,7 @@ a {
 .editor{
     border: 1px solid #BDBDBD;
 
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-right: 20px;
+    padding: 20px;
 }
 .btn{
     display: flex;
