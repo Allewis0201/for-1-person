@@ -87,37 +87,13 @@
                 </div>
                 <!--댓글내용 데이터 -->
             </div>
-            <!--페이징 부분 시작-->
-            <div class="bottom">
-                <nav>
-                    <ul>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_10.png}" alt=""></a>
-                        </li>
-                        <li><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                        <li><a>5</a></li>
-                        <li>
-                            <a><img th:src="@{/Img/img_12.png}" alt=""></a>
-                        </li>
-                        <li>
-                            <a><img th:src="@{/Img/img_13.png}" alt=""></a>
-                        </li>
-                    </ul>
-                </nav>
-                <!--페이징 부분 완료-->
-            </div>
+
             <form id="commentReviewForm" class="write-comments" th:action="@{/api/comment/review/{articleId}(articleId=${article.reviewId})}" th:method="post">
 
                 <div class="write-comment">
                     <p>댓글 작성</p>
                     <div class="checkbox">
-                        <label><input type="checkbox" name="anonymous">익명 체크</label>
+
                         <button class="btn2" type = "submit">댓글 등록</button>
                     </div>
                 </div>

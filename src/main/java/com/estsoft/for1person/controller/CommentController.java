@@ -100,20 +100,20 @@ public class CommentController {
 
     //==================================================================================================================
     // 댓글 수정 (일반, 리뷰, VIP)
-    @PostMapping("/api/comment/common/{article_id}/{comment_id}")
+    @PutMapping("/api/comment/common/{article_id}/{comment_id}")
     public ResponseEntity<?> updateCommentCommon(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
         commentService.updateCommentCommon(userId, articleId, commentId, request);
         return ResponseEntity.ok().body(Map.of("message", "Comment created successfully"));
     }
 
-    @PostMapping("/api/comment/review/{article_id}/{comment_id}")
+    @PutMapping("/api/comment/review/{article_id}/{comment_id}")
     public void updateCommentReview(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
         commentService.updateCommentReview(userId, articleId, commentId, request);
     }
 
-    @PostMapping("/api/comment/vip/{article_id}/{comment_id}")
+    @PutMapping("/api/comment/vip/{article_id}/{comment_id}")
     public void updateCommentVip(@PathVariable("article_id") Long articleId, @PathVariable("comment_id") Long commentId, @RequestBody AddCommentRequest request, Authentication authentication) {
         String userId = authentication.getName();
         commentService.updateCommentVip(userId, articleId, commentId, request);

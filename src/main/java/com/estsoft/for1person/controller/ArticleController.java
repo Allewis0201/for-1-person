@@ -53,19 +53,19 @@ public class ArticleController {
     //============================================================================================================
     // 게시판 모든 목록 페이지로 반환(일반, 리뷰, VIP)
     @GetMapping("/api/common2")
-    public ResponseEntity<Page<Article>> getAllArticle(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<Article>> getAllArticlePage(@RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllArticlesPaged(page, size));
     }
 
     @GetMapping("/api/review2")
-    public ResponseEntity<Page<Review>> getAllReview(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<Review>> getAllReviewPage(@RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllReviewPaged(page, size));
     }
 
     @GetMapping("/api/vip2")
-    public ResponseEntity<Page<Vip>> getAllVip(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<Vip>> getAllVipPage(@RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok().body(articleService.getAllVipPaged(page, size));
     }
@@ -132,6 +132,51 @@ public class ArticleController {
     }
 
     //==================================================================================================================
+    // 게시글 수정(일반, 리뷰, VIP)
+    @PutMapping("/api/common/{article_id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+        Article updateArticle = articleService.updateArticle(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
+    }
+
+    @PutMapping("/api/review/{article_id}")
+    public ResponseEntity<Review> updateReview(@PathVariable("article_id") Long articleId, @RequestBody AddReviewRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+
+        Review updateReview = articleService.updateReview(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateReview);
+    }
+
+    @PutMapping("/api/vip/{article_id}")
+    public ResponseEntity<Vip> updateVip(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
+        String userId = authentication.getName();
+
+        Vip updateVip = articleService.updateVip(userId, articleId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(updateVip);
+    }
+
+    //==================================================================================================================
+    // 게시글 삭제(일반, 리뷰, VIP)
+    @DeleteMapping("/api/common/{article_id}")
+    public void deleteArticle(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteArticle(userId, articleId);
+    }
+
+    @DeleteMapping("/api/review/{article_id}")
+    public void deleteReview(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteReview(userId, articleId);
+    }
+
+    @DeleteMapping("/api/vip/{article_id}")
+    public void deleteVip(@PathVariable("article_id") Long articleId, Authentication authentication) {
+        String userId = authentication.getName();
+        articleService.deleteVip(userId, articleId);
+    }
+
+    //==================================================================================================================
     // 특정 게시글 추천 기능
     // (추천은 게시글당 동일 유저가 최대 1개까지만 가능)
     // (추천을 안 눌렀을 때 누르면 추천이 되고 추천이 눌러져있을 때 누르면 추천이 해제됨)
@@ -170,51 +215,10 @@ public class ArticleController {
         return articleService.getLikeVip(article_id).get();
     }
 
-    //==================================================================================================================
-    // 게시글 수정(일반, 리뷰, VIP)
-    @PutMapping("/api/common/{article_id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
-        String userId = authentication.getName();
-        Article updateArticle = articleService.updateArticle(userId, articleId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(updateArticle);
-    }
-
-    @PutMapping("/api/review/{article_id}")
-    public ResponseEntity<Review> updateReview(@PathVariable("article_id") Long articleId, @RequestBody AddReviewRequest request, Authentication authentication) {
-        String userId = authentication.getName();
-
-        Review updateReview = articleService.updateReview(userId, articleId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(updateReview);
-    }
-
-    @PutMapping("/api/vip/{article_id}")
-    public ResponseEntity<Vip> updateVip(@PathVariable("article_id") Long articleId, @RequestBody AddArticleRequest request, Authentication authentication) {
-        String userId = authentication.getName();
-
-        Vip updateVip = articleService.updateVip(userId, articleId, request);
-        return ResponseEntity.status(HttpStatus.OK).body(updateVip);
-    }
 
 
-    //==================================================================================================================
-    // 게시글 삭제(일반, 리뷰, VIP)
-    @DeleteMapping("/api/common/{article_id}")
-    public void deleteArticle(@PathVariable("article_id") Long articleId, Authentication authentication) {
-        String userId = authentication.getName();
-        articleService.deleteArticle(userId, articleId);
-    }
 
-    @DeleteMapping("/api/review/{article_id}")
-    public void deleteReview(@PathVariable("article_id") Long articleId, Authentication authentication) {
-        String userId = authentication.getName();
-        articleService.deleteReview(userId, articleId);
-    }
 
-    @DeleteMapping("/api/vip/{article_id}")
-    public void deleteVip(@PathVariable("article_id") Long articleId, Authentication authentication) {
-        String userId = authentication.getName();
-        articleService.deleteVip(userId, articleId);
-    }
 
 
     // 게시글 생성(일반, 리뷰, VIP)
