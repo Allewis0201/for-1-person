@@ -84,7 +84,14 @@ public class UserViewController {
             if (result.isEmpty()) {
                 model.addAttribute("message", "존재하지 않는 회원입니다.");
             } else {
-                model.addAttribute("userList", result);
+
+                List<UserViewResponse> resultList = result.stream()
+                        .map(User::toViewResponse)
+                        .toList();
+                List<UserViewResponse> resultList2 = articleService.getAllArticleByUserId(resultList);
+                List<UserViewResponse> resultList3 = commentService.getAllCommentByUserId(resultList2);
+
+                model.addAttribute("userList", resultList3);
                 return "adminpage";
             }
         }
