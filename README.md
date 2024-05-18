@@ -361,7 +361,7 @@
 
 ### 주요 기능 시연 영상
 
-[![Video Label](http://img.youtube.com/vi/biLNW5fZV9M/0.jpg)](https://www.youtube.com/watch?v=biLNW5fZV9M)
+[![Video Label](http://img.youtube.com/vi/GzMqzKkJ618/0.jpg)](https://youtu.be/GzMqzKkJ618)
 
 
 ---
